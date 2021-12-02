@@ -30,8 +30,8 @@ We decided to define 3 contracts for this project:
 
 #### GitHub Contract
 
-- Everytime to do a task, create a new branch, with te task name, push it and do a Pull Request
+- Everytime you do a task, create a new branch, with the task name, push it and do a Pull Request
 - Commit regularly
-- Before starting working on your code, do pull to have the latest updates in the repo
+- Before starting working on your code, do a pull to have the latest updates in the repo
 
 #### Pull request contract
