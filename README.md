@@ -11,9 +11,9 @@ Enjoy : - A Happy house, by living in a clean and organized home - A Happy relat
 
 We decided to define 3 contracts for this project:
 
-- [Trello contract](#trello_contract)
-- [GitHub contract](#github_contract)
-- [Pull request contract](#pull_request_contract)
+- [Trello contract](#trello-contract)
+- [GitHub contract](#github-contract)
+- [Pull request contract](#pull-request-contract)
 
 ##### Trello Contract
 
@@ -29,5 +29,9 @@ We decided to define 3 contracts for this project:
   5.  Choose another ticket and repeat points 1, 2, 3 and 4.
 
 #### GitHub Contract
+
+- Everytime to do a task, create a new branch, with te task name, push it and do a Pull Request
+- Commit regularly
+- Before starting working on your code, do pull to have the latest updates in the repo
 
 #### Pull request contract
