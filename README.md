@@ -9,6 +9,25 @@ Enjoy : - A Happy house, by living in a clean and organized home - A Happy relat
 
 #### Contracts can avoid a lot of problems
 
-We decided to define 3 contracts for this project: - Trello contract - GitHub contract - Pull request contract
+We decided to define 3 contracts for this project:
+
+- [Trello contract](#trello_contract)
+- [GitHub contract](#github_contract)
+- [Pull request contract](#pull_request_contract)
 
 ##### Trello Contract
+
+- **Product Backlog** column: here you’ll find all the tasks we need to do during the Project
+- **Sprint n** column: we have a column for each Sprint with its tasks
+- Adding tasks:
+  Create small tasks with a label that refers to an Epic
+- Picking tickets(tasks) to do:
+  1.  Assign the ticket to yourself
+  2.  Put the ticket in the **Doing** column
+  3.  Create a branch with the task name
+  4.  Once the task is finished, put the ticket in the **Done** column
+  5.  Choose another ticket and repeat points 1, 2, 3 and 4.
+
+#### GitHub Contract
+
+#### Pull request contract
