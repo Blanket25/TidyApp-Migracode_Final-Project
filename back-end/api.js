@@ -1,3 +1,7 @@
-const { Pool } = require('pg');
-const secrest = require('./secrest.json');
-const connection = new Pool(secrest);
+const api = () => {
+    return {
+
+    }
+}
+
+module.exports = api;
