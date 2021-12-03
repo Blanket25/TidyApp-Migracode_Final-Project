@@ -3,17 +3,41 @@
 ## TidyApp
 
 TidyApp is an easy tool to keep your house clean and organized. The main goal is to have a healthy relationship between flatmates thanks to simply splitting the tasks between them all.
-Enjoy : - A Happy house, by living in a clean and organized home - A Happy relationship with your flatmates - A happy pocket, by saving money on cleaning services
+Enjoy :
+
+- A Happy house, by living in a clean and organized home
+- A Happy relationship with your flatmates
+- A happy pocket, by saving money on cleaning services
 
 ### The making of
 
 #### Contracts can avoid a lot of problems
 
-We decided to define 3 contracts for this project:
+We decided to define 4 contracts for this project:
 
+- [CSS contract](#css-contract)
 - [Trello contract](#trello-contract)
 - [GitHub contract](#github-contract)
 - [Pull request contract](#pull-request-contract)
+
+#### CSS Contract
+
+**Colours**:
+
+Light: #FFF9F0
+Orange: #F6752D
+Purple:#8584E8
+
+- Instead of pixels let’s use **rem**, in our project:
+  **1 rem = 10px**, so it’s easy to count in rem if you used to work with px
+- For margins try to use **utility classes** (they start with “.u-”)
+- To center containers on the page try to use **“.u-center-container”** utility class
+- To center text you can use **“.u-center-text”** utility class
+- To center elements inside container use **flexbox** or **grid** properties
+- You can add new utility classes below “Utility classes” comment in index.css
+- You can change values of utility classes and headers if you don’t like the current values (right now they are set just as an example), but be consistent.
+- The main idea to use some utility classes is to make changes in one place, instead of changing it everywhere you need to use the same property.
+- If you notice that you use one property with the same value in many places, make a utility class.
 
 ##### Trello Contract
 
