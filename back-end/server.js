@@ -9,4 +9,7 @@ const api = apiFunction();
 
 app.use(bodyParser.json());
 
+// getting all the task list
+app.get("/task-list", api.getAllTask);
+
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));
