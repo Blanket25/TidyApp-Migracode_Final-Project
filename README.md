@@ -24,9 +24,13 @@ We decided to define 4 contracts for this project:
 
 **Colours**:
 
+- These is the colors we are going to be working with:
+
 Light: #FFF9F0
 Orange: #F6752D
-Purple:#8584E8
+Purple: #8584E8
+
+There is one variable for each color, so you don't have to put the hex code each time.
 
 - Instead of pixels let’s use **rem**, in our project:
   **1 rem = 10px**, so it’s easy to count in rem if you used to work with px
