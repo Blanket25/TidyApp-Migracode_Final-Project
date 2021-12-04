@@ -1,123 +1,189 @@
-@import url("https://fonts.googleapis.com/css2?family=Kreon&family=Martel:wght@200;300;400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kreon&family=Martel:wght@200;300;400&display=swap');
 /* RESET DEFAULT STYLES */
 *::after,
 * ::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
 }
 html {
-  /* this defines 1 rem */
-  font-size: 62.5%;
-  /* 1rem=10px; 10px/16px=62.5% */
+	/* this defines 1 rem */
+	font-size: 62.5%;
+	/* 1rem=10px; 10px/16px=62.5% */
 }
 body {
-  font-family: "Martel", serif;
-  font-weight: 300;
-  font-size: 1.6rem;
-  line-height: 1.7;
-  box-sizing: border-box;
-  background-color: #fff9f0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	font-family: 'Martel', serif;
+	font-weight: 300;
+	font-size: 1.6rem;
+	line-height: 1.7;
+	box-sizing: border-box;
+	/* background-color: #fff9f0; */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	height: 100vh;
 }
 /* HEADERS */
 
 h1,
 h2,
 h3 {
-  font-family: "Kreon", serif;
-  font-weight: 400;
-  text-transform: uppercase;
+	font-family: 'Kreon', serif;
+	font-weight: 400;
 }
 h1 {
-  text-transform: uppercase;
-  font-size: 6rem;
+	text-transform: uppercase;
+	font-size: 4.5rem;
 }
 
 h2 {
-  font-size: 3.5rem;
-  text-transform: uppercase;
-  display: inline-block;
+	font-size: 3.5rem;
+	display: inline-block;
 }
 h3 {
-  font-size: 2rem;
-  text-transform: uppercase;
+	font-size: 3rem;
 }
 
+p {
+	font-size: 2rem;
+}
 /* COLORS */
 
 :root {
-  --light: #fff9f0;
-  --orange: #f6752d;
-  --purple: #8584e8;
+	--light: #fff9f0;
+	--orange: #f6752d;
+	--purple: #8584e8;
 }
 
 /* UTILITY CLASSES */
 .u-center-text {
-  text-align: center;
+	text-align: center;
 }
 .u-center-container {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 .u-margin-bottom-big {
-  margin-bottom: 8rem;
+	margin-bottom: 8rem;
 }
 .u-margin-bottom-medium {
-  margin-bottom: 4rem;
+	margin-bottom: 4rem;
 }
 .u-margin-bottom-small {
-  margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 .u-margin-top-huge {
-  margin-top: 10rem;
+	margin-top: 10rem;
 }
 .u-margin-top-big {
-  margin-top: 8rem;
+	margin-top: 8rem;
 }
 .u-margin-top-medium {
-  margin-top: 4rem;
+	margin-top: 4rem;
 }
 .u-margin-top-small {
-  margin-top: 1.5rem;
+	margin-top: 1.5rem;
 }
 
+.text-purple {
+	color: var(--purple);
+}
+.text-bold {
+	font-weight: bold;
+}
 /***** HEADER *****/
 
 /*General*/
 header {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
+	align-items: center;
+	height: 5vh;
 }
 
 /*Buttons*/
 .orange-btn,
 .purple-btn {
-  padding: 0.8rem 1.5rem;
-  font-weight: bold;
+	padding: 0.8rem 1.5rem;
+	font-weight: bold;
 }
 
 .purple-btn {
-  margin-right: 0.5rem;
-  border: solid 0.1rem var(--purple);
-  background-color: var(--light);
-  color: var(--purple);
+	margin-right: 0.5rem;
+	border: solid 0.1rem var(--purple);
+	background-color: var(--light);
+	color: var(--purple);
 }
 
 .orange-btn {
-  border: none;
-  border: solid 0.1rem var(--orange);
-  background-color: var(--orange);
-  color: var(--light);
+	border: none;
+	border: solid 0.1rem var(--orange);
+	background-color: var(--orange);
+	color: var(--light);
 }
 
 .purple-btn:hover {
-  background-color: var(--purple);
-  color: var(--light);
+	background-color: var(--purple);
+	color: var(--light);
 }
 
 .orange-btn:hover {
-  background-color: var(--light);
-  color: var(--orange);
+	background-color: var(--light);
+	color: var(--orange);
+}
+
+.app-logo {
+	width: 10rem;
+}
+/* HOMEPAGE */
+.homepage-main-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	height: 90vh;
+}
+@media (min-width: 768px) {
+	.homepage-main-container {
+		flex-direction: row;
+		/* padding: 5rem; */
+	}
+}
+.homepage-main-image-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+@media (min-width: 768px) {
+	.homepage-main-image-container {
+		display: flex;
+		justify-content: center;
+	}
+}
+.homepage-main-image {
+	width: 80%;
+}
+
+@media (min-width: 768px) {
+	.homepage-main-image {
+		width: 80%;
+	}
+}
+
+/* FOOTER */
+.footer {
+	text-transform: uppercase;
+	background-color: var(--orange);
+	color: var(--light);
+	height: 5vh;
+}
+.footer-text {
+	display: inline-block;
+}
+.footer p {
+	font-size: 1.2rem;
+	margin-bottom: 0;
 }

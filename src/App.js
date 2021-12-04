@@ -1,12 +1,13 @@
-import "./App.css";
-import Header from "./Header";
+import './App.css';
+import './index.css';
+import Homepage from './pages/Homepage';
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-    </div>
-  );
+	return (
+		<div className='App'>
+			<Homepage />
+		</div>
+	);
 }
 
 export default App;
