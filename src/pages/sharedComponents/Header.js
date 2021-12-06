@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <header>
-      <img src={logo} alt="TidyApp" className="app-logo"></img>
+      <img src={logo} alt="TidyApp" className="app-logo" />
       <div>
         <Link className="purple-btn" to="/login">
           Log in
