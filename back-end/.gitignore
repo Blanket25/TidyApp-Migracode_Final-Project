@@ -24,4 +24,4 @@ yarn-error.log*
 yarn.lock
 
 #connection
-secrest.json
+secrets.json
