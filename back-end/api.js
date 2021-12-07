@@ -36,6 +36,14 @@ const api = () => {
     }
   };
 
+  const deleteUser = async (req, res) => {
+      const userId = req.params.userId;
+      const queryUser = "delete from users where id=$1"
+        const result = await connection.query(queryUser, [userId]);
+        return res.status(200).send("user deleted").json(result.rows);
+  }
+
+  
   const getAllTask = async (req, res) => {
     const query = `
         select
@@ -84,6 +92,7 @@ const api = () => {
   return {
     getUsers,
     addUser,
+    deleteUser,
     getAllTask,
     addNewTask
   };
