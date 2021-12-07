@@ -1,10 +1,10 @@
-import logo from "../../img/Logo.png";
+import Nav from "./Nav";
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <header>
-      <img src={logo} alt="TidyApp" className="app-logo" />
+      <Nav />
       <div>
         <Link className="purple-btn" to="/login">
           Log in
