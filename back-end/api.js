@@ -65,7 +65,8 @@ const api = () => {
       return res.status(400).send('The task already exists try updating the task instead of creat a new one!')
     } else { 
       // if not create the task
-      const createTask = `insert into task (name, task_completed, description, starting_date, frequency, user_id) returning id`
+      const createTask = `insert into task (name, task_completed, description, starting_date, frequency, user_id) 
+      values ($1, $2, $3, $4, $5, $6) returning id`
       const newTaskRow = await connection.query(createTask,
       [
         newTask.name,
