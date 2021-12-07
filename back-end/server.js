@@ -13,5 +13,6 @@ app.use(bodyParser.json());
 app.get("/task-list", api.getAllTask);
 app.get("/users", api.getUsers);
 app.post("/users", api.addUser);
+app.delete("/users/:userId", api.deleteUser);
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));
