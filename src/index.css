@@ -118,6 +118,7 @@ header {
   padding: 0.8rem 1.5rem;
   font-weight: bold;
   font-size: 1.5rem;
+  border-radius: 0.5rem;
 }
 
 .purple-btn {
@@ -234,7 +235,11 @@ div.form-container {
 }
 
 div.form-container > p {
-  margin-top: 15rem;
+  margin-top: 12rem;
+}
+
+div.form-container > h2 {
+  margin: 0;
 }
 
 form {
@@ -262,11 +267,62 @@ div.signup-form-container {
 }
 
 div.signup-form-container > p:nth-of-type(2) {
-  margin: 8rem 0 2rem;
+  margin: 6rem 0 1rem;
+}
+
+div.signup-form-container > h2 {
+  margin: 3rem 0 0 0;
 }
 
 @media (min-width: 380px) {
   input {
     width: 30vw;
   }
+}
+
+/*** BOARD ***/
+
+.board-header,
+.print-btn,
+.card-container,
+.card {
+  display: flex;
+}
+
+.board-header {
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.print-btn {
+  flex-direction: row;
+  height: 4rem;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.print-btn > p {
+  color: var(--purple);
+}
+
+.card-container {
+  justify-content: center;
+}
+
+.card {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2rem;
+  padding: 3rem;
+  margin-top: 3rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: -2px 2px 5px var(--orangeFooter);
+  width: 75vw;
+}
+
+.print-btn > p,
+.card > p {
+  margin: 0;
 }
