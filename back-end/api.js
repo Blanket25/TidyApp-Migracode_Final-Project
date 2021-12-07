@@ -84,6 +84,7 @@ const api = () => {
     getUsers,
     addUser,
     getAllTask,
+    addNewTask
   };
 };
 
