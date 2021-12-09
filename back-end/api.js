@@ -89,12 +89,20 @@ const api = () => {
     }
   }
 
+  const deleteTask = async (req, res) => {
+    const taskId = req.params.taskId;
+    const query = `delete from task where id=$1`;
+    const result = await connection.query(query, [taskId])
+    return await res.status(200).json({message: 'The Task have been deleted!'})
+  }
+
   return {
     getUsers,
     addUser,
     deleteUser,
     getAllTask,
-    addNewTask
+    addNewTask,
+    deleteTask
   };
 };
 

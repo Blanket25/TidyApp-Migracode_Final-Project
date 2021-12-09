@@ -15,5 +15,6 @@ app.get("/users", api.getUsers);
 app.post("/users", api.addUser);
 app.post("/task", api.addNewTask);
 app.delete("/users/:userId", api.deleteUser);
+app.delete("/task/:taskId", api.deleteTask);
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));
