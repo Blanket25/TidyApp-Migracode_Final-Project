@@ -92,6 +92,10 @@ p {
   margin-top: 1.5rem;
 }
 
+.u-box-shadow {
+  box-shadow: -1px 2px 5px #f6732d33;
+}
+
 .text-purple {
   color: var(--purple);
 }
@@ -137,7 +141,16 @@ header {
   background-color: var(--orange);
   color: var(--light);
 }
-
+button:disabled {
+	background-color: #b2b3b5;
+	color: #515464;
+	border: none;
+}
+button:disabled:hover {
+	background-color: #b2b3b5;
+	color: #515464;
+	border: none;
+}
 .purple-btn:hover {
   background-color: var(--purple);
   color: var(--light);
@@ -193,12 +206,6 @@ ul {
 
 span {
   color: var(--purple);
-}
-
-.home-card-container,
-.card-up,
-.card-down {
-  box-shadow: -1px 2px 5px #f6732d33;
 }
 
 /*Section three*/
