@@ -13,6 +13,7 @@ function Signup() {
 		email: '',
 		password: '',
 	});
+  
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setNewUserData((prevValue) => {
@@ -39,7 +40,7 @@ function Signup() {
 			}
 		});
 	};
-
+  
 	function handleClick(event) {
 		event.preventDefault();
 		const group = newUserData.group.length > 0;
@@ -76,6 +77,7 @@ function Signup() {
 			);
 		}
 	}
+  
 	return (
 		<div className='signup-main-container'>
 			<Nav />
