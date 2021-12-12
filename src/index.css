@@ -92,6 +92,10 @@ p {
   margin-top: 1.5rem;
 }
 
+.u-box-shadow {
+  box-shadow: -1px 2px 5px #f6732d33;
+}
+
 .text-purple {
   color: var(--purple);
 }
@@ -193,12 +197,6 @@ ul {
 
 span {
   color: var(--purple);
-}
-
-.home-card-container,
-.card-up,
-.card-down {
-  box-shadow: -1px 2px 5px #f6732d33;
 }
 
 /*Section three*/
