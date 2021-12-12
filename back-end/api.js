@@ -96,13 +96,35 @@ const api = () => {
     return await res.status(200).json({message: 'The Task have been deleted!'})
   }
 
+  const updateTask = async (req, res) => {
+   console.log('qqq')
+    try {
+      const taskId = req.params.taskId;
+      const task = req.body;
+      const query = "UPDATE task SET name=$1, task_completed=$2, description=$3, starting_date=$4, frequency=$5, user_id=$6 WHERE id=$7;";
+      const result = await connection.query(query, [
+        task.name, 
+        task.task_completed, 
+        task.description, 
+        task.starting_date,
+        task.frequency,
+        task.user_id,
+        taskId]);  
+      return res.status(200).send("Task updated").json(result.rows);
+    }
+    catch (e){
+        return res.status(500).send("Error");
+    }
+  }
+
   return {
     getUsers,
     addUser,
     deleteUser,
     getAllTask,
     addNewTask,
-    deleteTask
+    deleteTask,
+    updateTask
   };
 };
 
