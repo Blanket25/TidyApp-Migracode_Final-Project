@@ -29,7 +29,7 @@ function Homepage() {
           </div>
         </div>
         <div className="homepage-main-container">
-          <div className="home-card-container">
+          <div className="home-card-container u-box-shadow">
             <img
               className="homepage-main-image"
               src={lunchBreackMonochromatic}
@@ -64,11 +64,11 @@ function Homepage() {
             <h2 className="u-center-text u-margin-bottom-medium">
               How to achieve happiness with TidyApp?
             </h2>
-            <p className="card-up">Create a group</p>
-            <p className="card-down">Add your roomies</p>
-            <p className="card-up">Add tasks</p>
-            <p className="card-down">Program the frequency</p>
-            <p className="card-up">Easy peasy!</p>
+            <p className="card-up u-box-shadow">Create a group</p>
+            <p className="card-down u-box-shadow">Add your roomies</p>
+            <p className="card-up u-box-shadow">Add tasks</p>
+            <p className="card-down u-box-shadow">Program the frequency</p>
+            <p className="card-up u-box-shadow">Easy peasy!</p>
           </div>
           <img
             className="homepage-main-image u-margin-top-medium u-margin-bottom-big"
