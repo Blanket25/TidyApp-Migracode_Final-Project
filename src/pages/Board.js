@@ -14,7 +14,7 @@ function Board() {
         </button>
       </div>
       <div className="card-container">
-        <div className="card">
+        <div className="card u-box-shadow">
           <p>Nombre</p>
           <div>
             <p>Tarea</p>

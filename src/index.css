@@ -142,14 +142,14 @@ header {
   color: var(--light);
 }
 button:disabled {
-	background-color: #b2b3b5;
-	color: #515464;
-	border: none;
+  background-color: #b2b3b5;
+  color: #515464;
+  border: none;
 }
 button:disabled:hover {
-	background-color: #b2b3b5;
-	color: #515464;
-	border: none;
+  background-color: #b2b3b5;
+  color: #515464;
+  border: none;
 }
 .purple-btn:hover {
   background-color: var(--purple);
@@ -407,7 +407,6 @@ div.signup-form-container > h2 {
   margin-top: 3rem;
   border-radius: 1rem;
   background-color: #fff;
-  box-shadow: -2px 2px 5px var(--orangeFooter);
   width: 75vw;
 }
 
@@ -462,7 +461,6 @@ div.signup-form-container > h2 {
   display: inline-block;
   height: 30vh;
   background-color: #fff;
-  box-shadow: -2px 2px 5px var(--orangeFooter);
   border-radius: 1rem;
 }
 @media (min-width: 768px) {
@@ -518,7 +516,6 @@ div.signup-form-container > h2 {
   margin-top: 2rem;
   border-radius: 1rem;
   background-color: #fff;
-  box-shadow: -2px 2px 5px var(--orangeFooter);
   justify-content: space-around;
   align-items: center;
 }

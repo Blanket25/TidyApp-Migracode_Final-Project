@@ -7,7 +7,7 @@ function CreateGroup() {
     <div>
       <Nav />
       <div className="group-card-container">
-        <div className="group-card">
+        <div className="group-card u-box-shadow">
           <h3>Add roomies</h3>
           <input type="text" />
         </div>

@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Login() {
-  const [newText, setNewText] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    if (email.length > 0 && password.length >= 6) {
+      setIsLogged(true);
+    }
   };
-
-  const handleMailChange = (event) => setNewText(event.target.value);
-
-  const handlePassChange = (event) => setPassword(event.target.value);
 
   return (
     <div className="login-main-container">
@@ -23,21 +24,27 @@ function Login() {
         <h2>Welcome back!</h2>
         <form onSubmit={submitHandler}>
           <input
-            value={newText}
-            onChange={handleMailChange}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             type="text"
             placeholder="email"
           />
           <input
             value={password}
-            onChange={handlePassChange}
+            onChange={(event) => setPassword(event.target.value)}
             type="password"
             placeholder="password"
           />
           {/* <Link className="orange-btn" to="/board">
             Go to board
           </Link> */}
-          <button className="orange-btn">Log in</button>
+          <button
+            type="submit"
+            className="orange-btn"
+            disabled={isLogged ? false : true}
+          >
+            Log in
+          </button>
         </form>
         <p>I don't have a group yet</p>
         <Link className="orange-btn" to="/signup">
