@@ -374,6 +374,9 @@ div.signup-form-container > h2 {
 .card {
   display: flex;
 }
+.card {
+  flex-direction: column;
+}
 
 .board-header {
   justify-content: space-between;
