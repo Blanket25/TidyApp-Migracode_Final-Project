@@ -524,6 +524,13 @@ div.signup-form-container > h2 {
   text-align: center;
 }
 
+.input-btn {
+  background-color: #fff;
+  padding: 0.2rem;
+  border-radius: 50%;
+  width: 2rem;
+}
+
 @media (min-width: 768px) {
   .group-card-container {
     flex-direction: row;
