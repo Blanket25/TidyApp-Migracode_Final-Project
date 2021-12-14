@@ -374,6 +374,9 @@ div.signup-form-container > h2 {
 .card {
   display: flex;
 }
+.card {
+	flex-direction: column;
+}
 
 .board-header {
   justify-content: space-between;
@@ -399,6 +402,18 @@ div.signup-form-container > h2 {
 }
 
 .card {
+
+	/*flex-direction: column;
+	align-items: stretch;
+	justify-content: space-evenly;
+	gap: 2rem;
+	padding: 3rem;
+	margin-top: 3rem;
+	border-radius: 1rem;
+	background-color: #fff;
+	box-shadow: -2px 2px 5px var(--orangeFooter);
+	width: 75vw;*/
+=======
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -409,8 +424,12 @@ div.signup-form-container > h2 {
   background-color: #fff;
   box-shadow: -2px 2px 5px var(--orangeFooter);
   width: 75vw;
-}
 
+}
+.task-container {
+	display: flex;
+	justify-content: space-between;
+}
 .print-btn > p,
 .card > p {
   margin: 0;
