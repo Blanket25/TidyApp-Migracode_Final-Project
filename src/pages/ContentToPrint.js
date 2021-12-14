@@ -1,3 +1,5 @@
+import "../index.css";
+
 function ContentToPrint() {
   const tasks = [
     {
