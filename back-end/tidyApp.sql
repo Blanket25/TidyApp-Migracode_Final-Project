@@ -21,14 +21,17 @@ create table users (
 	email varchar(120) not null,
 	type_of_user type not null,
 	group_id int references tidy_group(id),
-	task_id int references task(id),
 	password varchar(60) not null
 );
 
-create table task (
+create table tasks (
 	id serial primary key,
 	name varchar(60) not null,
 	task_completed boolean not null,
 	description varchar(500),
-	group_id int references tidy_group(id)
+	starting_date date not null,
+	group_id int references tidy_group(id),
+	user_id int references users(id)
 );
+
+
