@@ -2,10 +2,15 @@ DROP DATABASE IF EXISTS tidy_App;
 
 CREATE DATABASE tidy_App;
 
+CREATE TYPE frequency AS ENUM ('weekly', 'biweekly', 'monthly');
+
 create table tidy_group (
 	id serial primary key,
 	group_name varchar(60) not null,
-	date_of_creation date not null
+	date_of_creation date not null,
+	frequency frequency not null,
+	group_secret varchar(60) not null,
+	number_of_roomies int not null
 );
 
 CREATE TYPE type AS ENUM ('roomie', 'admin');
@@ -15,27 +20,15 @@ create table users (
 	username varchar(60) not null,
 	email varchar(120) not null,
 	type_of_user type not null,
-	group_id int references tidy_group(id)
+	group_id int references tidy_group(id),
+	task_id int references task(id),
+	password varchar(60) not null
 );
-
-CREATE TYPE frequency AS ENUM ('weekly', 'biweekly', 'monthly');
 
 create table task (
 	id serial primary key,
 	name varchar(60) not null,
 	task_completed boolean not null,
 	description varchar(500),
-	starting_date date not null,
-	frequency frequency not null,
-	user_id int references users(id)
-);
-
-create table task_list (
-	id serial primary key,
-	task_id int references task(id)
-);
-
-create table tasks (
-	task_id int references task(id),
-	task_list_id int references task_list(id)
+	group_id int references tidy_group(id)
 );
