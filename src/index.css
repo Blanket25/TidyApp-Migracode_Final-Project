@@ -336,7 +336,8 @@ form {
   margin-top: 2rem;
 }
 
-input {
+input,
+textarea {
   border: 0.1rem solid var(--orange);
   border-radius: 1rem;
   padding: 1rem;
@@ -504,47 +505,51 @@ div.signup-form-container > h2 {
   }
 }
 
-/*** CREATE GROUP ***/
-
-.group-card-container,
-.group-card {
+/*** ADD TASKS ***/
+.tasks-card-container,
+.task-card {
   display: flex;
   flex-direction: column;
 }
 
-.group-card-container {
+.tasks-card-container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
 }
 
-.group-card {
-  padding: 2rem;
-  margin-top: 2rem;
-  border-radius: 1rem;
-  background-color: #fff;
-  box-shadow: -2px 2px 5px var(--orangeFooter);
-  justify-content: space-around;
-  align-items: center;
+select {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
-.group-card > h3 {
-  text-align: center;
+.task-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #fff;
+}
+
+.task-card:last-of-type {
+  margin-bottom: 5rem;
+}
+
+textarea {
+  margin-top: 2rem;
+}
+
+.task-card > form > button {
+  align-self: flex-end;
 }
 
 @media (min-width: 768px) {
-  .group-card-container {
-    flex-direction: row;
-    width: 100vw;
+  .tasks-card-container {
+    width: 50rem;
+    margin: 0 auto;
   }
 
-  .group-card {
-    width: 30vw;
-  }
-
-  .group-card > input {
-    width: 20vw;
+  .task-card > form > div > input,
+  .task-card > form > div > textarea {
+    width: 100%;
   }
 }
