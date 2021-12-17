@@ -10,12 +10,19 @@ const api = apiFunction();
 
 app.use(bodyParser.json());
 
-app.get("/task-list", api.getAllTask);
+//GET
+app.get("/tasks", api.getTasks);
 app.get("/users", api.getUsers);
-app.post("/users", api.addUser);
-app.post("/task", api.addNewTask);
+
+//POST
+app.post("/users", api.addNewUser);
+app.post("/tasks", api.addNewTask);
+
+//DELETE
 app.delete("/users/:userId", api.deleteUser);
-app.delete("/task/:taskId", api.deleteTask);
-app.put("/task/:taskId", api.updateTask);
+app.delete("/tasks/:taskId", api.deleteTask);
+
+//PUT
+app.put("/tasks/:taskId", api.updateTask);
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));
