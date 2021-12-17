@@ -1,36 +1,60 @@
 import "../index.css";
 import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const prop = 2;
 
-function CreateGroup() {
-  const [confirmationText, setConfirmationText] = useState("");
+function TasksInfo() {
+  //const [confirmationText, setConfirmationText] = useState("");
   const [frequency, setFrequency] = useState("weekly");
-  const [task, setTask] = useState({
-    taskName: "",
-    description: "",
-  });
+  const [tasks, setTasks] = useState([]);
   const [validationError, setValidationError] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const emptyTasks = new Array(prop).fill().map(() => ({
+      taskName: "",
+      description: "",
+    }));
+
+    setTasks(emptyTasks);
+  }, []);
 
   const handleFrequency = (event) => {
-    setFrequency(event.target.value);
-  };
-
-  const handleTask = (event) => {
     const value = event.target.value;
-    setTask({
-      ...task.description, //!por que???
-      [event.target.name]: value,
-    });
     console.log(value);
+    setFrequency(value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleTask = (attribute, newValue, index) => {
+    const newTasks = [...tasks];
+    const newTask = { ...tasks[index] };
+    newTask[attribute] = newValue;
+    newTasks[index] = newTask;
+    console.log("New tasks", newTasks);
 
-    if (!task.taskName) {
+    setTasks(newTasks);
+  };
+
+  const handleClick = async () => {
+    let isValid = true;
+
+    tasks.map((task) => (isValid = isValid && task.taskName !== ""));
+
+    if (isValid) {
+      await fetch("http://localhost:4000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tasks,
+          frequency,
+        }),
+      });
+
+      navigate("/board");
+    } else {
       setValidationError("You're missing a roomie!");
     }
   };
@@ -39,12 +63,12 @@ function CreateGroup() {
     <div>
       <Nav />
       <div className="tasks-card-container">
-        <p>{confirmationText}</p>
+        {/* <p>{confirmationText}</p> */}
         <div className="task-card u-box-shadow">
           <p className="u-margin-bottom-small">
             How often do you want the tasks to rotate between roomies?
           </p>
-          <select value={frequency} onChange={handleFrequency}>
+          <select name="frequency" value={frequency} onChange={handleFrequency}>
             <option value="weekly">Weekly</option>
             <option value="biweekly">Biweekly</option>
             <option value="monthly">Monthly</option>
@@ -56,36 +80,38 @@ function CreateGroup() {
             define {prop} main tasks
           </p>
 
-          <form onSubmit={handleSubmit}>
-            {new Array(prop).fill().map((n, index) => (
-              <div key={index}>
-                <p className="text-bold">Task {index + 1}</p>
-                <input
-                  name="task"
-                  type="text"
-                  placeholder="task's name"
-                  onChange={handleTask}
-                  value={task.name}
-                />
-                <textarea
-                  name="taskDescription"
-                  type="text"
-                  placeholder="task's description"
-                  onChange={handleTask}
-                  value={task.description}
-                />
-              </div>
-            ))}
-            <p>{validationError}</p>
-            <button type="submit" className="orange-btn">
-              Finish
-            </button>
-          </form>
+          {new Array(prop).fill().map((n, index) => (
+            <div key={`input-${index}`}>
+              <p className="text-bold">Task {index + 1}</p>
+              <input
+                name={`name-${index}`}
+                type="text"
+                placeholder="task's name"
+                onChange={(event) =>
+                  handleTask("name", event.target.value, index)
+                }
+                value={tasks[index].taskName}
+              />
+              <textarea
+                name={`description-${index}`}
+                placeholder="task's description"
+                onChange={(event) =>
+                  handleTask("description", event.target.value, index)
+                }
+                value={tasks[index].description}
+              />
+            </div>
+          ))}
+          <p>{validationError}</p>
+          <button onClick={handleClick} className="orange-btn">
+            Finish
+          </button>
         </div>
       </div>
+
       <Footer />
     </div>
   );
 }
 
-export default CreateGroup;
+export default TasksInfo;
