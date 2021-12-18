@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Board from "./pages/Board";
 import AdminPanel from "./pages/AdminPanel";
-import CreateGroup from "./pages/CreateGroup";
+import TasksInfo from "./pages/TasksInfo";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/create_group" element={<CreateGroup />} />
+        <Route path="/tasks-info" element={<TasksInfo />} />
         <Route path="/board" element={<Board />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
       </Routes>
