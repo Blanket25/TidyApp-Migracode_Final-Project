@@ -15,10 +15,16 @@ Enjoy :
 
 We decided to define 4 contracts for this project:
 
-- [CSS contract](#css-contract)
-- [Trello contract](#trello-contract)
-- [GitHub contract](#github-contract)
-- [Pull request contract](#pull-request-contract)
+- [Migracode's Final Project](#migracodes-final-project)
+  - [TidyApp](#tidyapp)
+    - [The making of](#the-making-of)
+      - [Contracts can avoid a lot of problems](#contracts-can-avoid-a-lot-of-problems)
+      - [CSS Contract](#css-contract)
+        - [Trello Contract](#trello-contract)
+      - [GitHub Contract](#github-contract)
+      - [Pull request contract](#pull-request-contract)
+    - [Back-end](#back-end)
+      - [Setup](#setup)
 
 #### CSS Contract
 
@@ -59,8 +65,40 @@ There is one variable for each color, so you don't have to put the hex code each
 #### GitHub Contract
 
 - Fork the repo and clone it in your device
-- Everytime you do a task, create a new branch, with the task name, push it and do a Pull Request
 - Commit regularly
 - Before starting working on your code, do a pull to have the latest updates in the repo
 
 #### Pull request contract
+
+- Everytime you do a task, create a new branch with the task name, push it and do a Pull Request
+- Always add one or two team members to review your Pull Request
+- When receiveing a Pull Request for reviewing, always check the code before approving it
+
+### Back-end
+
+- This project's database has 3 tables: Users, Tasks and Tidy_group. 
+- The URLs for them are
+  ```
+    /users
+    /tasks
+    /groups
+  ```
+- The endpoints GET, ADD and DELETE were created for ```/users``` and ```/tasks```
+- The endpoint ADD was created for ``/groups``
+#### Setup
+
+- Create the Database tidy_app locally by running the file *tidyApp.sql*;
+  
+- Inside the back-end folder, create a file named secrets.json and add the following:
+    ```json
+    { 
+      "user": "name of your user",
+      "database": "tidy_app",
+      "password": "your password",
+      "host": "localhost",
+      "port": 5432
+    }
+    ```
+
+- Run ```nodemon server.js``` on you terminal.
+  
