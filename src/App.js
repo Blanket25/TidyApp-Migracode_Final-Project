@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Board from "./pages/Board";
 import AdminPanel from "./pages/AdminPanel";
 import TasksInfo from "./pages/TasksInfo";
+import NoOfRommies from "./pages/NoOfRommies";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/tasks-info" element={<TasksInfo />} />
+        <Route path="/number-of-roomies" element={<NoOfRommies />} />
         <Route path="/board" element={<Board />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
       </Routes>
