@@ -505,6 +505,32 @@ div.signup-form-container > h2 {
   }
 }
 
+/***NUMBER OF ROOMIES***/
+
+.roomies-main {
+  margin-left: 1rem;
+}
+
+.roomies-card {
+  margin: 1rem 1rem 1rem 0;
+}
+
+.roomies-container {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 440px) {
+  .roomies-card {
+    max-width: 42rem;
+  }
+
+  .roomies-card > form > input,
+  .roomies-card > form > button.orange-btn {
+    align-self: center;
+  }
+}
+
 /*** ADD TASKS ***/
 .tasks-card-container,
 .task-card {

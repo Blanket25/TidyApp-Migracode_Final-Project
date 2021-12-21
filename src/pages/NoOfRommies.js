@@ -1,25 +1,37 @@
 import "../index.css";
 import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function NoOfRommies() {
-    const handleSubmit=(e) => {
-        e.preventDefault();
-        const output=e.target.fvalue.value;
-        console.log(output);
-        }
+  const [number, setNumber] = useState(0);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //console.log(number);
+    navigate("/tasks-info", { state: { number } }); // pass the number of roomies as a parametre, not as a prop
+  };
 
   return (
-    <div>
+    <div className="roomies-main">
       <Nav />
-      <div className="group-card-container">
-        <div className="group-card">
+      <div className="roomies-container">
+        <div className="task-card roomies-card">
           <h3>How many people live in your house?</h3>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              type="number"
+              value={number}
+              onChange={(e) => {
+                setNumber(e.target.value);
+              }}
+            />
+            <button className="orange-btn">Submit</button>
+          </form>
         </div>
-        <form onSubmit = {handleSubmit}>
-            <input type="text" name="fvalue" placeholder="input value"/><br/><br/>
-            <button>Submit</button>
-        </form>
       </div>
       <Footer />
     </div>

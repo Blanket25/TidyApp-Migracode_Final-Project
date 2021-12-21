@@ -2,9 +2,7 @@ import "../index.css";
 import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-const prop = 2;
+import { useNavigate, useLocation } from "react-router-dom";
 
 function TasksInfo() {
   //const [confirmationText, setConfirmationText] = useState("");
@@ -12,15 +10,17 @@ function TasksInfo() {
   const [tasks, setTasks] = useState([]);
   const [validationError, setValidationError] = useState("");
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const { number } = state;
 
   useEffect(() => {
-    const emptyTasks = new Array(prop).fill().map(() => ({
+    const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
       taskName: "",
       description: "",
     }));
 
     setTasks(emptyTasks);
-  }, []);
+  }, [number]);
 
   const handleFrequency = (event) => {
     const value = event.target.value;
@@ -76,11 +76,11 @@ function TasksInfo() {
         </div>
         <div className="task-card u-box-shadow">
           <p>
-            Now, Since there are {prop} people living in your house, you should
-            define {prop} main tasks
+            Now, Since there are {number} people living in your house, you
+            should define {number} main tasks
           </p>
 
-          {new Array(prop).fill().map((n, index) => (
+          {tasks.map((n, index) => (
             <div key={`input-${index}`}>
               <p className="text-bold">Task {index + 1}</p>
               <input
