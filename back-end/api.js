@@ -1,5 +1,6 @@
 const secrets = require("./secrets.json");
 const { Pool } = require("pg");
+const { query } = require("express");
 const connection = new Pool(secrets);
 
 const api = () => {
@@ -117,6 +118,32 @@ const api = () => {
     }
   }
 
+  const addNewGroup = async (req, res) => {
+    const newGroup = req.body;
+
+    // checking if the email of the admin exists
+    const emailExists = await connection.query('select * from tidy_group where email=$1', [newGroup.email]);
+    if (emailExists.rows.length > 0) {
+      return res.status(400).send('The email already exists as admin!')
+    } else {
+      // if not create the group
+      let currentDate = new Date();
+      const createGroup = `insert into tidy_group (group_name, email, date_of_creation, frequency, group_secret, number_of_roomies) 
+      values ($1, $2, $3, $4, $5, $6) returning id`
+      const result = await connection.query(createGroup, 
+        [
+          newGroup.name,
+          newGroup.email,
+          currentDate,
+          newGroup.frequency,
+          newGroup.password,
+          newGroup.numbers_of_roomies
+        ])
+      // answering wuth the task id
+      await res.status(200).json({groupId : result.rows[0].id});
+    }
+  }
+
   return {
     getUsers,
     addNewUser,
@@ -124,7 +151,8 @@ const api = () => {
     getTasks,
     addNewTask,
     deleteTask,
-    updateTask
+    updateTask,
+    addNewGroup
   };
 };
 

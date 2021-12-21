@@ -17,6 +17,7 @@ app.get("/users", api.getUsers);
 //POST
 app.post("/users", api.addNewUser);
 app.post("/tasks", api.addNewTask);
+app.post("/groups", api.addNewGroup);
 
 //DELETE
 app.delete("/users/:userId", api.deleteUser);
