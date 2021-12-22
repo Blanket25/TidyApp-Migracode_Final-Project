@@ -12,6 +12,9 @@ function NoOfRommies() {
     e.preventDefault();
     //console.log(number);
     navigate("/tasks-info", { state: { number } }); // pass the number of roomies as a parametre, not as a prop
+    //should be redirect to roomies info, and that one to tasks info
+
+    //TODO post request to send number of roomies to server
   };
 
   return (
