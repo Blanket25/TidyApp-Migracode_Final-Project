@@ -25,5 +25,6 @@ app.delete("/tasks/:taskId", api.deleteTask);
 
 //PUT
 app.put("/tasks/:taskId", api.updateTask);
+app.patch("/users/:userId", api.updateUser);
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));

@@ -193,6 +193,7 @@ const api = () => {
     addNewTask,
     deleteTask,
     updateTask,
+    updateUser,
     addNewGroup
   };
 };
