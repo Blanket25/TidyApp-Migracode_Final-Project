@@ -118,6 +118,47 @@ const api = () => {
     }
   }
 
+  const replaceUserValues = (user, newUser) => {
+
+    let updatedUser = {};
+
+    for (const propertyName in user) {
+      updatedUser[propertyName] = user[propertyName];
+    }
+    for (const propertyName in newUser) {
+      updatedUser[propertyName] = newUser[propertyName];
+    }
+
+    return updatedUser;
+  }
+
+  const getUserFromDatabase = async (userId) => {
+    const result = await connection.query(`select * from users where id=$1`, [userId]);
+    const dbUser = result.rows[0];
+    return dbUser;
+  }
+
+  const updateUser = async (req, res) => {
+    const userId = req.params.userId;
+    const userBody = req.body;
+
+    const dbUser = await getUserFromDatabase(userId);
+    const user = replaceUserValues(dbUser, userBody);
+
+    await connection.query(`update users set 
+    username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
+    [
+      user.name,
+      user.email,
+      user.type_of_user,
+      user.group_id,
+      user.password,
+      userId
+    ]);
+
+    await res.status(202).send(`User ${userId} have been updated!`)
+  }
+
   const addNewGroup = async (req, res) => {
     const newGroup = req.body;
 
