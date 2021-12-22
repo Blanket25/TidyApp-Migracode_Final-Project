@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Nav from './sharedComponents/Nav';
 import Footer from '../pages/sharedComponents/Footer';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { init } from 'emailjs-com';
-init('user_qM5g1zhJlzTpO2v22X8WF');
+// import { init } from 'emailjs-com';
+// init('user_qM5g1zhJlzTpO2v22X8WF');
+import emailjs from 'emailjs-com';
 
 function RoomiesInfo() {
 	const location = useLocation();
@@ -12,6 +13,7 @@ function RoomiesInfo() {
 	const [roomies, setRoomies] = useState([]);
 	const [validationError, setValidationError] = useState('');
 	const { number } = state;
+
 	useEffect(() => {
 		const emptyRoomie = new Array(parseInt(number)).fill().map(() => ({
 			roomieName: '',
@@ -36,6 +38,27 @@ function RoomiesInfo() {
 				(isValid = isValid && roomie.roomieName !== '' && roomie.email !== '')
 		);
 		if (isValid) {
+			roomies.forEach((roomie) => {
+				emailjs
+					.send(
+						'service_kbjdvl4',
+						'template_k7fxp8r',
+						{
+							to_name: roomie.name,
+							link: 'www.streamable.com',
+							to_email: roomie.email,
+						},
+						'user_qM5g1zhJlzTpO2v22X8WF'
+					)
+					.then(
+						(response) => {
+							console.log('SUCCESS!', response.status, response.text);
+						},
+						(err) => {
+							console.log('FAILED...', err);
+						}
+					);
+			});
 			navigate('/tasks-info', { state: { roomies } }); // pass roomies as a parametre, not as a prop
 		} else {
 			setValidationError("You're missing sme information!");
