@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Nav from './sharedComponents/Nav';
 import Footer from '../pages/sharedComponents/Footer';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { init } from 'emailjs-com';
-// init('user_qM5g1zhJlzTpO2v22X8WF');
 import emailjs from 'emailjs-com';
 
 function RoomiesInfo() {
@@ -20,15 +18,14 @@ function RoomiesInfo() {
 			email: '',
 		}));
 
-		setRoomies(emptyRoomie);
-	}, [number]);
-	const handleTask = (attribute, newValue, index) => {
-		const newRoomies = [...roomies];
-		const newRoomie = { ...roomies[index] };
-		newRoomie[attribute] = newValue;
-		newRoomies[index] = newRoomie;
-		console.log('New roomies', newRoomies);
-
+    setRoomies(emptyRoomie);
+  }, [number]);
+  const handleTask = (attribute, newValue, index) => {
+    const newRoomies = [...roomies];
+    const newRoomie = { ...roomies[index] };
+    newRoomie[attribute] = newValue;
+    newRoomies[index] = newRoomie;
+    console.log("New roomies", newRoomies);
 		setRoomies(newRoomies);
 	};
 	const submitRoomies = () => {

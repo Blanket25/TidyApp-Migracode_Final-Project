@@ -9,11 +9,15 @@ function NoOfRommies() {
 	const [number, setNumber] = useState(0);
 	const navigate = useNavigate();
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		//console.log(number);
-		navigate('/set_roomies', { state: { number } }); // pass the number of roomies as a parametre, not as a prop
-	};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //console.log(number);
+    navigate("/tasks-info", { state: { number } }); // pass the number of roomies as a parametre, not as a prop
+    //should be redirect to roomies info, and that one to tasks info
+
+  };
+
 
 	return (
 		<div className='roomies-main'>

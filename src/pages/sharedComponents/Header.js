@@ -17,24 +17,31 @@ function Header() {
       </div>
       <div>
         {isLogged ? (
-          <Link
-            className="purple-btn"
-            to="/"
-            onClick={() => {
-              setIsLogged(false);
-              window.localStorage.clear();
-            }}
-          >
-            Log out{" "}
-          </Link>
+          <>
+            <Link
+              className="purple-btn"
+              to="/"
+              onClick={() => {
+                setIsLogged(false);
+                window.localStorage.clear();
+              }}
+            >
+              Log out{" "}
+            </Link>
+            <Link className="orange-btn" to="/board">
+              Go to board
+            </Link>
+          </>
         ) : (
-          <Link className="purple-btn" to="/login">
-            Log in
-          </Link>
+          <>
+            <Link className="purple-btn" to="/login">
+              Log in
+            </Link>
+            <Link className="orange-btn" to="/signup">
+              Get started
+            </Link>
+          </>
         )}
-        <Link className="orange-btn" to="/signup">
-          Get started
-        </Link>
       </div>
     </header>
   );
