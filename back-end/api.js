@@ -155,7 +155,6 @@ const api = () => {
       user.password,
       userId
     ]);
-
     await res.status(202).send(`User ${userId} have been updated!`)
   }
 

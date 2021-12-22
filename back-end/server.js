@@ -23,7 +23,7 @@ app.post("/groups", api.addNewGroup);
 app.delete("/users/:userId", api.deleteUser);
 app.delete("/tasks/:taskId", api.deleteTask);
 
-//PUT
+//PUT AND PATCH
 app.put("/tasks/:taskId", api.updateTask);
 app.patch("/users/:userId", api.updateUser);
 
