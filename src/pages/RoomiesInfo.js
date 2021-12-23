@@ -5,12 +5,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 
 function RoomiesInfo() {
-	const location = useLocation();
+	// const location = useLocation();
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const [roomies, setRoomies] = useState([]);
 	const [validationError, setValidationError] = useState('');
 	const { number } = state;
+	const groupId = 4;
 
 	useEffect(() => {
 		const emptyRoomie = new Array(parseInt(number)).fill().map(() => ({
@@ -18,14 +19,14 @@ function RoomiesInfo() {
 			email: '',
 		}));
 
-    setRoomies(emptyRoomie);
-  }, [number]);
-  const handleTask = (attribute, newValue, index) => {
-    const newRoomies = [...roomies];
-    const newRoomie = { ...roomies[index] };
-    newRoomie[attribute] = newValue;
-    newRoomies[index] = newRoomie;
-    console.log("New roomies", newRoomies);
+		setRoomies(emptyRoomie);
+	}, [number]);
+	const handleTask = (attribute, newValue, index) => {
+		const newRoomies = [...roomies];
+		const newRoomie = { ...roomies[index] };
+		newRoomie[attribute] = newValue;
+		newRoomies[index] = newRoomie;
+		console.log('New roomies', newRoomies);
 		setRoomies(newRoomies);
 	};
 	const submitRoomies = () => {
@@ -42,7 +43,7 @@ function RoomiesInfo() {
 						'template_k7fxp8r',
 						{
 							to_name: roomie.name,
-							link: 'www.streamable.com',
+							link: `http://localhost:3000/board/${groupId}`,
 							to_email: roomie.email,
 						},
 						'user_qM5g1zhJlzTpO2v22X8WF'
@@ -58,7 +59,7 @@ function RoomiesInfo() {
 			});
 			navigate('/tasks-info', { state: { roomies } }); // pass roomies as a parametre, not as a prop
 		} else {
-			setValidationError("You're missing sme information!");
+			setValidationError("You're missing some information!");
 		}
 	};
 	return (
