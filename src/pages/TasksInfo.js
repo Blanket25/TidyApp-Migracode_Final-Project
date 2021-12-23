@@ -13,6 +13,7 @@ function TasksInfo() {
 	const { state } = useLocation();
 	const { roomies } = state;
 	const number = roomies.length;
+	const groupId = 4;
 	useEffect(() => {
 		const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
 			taskName: '',
@@ -53,7 +54,7 @@ function TasksInfo() {
 				}),
 			});
 
-			navigate('/board');
+			navigate(`/board/${groupId}`);
 		} else {
 			setValidationError("You're missing a roomie!");
 		}
