@@ -13,29 +13,33 @@ function Login() {
   const [erroMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const authenticate = async () => {
-    const settings = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    };
-    const response = await fetch("http://localhost:4000/users", settings);
-    const data = await response.json();
-    console.log(data);
-    window.localStorage.setItem("group id", data);
-  };
-
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     if (email.length > 0 && password.length >= 6) {
-      authenticate();
       setIsLogged(isAuthenticated);
       logIn("klsdjasdASFAWETGWEGF");
-      navigate("/board");
+
+      const settings = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      };
+
+      const response = await fetch("http://localhost:4000/login", settings);
+      // console.log(response);
+      const data = await response.json();
+      // console.log(data);
+
+      const groupId = data.group_id;
+      window.localStorage.setItem("group id", data);
+      if (groupId.length > 0) {
+        setIsLogged(true);
+        navigate(`/board/${groupId}`);
+      }
     } else if (!email && password) {
       setErrorMessage("Please enter your email");
     } else if (email && !password) {

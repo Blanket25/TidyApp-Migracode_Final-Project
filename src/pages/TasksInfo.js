@@ -5,62 +5,59 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function TasksInfo() {
-	const [frequency, setFrequency] = useState('weekly');
-	const [tasks, setTasks] = useState([]);
-	const [validationError, setValidationError] = useState('');
-	const navigate = useNavigate();
-	const { state } = useLocation();
-	const { roomies } = state;
-	const number = roomies.length;
-	const groupId = 1;
-	const userId = 1;
-	
+  const [frequency, setFrequency] = useState("weekly");
+  const [tasks, setTasks] = useState([]);
+  const [validationError, setValidationError] = useState("");
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { roomies } = state;
+  const number = roomies.length;
+  const groupId = 1;
+  const userId = 1;
+
   useEffect(() => {
-    const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
+    const emptyTasks = new Array(number).fill().map(() => ({
       taskName: "",
       description: "",
     }));
 
-	const handleFrequency = (event) => {
-		const value = event.target.value;
-		setFrequency(value);
-	};
+    setTasks(emptyTasks);
+  }, [number]);
 
-	const handleTask = (attribute, newValue, index) => {
-		const newTasks = [...tasks];
-		const newTask = { ...tasks[index] };
-		newTask[attribute] = newValue;
-		newTasks[index] = newTask;
-		
-		setTasks(newTasks);
-	};
+  const handleFrequency = (event) => {
+    const value = event.target.value;
+    setFrequency(value);
+  };
 
-	const handleClick = async () => {
-		const isValid = tasks.every(task => task.taskName !== '');
+  const handleTask = (attribute, newValue, index) => {
+    const newTasks = [...tasks];
+    const newTask = { ...tasks[index] };
+    newTask[attribute] = newValue;
+    newTasks[index] = newTask;
 
-		if (isValid) {
-			await fetch('http://localhost:4000/tasks', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(
-					tasks.map(task => ({
-						name: task.taskName,
-						task_completed: false,
-						description: task.description,
-						starting_date: new Date(),
-						group_id: groupId,
-						user_id: userId
-					}))
-				),
-			});
+    setTasks(newTasks);
+  };
 
-			navigate(`/board/${groupId}`);
-		} else {
-			setValidationError("You're missing a roomie!");
-		}
-	};
+  const handleClick = async () => {
+    const isValid = tasks.every((task) => task.taskName !== "");
 
-      navigate("/board");
+    if (isValid) {
+      await fetch("http://localhost:4000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+          tasks.map((task) => ({
+            name: task.taskName,
+            task_completed: false,
+            description: task.description,
+            starting_date: new Date(),
+            group_id: groupId,
+            user_id: userId,
+          }))
+        ),
+      });
+
+      navigate(`/board/${groupId}`);
     } else {
       setValidationError("You're missing a roomie!");
     }
@@ -70,7 +67,6 @@ function TasksInfo() {
     <div>
       <Nav />
       <div className="tasks-card-container">
-        {/* <p>{confirmationText}</p> */}
         <div className="task-card u-box-shadow">
           <p className="u-margin-bottom-small">
             How often do you want the tasks to rotate between roomies?
