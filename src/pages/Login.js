@@ -13,10 +13,26 @@ function Login() {
   const [erroMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const authenticate = async () => {
+    const settings = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    };
+    const response = await fetch("http://localhost:4000/users", settings);
+    const data = await response.json();
+    console.log(data);
+    window.localStorage.setItem("group id", data);
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
     if (email.length > 0 && password.length >= 6) {
+      authenticate();
       setIsLogged(isAuthenticated);
       logIn("klsdjasdASFAWETGWEGF");
       navigate("/board");
@@ -48,9 +64,6 @@ function Login() {
             type="password"
             placeholder="password"
           />
-          {/* <Link className="orange-btn" to="/board">
-            Go to board
-          </Link> */}
           <p>{erroMessage}</p>
           <button type="submit" className="orange-btn" disabled={isLogged}>
             Log in

@@ -6,12 +6,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 //init('user_qM5g1zhJlzTpO2v22X8WF');
 
 function RoomiesInfo() {
-  const location = useLocation();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [roomies, setRoomies] = useState([]);
   const [validationError, setValidationError] = useState("");
   const { number } = state;
+
   useEffect(() => {
     const emptyRoomie = new Array(parseInt(number)).fill().map(() => ({
       roomieName: "",
@@ -20,6 +20,7 @@ function RoomiesInfo() {
 
     setRoomies(emptyRoomie);
   }, [number]);
+
   const handleTask = (attribute, newValue, index) => {
     const newRoomies = [...roomies];
     const newRoomie = { ...roomies[index] };
@@ -29,18 +30,22 @@ function RoomiesInfo() {
 
     setRoomies(newRoomies);
   };
+
   const submitRoomies = () => {
     let isValid = true;
+
     roomies.map(
       (roomie) =>
         (isValid = isValid && roomie.roomieName !== "" && roomie.email !== "")
     );
+
     if (isValid) {
-      navigate("/tasks-info", { state: { roomies } }); // pass roomies as a parametre, not as a prop
+      navigate("/tasks-info", { state: { roomies } });
     } else {
       setValidationError("You're missing some information!");
     }
   };
+
   return (
     <div>
       <Nav />

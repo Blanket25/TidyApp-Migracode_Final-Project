@@ -9,10 +9,11 @@ import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
+import { logOut } from "./auth";
 
 function App() {
   useEffect(() => {
-    window.localStorage.clear();
+    logOut();
   }, []);
 
   return (

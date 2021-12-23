@@ -5,6 +5,13 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+app.use(cors(corsOptions));
+
 const apiFunction = require("./api.js");
 const api = apiFunction();
 
@@ -12,12 +19,13 @@ app.use(bodyParser.json());
 
 //GET
 app.get("/tasks", api.getTasks);
-app.get("/users", api.getUsers);
+app.get("/users/:groupId", api.getUsers);
 
 //POST
 app.post("/users", api.addNewUser);
 app.post("/tasks", api.addNewTask);
 app.post("/groups", api.addNewGroup);
+app.post("/login", api.login);
 
 //DELETE
 app.delete("/users/:userId", api.deleteUser);
