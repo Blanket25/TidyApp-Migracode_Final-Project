@@ -6,6 +6,7 @@ const express = require("express");
 
 const app = express();
 
+
 const corsOptions = {
    origin: "http://localhost:3000"
 };
@@ -19,12 +20,13 @@ app.use(bodyParser.json());
 
 //GET
 app.get("/tasks", api.getTasks);
-app.get("/users", api.getUsers);
+app.get("/users/:groupId", api.getUsers);
 
 //POST
 app.post("/users", api.addNewUser);
 app.post("/tasks", api.addNewTasks);
 app.post("/groups", api.addNewGroup);
+app.post("/login", api.login);
 
 //DELETE
 app.delete("/users/:userId", api.deleteUser);

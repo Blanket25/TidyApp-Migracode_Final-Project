@@ -1,8 +1,8 @@
-import '../index.css';
-import Nav from './sharedComponents/Nav';
-import Footer from '../pages/sharedComponents/Footer';
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import "../index.css";
+import Nav from "./sharedComponents/Nav";
+import Footer from "../pages/sharedComponents/Footer";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function TasksInfo() {
 	const [frequency, setFrequency] = useState('weekly');
@@ -14,14 +14,12 @@ function TasksInfo() {
 	const number = roomies.length;
 	const groupId = 1;
 	const userId = 1;
-	useEffect(() => {
-		const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
-			taskName: '',
-			description: '',
-		}));
-
-		setTasks(emptyTasks);
-	}, [number]);
+	
+  useEffect(() => {
+    const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
+      taskName: "",
+      description: "",
+    }));
 
 	const handleFrequency = (event) => {
 		const value = event.target.value;
@@ -62,59 +60,65 @@ function TasksInfo() {
 		}
 	};
 
-	return (
-		<div>
-			<Nav />
-			<div className='tasks-card-container'>
-				{/* <p>{confirmationText}</p> */}
-				<div className='task-card u-box-shadow'>
-					<p className='u-margin-bottom-small'>
-						How often do you want the tasks to rotate between roomies?
-					</p>
-					<select name='frequency' value={frequency} onChange={handleFrequency}>
-						<option value='weekly'>Weekly</option>
-						<option value='biweekly'>Biweekly</option>
-						<option value='monthly'>Monthly</option>
-					</select>
-				</div>
-				<div className='task-card u-box-shadow'>
-					<p>
-						Now, Since there are {number} people living in your house, you
-						should define {number} main tasks
-					</p>
+      navigate("/board");
+    } else {
+      setValidationError("You're missing a roomie!");
+    }
+  };
 
-					{tasks.map((n, index) => (
-						<div key={`input-${index}`}>
-							<p className='text-bold'>Task {index + 1}</p>
-							<input
-								name={`name-${index}`}
-								type='text'
-								placeholder="task's name"
-								onChange={(event) =>
-									handleTask('taskName', event.target.value, index)
-								}
-								value={tasks[index].taskName}
-							/>
-							<textarea
-								name={`description-${index}`}
-								placeholder="task's description"
-								onChange={(event) =>
-									handleTask('description', event.target.value, index)
-								}
-								value={tasks[index].description}
-							/>
-						</div>
-					))}
-					<p>{validationError}</p>
-					<button onClick={handleClick} className='orange-btn'>
-						Finish
-					</button>
-				</div>
-			</div>
+  return (
+    <div>
+      <Nav />
+      <div className="tasks-card-container">
+        {/* <p>{confirmationText}</p> */}
+        <div className="task-card u-box-shadow">
+          <p className="u-margin-bottom-small">
+            How often do you want the tasks to rotate between roomies?
+          </p>
+          <select name="frequency" value={frequency} onChange={handleFrequency}>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Biweekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        <div className="task-card u-box-shadow">
+          <p>
+            Now, Since there are {number} people living in your house, you
+            should define {number} main tasks
+          </p>
 
-			<Footer />
-		</div>
-	);
+          {tasks.map((n, index) => (
+            <div key={`input-${index}`}>
+              <p className="text-bold">Task {index + 1}</p>
+              <input
+                name={`name-${index}`}
+                type="text"
+                placeholder="task's name"
+                onChange={(event) =>
+                  handleTask("taskName", event.target.value, index)
+                }
+                value={tasks[index].taskName}
+              />
+              <textarea
+                name={`description-${index}`}
+                placeholder="task's description"
+                onChange={(event) =>
+                  handleTask("description", event.target.value, index)
+                }
+                value={tasks[index].description}
+              />
+            </div>
+          ))}
+          <p>{validationError}</p>
+          <button onClick={handleClick} className="orange-btn">
+            Finish
+          </button>
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
 }
 
 export default TasksInfo;

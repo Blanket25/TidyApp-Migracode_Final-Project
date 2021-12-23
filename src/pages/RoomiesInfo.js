@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 
 function RoomiesInfo() {
-	// const location = useLocation();
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const [roomies, setRoomies] = useState([]);
