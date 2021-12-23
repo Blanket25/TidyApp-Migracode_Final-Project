@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Team_building_Outline from "../img/Team_building_Outline.svg";
 
 function NoOfRommies() {
+
   const [number, setNumber] = useState(0);
   const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ function NoOfRommies() {
       <Footer />
     </div>
   );
+
 }
 
 export default NoOfRommies;

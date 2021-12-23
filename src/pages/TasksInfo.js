@@ -5,54 +5,60 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function TasksInfo() {
-  //const [confirmationText, setConfirmationText] = useState("");
-  const [frequency, setFrequency] = useState("weekly");
-  const [tasks, setTasks] = useState([]);
-  const [validationError, setValidationError] = useState("");
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { roomies } = state;
-  const number = roomies.length;
-
+	const [frequency, setFrequency] = useState('weekly');
+	const [tasks, setTasks] = useState([]);
+	const [validationError, setValidationError] = useState('');
+	const navigate = useNavigate();
+	const { state } = useLocation();
+	const { roomies } = state;
+	const number = roomies.length;
+	const groupId = 1;
+	const userId = 1;
+	
   useEffect(() => {
     const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
       taskName: "",
       description: "",
     }));
 
-    setTasks(emptyTasks);
-  }, [number]);
+	const handleFrequency = (event) => {
+		const value = event.target.value;
+		setFrequency(value);
+	};
 
-  const handleFrequency = (event) => {
-    const value = event.target.value;
-    console.log(value);
-    setFrequency(value);
-  };
+	const handleTask = (attribute, newValue, index) => {
+		const newTasks = [...tasks];
+		const newTask = { ...tasks[index] };
+		newTask[attribute] = newValue;
+		newTasks[index] = newTask;
+		
+		setTasks(newTasks);
+	};
 
-  const handleTask = (attribute, newValue, index) => {
-    const newTasks = [...tasks];
-    const newTask = { ...tasks[index] };
-    newTask[attribute] = newValue;
-    newTasks[index] = newTask;
-    console.log("New tasks", newTasks);
+	const handleClick = async () => {
+		const isValid = tasks.every(task => task.taskName !== '');
 
-    setTasks(newTasks);
-  };
+		if (isValid) {
+			await fetch('http://localhost:4000/tasks', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(
+					tasks.map(task => ({
+						name: task.taskName,
+						task_completed: false,
+						description: task.description,
+						starting_date: new Date(),
+						group_id: groupId,
+						user_id: userId
+					}))
+				),
+			});
 
-  const handleClick = async () => {
-    let isValid = true;
-
-    tasks.map((task) => (isValid = isValid && task.taskName !== ""));
-
-    if (isValid) {
-      await fetch("http://localhost:4000/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tasks,
-          frequency,
-        }),
-      });
+			navigate(`/board/${groupId}`);
+		} else {
+			setValidationError("You're missing a roomie!");
+		}
+	};
 
       navigate("/board");
     } else {

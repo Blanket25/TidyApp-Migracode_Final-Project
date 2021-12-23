@@ -16,20 +16,21 @@ function App() {
     logOut();
   }, []);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/tasks-info" element={<TasksInfo />} />
-        <Route path="/number-of-roomies" element={<NoOfRommies />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="/adminpanel" element={<AdminPanel />} />
-        <Route path="/set_roomies" element={<RoomiesInfo />} />
-      </Routes>
-    </BrowserRouter>
-  );
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<Homepage />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/signup' element={<Signup />} />
+				<Route path='/tasks-info' element={<TasksInfo />} />
+				<Route path='/number-of-roomies' element={<NoOfRommies />} />
+				<Route path='/board/:groupId' element={<Board />} />
+				<Route path='/adminpanel' element={<AdminPanel />} />
+				<Route path='/set_roomies' element={<RoomiesInfo />} />
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App;

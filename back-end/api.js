@@ -71,33 +71,37 @@ const api = () => {
             t.starting_date,
             t.task_completed
         from tasks t 
-        inner join users u on u.task_id=t.id
+        inner join users u on u.id=t.user_id
         inner join tidy_group g on g.id=u.group_id`;
 
     const taskList = await connection.query(query);
     return await res.status(200).json(taskList.rows);
   };
 
-  const addNewTask = async (req, res) => {
-    // require all the elements into the body
-    const newTask = req.body;
+  const addNewTasks = async (req,res) =>{
+    const tasks = req.body;
 
-    // checking if teh task already exists
-    const itExists = await connection.query(
-      "select * from tasks where name=$1",
-      [newTask.name]
-    );
+   const insertedTasks = await tasks.map(async (task) => {
+      await addNewTask(task)
+    });
+    
+    if(insertedTasks.every(success => success))
+      return res.status(200).json({});
+    else
+      return res.status(400).send('Some tasks already exist, try updating the task instead of creating a new one!')
+  }
+
+  const addNewTask = async (newTask) => {
+        // checking if the task already exists
+    const itExists = await connection.query('select * from tasks where name=$1', [newTask.name])
     if (itExists.rows.length > 0) {
-      return res
-        .status(400)
-        .send(
-          "The task already exists, try updating the task instead of creating a new one!"
-        );
-    } else {
+      return false;
+    } else { 
       // if not create the task
       const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
-      values ($1, $2, $3, $4, $5, $6) returning id`;
-      const newTaskRow = await connection.query(createTask, [
+      values ($1, $2, $3, $4, $5, $6) returning id`
+      await connection.query(createTask,
+      [
         newTask.name,
         newTask.task_completed,
         newTask.description,
@@ -106,7 +110,9 @@ const api = () => {
         newTask.user_id,
       ]);
       // answering wuth the task id
-      await res.status(200).json({ taskId: newTaskRow.rows[0].id });
+
+      return true;
+
     }
   };
 
@@ -139,6 +145,46 @@ const api = () => {
       return res.status(500).send("Error");
     }
   };
+
+  const replaceUserValues = (user, newUser) => {
+
+    let updatedUser = {};
+
+    for (const propertyName in user) {
+      updatedUser[propertyName] = user[propertyName];
+    }
+    for (const propertyName in newUser) {
+      updatedUser[propertyName] = newUser[propertyName];
+    }
+
+    return updatedUser;
+  }
+
+  const getUserFromDatabase = async (userId) => {
+    const result = await connection.query(`select * from users where id=$1`, [userId]);
+    const dbUser = result.rows[0];
+    return dbUser;
+  }
+
+  const updateUser = async (req, res) => {
+    const userId = req.params.userId;
+    const userBody = req.body;
+
+    const dbUser = await getUserFromDatabase(userId);
+    const user = replaceUserValues(dbUser, userBody);
+
+    await connection.query(`update users set 
+    username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
+    [
+      user.name,
+      user.email,
+      user.type_of_user,
+      user.group_id,
+      user.password,
+      userId
+    ]);
+    await res.status(202).send(`User ${userId} have been updated!`)
+  }
 
   const addNewGroup = async (req, res) => {
     const newGroup = req.body;
@@ -174,10 +220,12 @@ const api = () => {
     addNewUser,
     deleteUser,
     getTasks,
-    addNewTask,
+    addNewTasks,
     deleteTask,
     updateTask,
-    addNewGroup,
+    updateUser,
+    addNewGroup
+
   };
 };
 
