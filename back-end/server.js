@@ -1,9 +1,16 @@
 const PORT = 4000;
 
+const cors = require("cors");
 const bodyParser = require("body-parser");
-
 const express = require("express");
+
 const app = express();
+
+const corsOptions = {
+   origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions)); 
 
 const apiFunction = require("./api.js");
 const api = apiFunction();
@@ -16,7 +23,7 @@ app.get("/users", api.getUsers);
 
 //POST
 app.post("/users", api.addNewUser);
-app.post("/tasks", api.addNewTask);
+app.post("/tasks", api.addNewTasks);
 app.post("/groups", api.addNewGroup);
 
 //DELETE
