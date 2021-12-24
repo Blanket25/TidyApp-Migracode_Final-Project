@@ -11,12 +11,17 @@ function RoomiesInfo() {
 	const [roomies, setRoomies] = useState([]);
 	const [validationError, setValidationError] = useState('');
 	const { number } = state;
-	const groupId = 4;
+	// make get request to receive grop id
+	const groupId = 2;
+	const groupSecret = 'thisIsSecret';
 
 	useEffect(() => {
 		const emptyRoomie = new Array(parseInt(number)).fill().map(() => ({
-			roomieName: '',
+			username: '',
 			email: '',
+			type_of_user: `roomie`,
+			group_id: groupId,
+			password: groupSecret,
 		}));
 
 		setRoomies(emptyRoomie);
@@ -29,11 +34,11 @@ function RoomiesInfo() {
 		console.log('New roomies', newRoomies);
 		setRoomies(newRoomies);
 	};
-	const submitRoomies = () => {
+	const submitRoomies = async () => {
 		let isValid = true;
 		roomies.map(
 			(roomie) =>
-				(isValid = isValid && roomie.roomieName !== '' && roomie.email !== '')
+				(isValid = isValid && roomie.username !== '' && roomie.email !== '')
 		);
 		if (isValid) {
 			roomies.forEach((roomie) => {
@@ -42,7 +47,7 @@ function RoomiesInfo() {
 						'service_kbjdvl4',
 						'template_k7fxp8r',
 						{
-							to_name: roomie.name,
+							to_name: roomie.username,
 							link: `http://localhost:3000/board/${groupId}`,
 							to_email: roomie.email,
 						},
@@ -57,6 +62,15 @@ function RoomiesInfo() {
 						}
 					);
 			});
+			await fetch('http://localhost:4000/users', {
+				method: 'POST',
+				mode: 'no-cors',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					roomies,
+				}),
+			});
+
 			navigate('/tasks-info', { state: { roomies } }); // pass roomies as a parametre, not as a prop
 		} else {
 			setValidationError("You're missing some information!");
@@ -79,9 +93,9 @@ function RoomiesInfo() {
 									name={`name-${index}`}
 									type='text'
 									onChange={(event) =>
-										handleTask('roomieName', event.target.value, index)
+										handleTask('username', event.target.value, index)
 									}
-									value={roomies[index].roomieName}
+									value={roomies[index].username}
 								/>
 							</div>
 							<div className='input-group'>

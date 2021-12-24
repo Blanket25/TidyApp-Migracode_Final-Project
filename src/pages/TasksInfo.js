@@ -13,11 +13,15 @@ function TasksInfo() {
 	const { state } = useLocation();
 	const { roomies } = state;
 	const number = roomies.length;
-	const groupId = 4;
+	const groupId = 5;
 	useEffect(() => {
 		const emptyTasks = new Array(parseInt(number)).fill().map(() => ({
-			taskName: '',
+			name: '',
 			description: '',
+			task_completed: false,
+			starting_date: new Date(),
+			group_id: groupId,
+			user_id: 1,
 		}));
 
 		setTasks(emptyTasks);
@@ -42,11 +46,12 @@ function TasksInfo() {
 	const handleClick = async () => {
 		let isValid = true;
 
-		tasks.map((task) => (isValid = isValid && task.taskName !== ''));
+		tasks.map((task) => (isValid = isValid && task.name !== ''));
 
 		if (isValid) {
 			await fetch('http://localhost:4000/tasks', {
 				method: 'POST',
+				mode: 'no-cors',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					tasks,
@@ -89,9 +94,9 @@ function TasksInfo() {
 								type='text'
 								placeholder="task's name"
 								onChange={(event) =>
-									handleTask('taskName', event.target.value, index)
+									handleTask('name', event.target.value, index)
 								}
-								value={tasks[index].taskName}
+								value={tasks[index].name}
 							/>
 							<textarea
 								name={`description-${index}`}

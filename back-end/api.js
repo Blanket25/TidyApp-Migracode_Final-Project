@@ -1,54 +1,70 @@
-const secrets = require("./secrets.json");
-const { Pool } = require("pg");
-const { query } = require("express");
+const secrets = require('./secrets.json');
+const { Pool } = require('pg');
+const { query } = require('express');
 const connection = new Pool(secrets);
 
 const api = () => {
-  const getUsers = async (req, res) => {
-    try {
-      const query = "select * from users";
-      const result = await connection.query(query);
-      return res.status(200).send(result.rows);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+	const getUsers = async (req, res) => {
+		try {
+			const query = 'select * from users';
+			const result = await connection.query(query);
+			return res.status(200).send(result.rows);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  const addNewUser = async (req, res) => {
-    const newUserName = req.body.username;
-    const newUserEmail = req.body.email;
-    const newUserType = req.body.type_of_user;
-    const newUserGroupId = req.body.group_id;
-    const newUserPassword = req.body.password;
+	const addNewUsers = async (req, res) => {
+		console.log('addNewUser');
+		console.log(req.body);
+		try {
+			for (let user in req.body.roomies) {
+				let newUser = req.body.roomies[user];
+				const newUserName = newUser.username;
 
-    const userQuery = "SELECT * FROM users WHERE username=$1";
-    const result = await connection.query(userQuery, [newUserName]);
-    if (result.rows.length > 0) {
-      return res.status(400).send("A user with the same name already exists!");
-    } else {
-      const query =
-        "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5)";
-      const result = await connection.query(query, [
-        newUserName,
-        newUserEmail,
-        newUserType,
-        newUserGroupId,
-        newUserPassword
-      ]);
-      return res.status(201).send("User created!").json(result.rows);
-    }
-  };
+				// const newUserEmail = newUser.email;
+				// const newUserType = newUser.type_of_user;
+				// const newUserGroupId = newUser.group_id;
+				// const newUserPassword = newUser.password;
 
-  const deleteUser = async (req, res) => {
-      const userId = req.params.userId;
-      const queryUser = "delete from users where id=$1"
-        const result = await connection.query(queryUser, [userId]);
-        return res.status(200).send("user deleted").json(result.rows);
-  }
+				const userQuery = 'SELECT * FROM users WHERE username=$1';
+				const result = await connection.query(userQuery, [newUserName]);
+				if (result.rows.length > 0) {
+					return res
+						.status(400)
+						.send('A user with the same name already exists!');
+				} else {
+					const query =
+						'INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5)';
+					const val = [
+						newUser.username,
+						newUser.email,
+						newUser.type_of_user,
+						newUser.group_id,
+						newUser.password,
+					];
+					console.log(val);
+					await connection.query(query, val);
+				}
+			}
+			await res.status(200);
+		} catch (error) {
+			// return res.status(201).send('User created!').json(result.rows);
 
-  
-  const getTasks = async (req, res) => {
-    const query = `
+			console.log(error);
+			return res.status(400).send('Error ' + error);
+		}
+	};
+
+	const deleteUser = async (req, res) => {
+		const userId = req.params.userId;
+		const queryUser = 'delete from users where id=$1';
+		const result = await connection.query(queryUser, [userId]);
+		return res.status(200).send('user deleted').json(result.rows);
+	};
+
+	const getTasks = async (req, res) => {
+		const query = `
         select
             t.id,
             u.username,
@@ -60,100 +76,123 @@ const api = () => {
         from tasks t 
         inner join users u on u.task_id=t.id
         inner join tidy_group g on g.id=u.group_id`;
-       
-    const taskList = await connection.query(query);
-    return await res.status(200).json(taskList.rows);
-  };
 
-  const addNewTask = async (req, res) => {
-    // require all the elements into the body
-    const newTask = req.body;
+		const taskList = await connection.query(query);
+		return await res.status(200).json(taskList.rows);
+	};
 
-    // checking if teh task already exists
-    const itExists = await connection.query('select * from tasks where name=$1', [newTask.name])
-    if (itExists.rows.length > 0) {
-      return res.status(400).send('The task already exists, try updating the task instead of creating a new one!')
-    } else { 
-      // if not create the task
-      const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
-      values ($1, $2, $3, $4, $5, $6) returning id`
-      const newTaskRow = await connection.query(createTask,
-      [
-        newTask.name,
-        newTask.task_completed,
-        newTask.description,
-        newTask.starting_date,
-        newTask.group_id,
-        newTask.user_id
-      ])
-      // answering wuth the task id
-      await res.status(200).json({taskId : newTaskRow.rows[0].id});
-    }
-  }
+	const addNewTasks = async (req, res) => {
+		// require all the elements into the body
 
-  const deleteTask = async (req, res) => {
-    const taskId = req.params.taskId;
-    const query = `delete from tasks where id=$1`;
-    const result = await connection.query(query, [taskId])
-    return await res.status(200).json({message: 'The Task have been deleted!'})
-  }
+		console.log('addNewTask');
+		console.log(req.body);
+		try {
+			for (let taskN in req.body.tasks) {
+				let newTask = req.body.tasks[taskN];
+				// checking if teh task already exists
+				const itExists = await connection.query(
+					'select * from tasks where name=$1',
+					[newTask.name]
+				);
+				if (itExists.rows.length > 0) {
+					return res
+						.status(400)
+						.send(
+							'The task already exists, try updating the task instead of creating a new one!'
+						);
+				} else {
+					// if not create the task
+					const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
+          values ($1, $2, $3, $4, $5, $6) returning id`;
+					const val = [
+						newTask.name,
+						newTask.task_completed,
+						newTask.description,
+						newTask.starting_date,
+						newTask.group_id,
+						newTask.user_id,
+					];
 
-  const updateTask = async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const task = req.body;
-      const query = "UPDATE tasks SET name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7;";
-      const result = await connection.query(query, [
-        task.name, 
-        task.task_completed, 
-        task.description, 
-        task.starting_date,
-        task.group_id,
-        task.user_id,
-        taskId]);  
-      return res.status(200).send("Task updated").json(result.rows);
-    }
-    catch (e){
-        return res.status(500).send("Error");
-    }
-  }
+					console.log(val);
+					await connection.query(createTask, val);
+				}
+			}
 
-  const addNewGroup = async (req, res) => {
-    const newGroup = req.body;
+			await res.status(200);
+		} catch (error) {
+			console.log(error);
+			return res.status(400).send('Error ' + error);
+		}
+	};
 
-    // checking if the email of the admin exists
-    const emailExists = await connection.query('select * from tidy_group where email=$1', [newGroup.email]);
-    if (emailExists.rows.length > 0) {
-      return res.status(400).send('The email already exists as admin!')
-    } else {
-      // if not create the group
-      let currentDate = new Date();
-      const createGroup = `insert into tidy_group (group_name, email, date_of_creation, frequency, group_secret, number_of_roomies) 
-      values ($1, $2, $3, $4, $5, $6) returning id`
-      const result = await connection.query(createGroup, 
-        [
-          newGroup.name,
-          newGroup.email,
-          currentDate,
-          newGroup.frequency,
-          newGroup.password,
-          newGroup.numbers_of_roomies
-        ])
-      // answering wuth the task id
-      await res.status(200).json({groupId : result.rows[0].id});
-    }
-  }
+	const deleteTask = async (req, res) => {
+		const taskId = req.params.taskId;
+		const query = `delete from tasks where id=$1`;
+		const result = await connection.query(query, [taskId]);
+		return await res
+			.status(200)
+			.json({ message: 'The Task have been deleted!' });
+	};
 
-  return {
-    getUsers,
-    addNewUser,
-    deleteUser,
-    getTasks,
-    addNewTask,
-    deleteTask,
-    updateTask,
-    addNewGroup
-  };
+	const updateTask = async (req, res) => {
+		try {
+			const taskId = req.params.taskId;
+			const task = req.body;
+			const query =
+				'UPDATE tasks SET name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7;';
+			const result = await connection.query(query, [
+				task.name,
+				task.task_completed,
+				task.description,
+				task.starting_date,
+				task.group_id,
+				task.user_id,
+				taskId,
+			]);
+			return res.status(200).send('Task updated').json(result.rows);
+		} catch (e) {
+			return res.status(500).send('Error');
+		}
+	};
+
+	const addNewGroup = async (req, res) => {
+		const newGroup = req.body;
+
+		// checking if the email of the admin exists
+		const emailExists = await connection.query(
+			'select * from tidy_group where email=$1',
+			[newGroup.email]
+		);
+		if (emailExists.rows.length > 0) {
+			return res.status(400).send('The email already exists as admin!');
+		} else {
+			// if not create the group
+			let currentDate = new Date();
+			const createGroup = `insert into tidy_group (group_name, email, date_of_creation, frequency, group_secret, number_of_roomies) 
+      values ($1, $2, $3, $4, $5, $6) returning id`;
+			const result = await connection.query(createGroup, [
+				newGroup.name,
+				newGroup.email,
+				currentDate,
+				newGroup.frequency,
+				newGroup.password,
+				newGroup.numbers_of_roomies,
+			]);
+			// answering wuth the task id
+			await res.status(200).json({ groupId: result.rows[0].id });
+		}
+	};
+
+	return {
+		getUsers,
+		addNewUsers,
+		deleteUser,
+		getTasks,
+		addNewTasks,
+		deleteTask,
+		updateTask,
+		addNewGroup,
+	};
 };
 
 module.exports = api;

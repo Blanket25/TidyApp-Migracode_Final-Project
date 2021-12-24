@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS tidy_App;
+DROP DATABASE IF EXISTS tidy_app;
 
-CREATE DATABASE tidy_App;
+CREATE DATABASE tidy_app;
 
 CREATE TYPE frequency AS ENUM ('weekly', 'biweekly', 'monthly');
 
@@ -33,5 +33,4 @@ create table tasks (
 	group_id int references tidy_group(id),
 	user_id int references users(id)
 );
-
 
