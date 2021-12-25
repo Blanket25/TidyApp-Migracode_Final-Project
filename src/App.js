@@ -7,6 +7,7 @@ import AdminPanel from "./pages/AdminPanel";
 import TasksInfo from "./pages/TasksInfo";
 import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
+import ResetPassword from "./pages/ResetPassword";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { logOut } from "./auth";
@@ -28,6 +29,7 @@ function App() {
 				<Route path='/board/:groupId' element={<Board />} />
 				<Route path='/adminpanel' element={<AdminPanel />} />
 				<Route path='/set_roomies' element={<RoomiesInfo />} />
+				<Route path='/ResetPassword' element={<ResetPassword />} />
 			</Routes>
 		</BrowserRouter>
 	);
