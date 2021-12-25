@@ -6,12 +6,11 @@ const express = require("express");
 
 const app = express();
 
-
 const corsOptions = {
-   origin: "http://localhost:3000"
+	origin: "http://localhost:3000",
 };
 
-app.use(cors(corsOptions)); 
+app.use(cors(corsOptions));
 
 const apiFunction = require("./api.js");
 const api = apiFunction();
@@ -23,7 +22,7 @@ app.get("/tasks", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
 
 //POST
-app.post("/users", api.addNewUser);
+app.post("/users", api.addNewUsers);
 app.post("/tasks", api.addNewTasks);
 app.post("/groups", api.addNewGroup);
 app.post("/login", api.login);
