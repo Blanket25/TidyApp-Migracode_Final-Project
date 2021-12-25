@@ -32,15 +32,9 @@ const api = () => {
 		console.log("addNewUser");
 		console.log(req.body);
 		try {
-			for (let user in req.body.roomies) {
-				let newUser = req.body.roomies[user];
+			for (let user in req.body.allgroupMembers) {
+				let newUser = req.body.allgroupMembers[user];
 				const newUserName = newUser.username;
-
-				// const newUserEmail = newUser.email;
-				// const newUserType = newUser.type_of_user;
-				// const newUserGroupId = newUser.group_id;
-				// const newUserPassword = newUser.password;
-
 				const userQuery = "SELECT * FROM users WHERE username=$1";
 				const result = await connection.query(userQuery, [newUserName]);
 				if (result.rows.length > 0) {
@@ -214,6 +208,7 @@ const api = () => {
 	const addNewGroup = async (req, res) => {
 		const newGroup = req.body;
 
+		console.log("This is new group:" + newGroup.name);
 		// checking if the email of the admin exists
 		const emailExists = await connection.query(
 			"select * from tidy_group where email=$1",
@@ -234,7 +229,7 @@ const api = () => {
 				newGroup.password,
 				newGroup.numbers_of_roomies,
 			]);
-			// answering wuth the task id
+			// answering with the task id
 			await res.status(200).json({ groupId: result.rows[0].id });
 		}
 	};

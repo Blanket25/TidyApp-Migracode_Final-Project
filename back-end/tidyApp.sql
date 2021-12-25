@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS tidy_App;
+DROP DATABASE IF EXISTS tidy_app;
 
-CREATE DATABASE tidy_App;
+CREATE DATABASE tidy_app;
 
 CREATE TYPE frequency AS ENUM ('weekly', 'biweekly', 'monthly');
 
@@ -10,7 +10,8 @@ create table tidy_group (
 	date_of_creation date not null,
 	frequency frequency not null,
 	group_secret varchar(60) not null,
-	number_of_roomies int not null
+	number_of_roomies int not null,
+	email varchar(120) not null 
 );
 
 CREATE TYPE type AS ENUM ('roomie', 'admin');
