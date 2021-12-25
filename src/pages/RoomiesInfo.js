@@ -9,18 +9,14 @@ function RoomiesInfo() {
 	const { state } = useLocation();
 	const [roomies, setRoomies] = useState([]);
 	const [validationError, setValidationError] = useState("");
-	const { number } = state;
+	const { number, newGroupData } = state;
 	// need to receive group id and secret
-	const groupId = 4;
-	const groupSecret = "thisIsSecret";
 
 	useEffect(() => {
-		const emptyRoomie = new Array(parseInt(number)).fill().map(() => ({
+		const emptyRoomie = new Array(parseInt(number - 1)).fill().map(() => ({
 			username: "",
 			email: "",
 			type_of_user: `roomie`,
-			group_id: groupId,
-			password: groupSecret,
 		}));
 
 		setRoomies(emptyRoomie);
@@ -30,7 +26,7 @@ function RoomiesInfo() {
 		const newRoomie = { ...roomies[index] };
 		newRoomie[attribute] = newValue;
 		newRoomies[index] = newRoomie;
-		console.log("New roomies", newRoomies);
+		// console.log("New roomies", newRoomies);
 		setRoomies(newRoomies);
 	};
 	const submitRoomies = async () => {
@@ -40,36 +36,38 @@ function RoomiesInfo() {
 				(isValid = isValid && roomie.username !== "" && roomie.email !== "")
 		);
 		if (isValid) {
-			roomies.forEach((roomie) => {
-				emailjs
-					.send(
-						"service_kbjdvl4",
-						"template_k7fxp8r",
-						{
-							to_name: roomie.username,
-							link: `http://localhost:3000/board/${groupId}`,
-							to_email: roomie.email,
-						},
-						"user_qM5g1zhJlzTpO2v22X8WF"
-					)
-					.then(
-						(response) => {
-							console.log("SUCCESS!", response.status, response.text);
-						},
-						(err) => {
-							console.log("FAILED...", err);
-						}
-					);
-			});
-			await fetch("http://localhost:4000/users", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					roomies,
-				}),
-			});
-			navigate("/tasks-info", { state: { roomies } }); // pass roomies as a parametre, not as a prop
+			// roomies.forEach((roomie) => {
+			// 	emailjs
+			// 		.send(
+			// 			"service_kbjdvl4",
+			// 			"template_k7fxp8r",
+			// 			{
+			// 				to_name: roomie.username,
+			// 				link: `http://localhost:3000/board/${groupId}`,
+			// 				to_email: roomie.email,
+			// 			},
+			// 			"user_qM5g1zhJlzTpO2v22X8WF"
+			// 		)
+			// 		.then(
+			// 			(response) => {
+			// 				console.log("SUCCESS!", response.status, response.text);
+			// 			},
+			// 			(err) => {
+			// 				console.log("FAILED...", err);
+			// 			}
+			// 		);
+			// });
+			// await fetch("http://localhost:4000/users", {
+			// 	method: "POST",
+			// 	headers: { "Content-Type": "application/json" },
+			// 	body: JSON.stringify({
+			// 		roomies,
+			// 	}),
+			// });
+			navigate("/tasks-frequency", { state: { roomies, newGroupData } }); // pass roomies as a parametre, not as a prop
 		} else {
+			console.log(newGroupData);
+
 			setValidationError("You're missing some information!");
 		}
 	};
@@ -78,7 +76,11 @@ function RoomiesInfo() {
 			<Nav />
 			<div className='set-roomies-main-container'>
 				<div>
-					<h3>Enter the info of {number} people</h3>
+					<h3>
+						{number - 1 > 1
+							? `Enter the info of your ${number - 1} roomies`
+							: "Enter the info of your roomie"}{" "}
+					</h3>
 				</div>
 				{roomies.map((n, index) => (
 					<div key={`input-${index}`}>

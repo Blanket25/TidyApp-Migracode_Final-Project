@@ -7,15 +7,15 @@ import AdminPanel from "./pages/AdminPanel";
 import TasksInfo from "./pages/TasksInfo";
 import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
+import TasksFrequency from "./pages/TasksFrequency";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { logOut } from "./auth";
 
 function App() {
-  useEffect(() => {
-    logOut();
-  }, []);
-
+	useEffect(() => {
+		logOut();
+	}, []);
 
 	return (
 		<BrowserRouter>
@@ -24,6 +24,7 @@ function App() {
 				<Route path='/login' element={<Login />} />
 				<Route path='/signup' element={<Signup />} />
 				<Route path='/tasks-info' element={<TasksInfo />} />
+				<Route path='/tasks-frequency' element={<TasksFrequency />} />
 				<Route path='/number-of-roomies' element={<NoOfRommies />} />
 				<Route path='/board/:groupId' element={<Board />} />
 				<Route path='/adminpanel' element={<AdminPanel />} />

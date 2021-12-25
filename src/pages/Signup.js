@@ -9,23 +9,25 @@ function Signup() {
 	const [isSigned, setIsSigned] = useState(false);
 	const [signupText, setSignupText] = useState("");
 	const arrayOfRegisteredUsers = [];
-	const [newUserData, setNewUserData] = useState({
+	const [newGroupData, setNewGroupData] = useState({
 		group: "",
 		email: "",
 		password: "",
 		secret: "",
+		username: "",
 	});
 	const navigate = useNavigate();
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setNewUserData((prevValue) => {
+		setNewGroupData((prevValue) => {
 			if (name === "group") {
 				return {
 					group: value,
 					email: prevValue.email,
 					password: prevValue.password,
 					secret: prevValue.secret,
+					username: prevValue.username,
 				};
 			}
 			if (name === "email") {
@@ -34,6 +36,7 @@ function Signup() {
 					email: value,
 					password: prevValue.password,
 					secret: prevValue.secret,
+					username: prevValue.username,
 				};
 			}
 			if (name === "password") {
@@ -42,6 +45,7 @@ function Signup() {
 					email: prevValue.email,
 					password: value,
 					secret: prevValue.secret,
+					username: prevValue.username,
 				};
 			}
 			if (name === "groupSecret") {
@@ -50,62 +54,75 @@ function Signup() {
 					email: prevValue.email,
 					password: prevValue.password,
 					secret: value,
+					username: prevValue.username,
+				};
+			}
+			if (name === "username") {
+				return {
+					group: prevValue.group,
+					email: prevValue.email,
+					password: prevValue.password,
+					secret: prevValue.secret,
+					username: value,
 				};
 			}
 		});
 	};
 
-	function handleClick(event) {
+	async function handleClick(event) {
 		event.preventDefault();
-		const group = newUserData.group.length > 0;
+		const group = newGroupData.group.length > 0;
 		const email =
-			newUserData.email.length > 0 && newUserData.email.includes("@");
-		const password = newUserData.password.length >= 6;
-		const secret = newUserData.secret.length > 0;
+			newGroupData.email.length > 0 && newGroupData.email.includes("@");
+		const password = newGroupData.password.length >= 6;
+		const secret = newGroupData.secret.length > 0;
+		const username = newGroupData.username.length > 0;
 
-		if (group && email && password && secret) {
+		if (group && email && password && secret && username) {
 			setIsSigned(true);
-			arrayOfRegisteredUsers.push(newUserData);
-			setSignupText(
-				"Your group was successfully created, you can now open the board"
-			);
-			navigate("/number-of-roomies");
-		} else if (!group && email && password && secret) {
+			arrayOfRegisteredUsers.push(newGroupData);
+			setSignupText("");
+			navigate("/number-of-roomies", { state: { newGroupData } });
+		} else if (!group && email && password && secret && username) {
 			setSignupText("Please enter the group name");
-		} else if (group && !email && password && secret) {
+		} else if (group && !email && password && secret && username) {
 			setSignupText("Please enter your email");
-		} else if (group && email && password && !secret) {
+		} else if (group && email && password && !secret && username) {
 			setSignupText(
 				"Please choose a secret word for your group which will be used as a group password"
 			);
-		} else if (group && email && !password && secret) {
+		} else if (group && email && !password && secret && username) {
 			setSignupText(
 				"Please create a strong password (at least 6 characters long)"
 			);
-		} else if (!group && !email && password && secret) {
+		} else if (group && email && password && secret && !username) {
+			setSignupText("Please enter your name)");
+		} else if (!group && !email && password && secret && username) {
 			setSignupText("Please enter the group name and email");
-		} else if (group && !email && !password && secret) {
+		} else if (group && !email && !password && secret && username) {
 			setSignupText("Please enter your email and password");
-		} else if (!group && email && !password && secret) {
+		} else if (!group && email && !password && secret && username) {
 			setSignupText(
 				"Please enter a group name and create a strong password (at least 6 characters long)"
 			);
-		} else if (!group && email && password && !secret) {
+		} else if (!group && email && password && !secret && username) {
 			setSignupText(
 				"Please enter a group name and create a secret word for your group which will be used as a group password"
 			);
-		} else if (group && !email && password && !secret) {
+		} else if (group && !email && password && !secret && username) {
 			setSignupText(
 				"Please enter your email and create a secret word for your group which will be used as a group password"
 			);
-		} else if (group && email && !password && !secret) {
+		} else if (group && email && !password && !secret && username) {
 			setSignupText(
 				"Please create a strong password (at least 6 characters long) and create a secret word for your group which will be used as a group password"
 			);
-		} else if (!group && !email && !password && !secret) {
+		} else if (!group && !email && !password && !secret && username) {
 			setSignupText(
 				"Please fill all the fields. Note,that your password should be at least 6 characters long)"
 			);
+		} else {
+			setSignupText("You're missing some information!");
 		}
 	}
 
@@ -116,6 +133,11 @@ function Signup() {
 				<h2>Get Started!</h2>
 				<p>create your first group</p>
 				<form>
+					<input
+						type='text'
+						placeholder='your name'
+						name='username'
+						onChange={handleChange}></input>
 					<input
 						type='text'
 						placeholder='group name'
