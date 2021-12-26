@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
-import emailjs from "emailjs-com";
 
 function RoomiesInfo() {
 	const navigate = useNavigate();
@@ -26,7 +25,6 @@ function RoomiesInfo() {
 		const newRoomie = { ...roomies[index] };
 		newRoomie[attribute] = newValue;
 		newRoomies[index] = newRoomie;
-		// console.log("New roomies", newRoomies);
 		setRoomies(newRoomies);
 	};
 	const submitRoomies = async () => {
@@ -36,38 +34,8 @@ function RoomiesInfo() {
 				(isValid = isValid && roomie.username !== "" && roomie.email !== "")
 		);
 		if (isValid) {
-			// roomies.forEach((roomie) => {
-			// 	emailjs
-			// 		.send(
-			// 			"service_kbjdvl4",
-			// 			"template_k7fxp8r",
-			// 			{
-			// 				to_name: roomie.username,
-			// 				link: `http://localhost:3000/board/${groupId}`,
-			// 				to_email: roomie.email,
-			// 			},
-			// 			"user_qM5g1zhJlzTpO2v22X8WF"
-			// 		)
-			// 		.then(
-			// 			(response) => {
-			// 				console.log("SUCCESS!", response.status, response.text);
-			// 			},
-			// 			(err) => {
-			// 				console.log("FAILED...", err);
-			// 			}
-			// 		);
-			// });
-			// await fetch("http://localhost:4000/users", {
-			// 	method: "POST",
-			// 	headers: { "Content-Type": "application/json" },
-			// 	body: JSON.stringify({
-			// 		roomies,
-			// 	}),
-			// });
 			navigate("/tasks-frequency", { state: { roomies, newGroupData } }); // pass roomies as a parametre, not as a prop
 		} else {
-			console.log(newGroupData);
-
 			setValidationError("You're missing some information!");
 		}
 	};

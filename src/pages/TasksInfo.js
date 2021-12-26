@@ -3,18 +3,16 @@ import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import emailjs from "emailjs-com";
 function TasksInfo() {
 	const [tasks, setTasks] = useState([]);
 	const [validationError, setValidationError] = useState("");
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const { roomies, newGroupData } = state;
-	const userId = 1;
 	const number = roomies.length + 1;
 	let allgroupMembers = [];
 	const idFromStorage = localStorage.getItem("groupId");
-
 	useEffect(() => {
 		const emptyTasks = new Array(number).fill().map(() => ({
 			taskName: "",
@@ -59,18 +57,20 @@ function TasksInfo() {
 			throw err;
 		}
 	}
-	async function fetchTasks() {
+
+	async function fetchTasks(data) {
+		const ids = data.map((data) => data.id);
 		const response = await fetch("http://localhost:4000/tasks", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(
-				tasks.map((task) => ({
+				tasks.map((task, index) => ({
 					name: task.taskName,
 					task_completed: false,
 					description: task.description,
 					starting_date: new Date(),
 					group_id: idFromStorage,
-					user_id: userId,
+					user_id: ids[index],
 				}))
 			),
 		});
@@ -88,7 +88,41 @@ function TasksInfo() {
 		if (isValid) {
 			fetchUsers();
 			fetchTasks();
-			navigate(`/board/${idFromStorage}`);
+			roomies.forEach((roomie) => {
+				emailjs
+					.send(
+						"service_kbjdvl4",
+						"template_k7fxp8r",
+						{
+							to_name: roomie.username,
+							link: `http://localhost:3000/board/${idFromStorage}`,
+							to_email: roomie.email,
+						},
+						"user_qM5g1zhJlzTpO2v22X8WF"
+					)
+					.then(
+						(response) => {
+							console.log("SUCCESS!", response.status, response.text);
+						},
+						(err) => {
+							console.log("FAILED...", err);
+						}
+					);
+			});
+			const response = await fetch(
+				`http://localhost:4000/users/${idFromStorage}`,
+				{
+					method: "GET",
+				}
+			);
+			if (!response.ok) throw Error(response.message);
+			try {
+				const data = await response.json();
+				fetchTasks(data);
+				navigate(`/board/${idFromStorage}`);
+			} catch (err) {
+				throw err;
+			}
 		} else {
 			setValidationError("You're missing a roomie!");
 		}

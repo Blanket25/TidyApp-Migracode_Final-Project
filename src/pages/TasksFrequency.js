@@ -1,13 +1,11 @@
 import "../index.css";
 import Nav from "./sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function TasksFrequency() {
 	const [frequency, setFrequency] = useState("weekly");
-	// const [tasks, setTasks] = useState([]);
-	// const [validationError, setValidationError] = useState("");
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const { roomies, newGroupData } = state;
@@ -44,6 +42,7 @@ function TasksFrequency() {
 	}
 	const handleClick = async () => {
 		fetchGroup();
+
 		navigate("/tasks-info", { state: { roomies, newGroupData } });
 	};
 
