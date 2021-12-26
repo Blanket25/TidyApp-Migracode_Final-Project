@@ -234,8 +234,40 @@ const api = () => {
 			]);
 			// answering with the task id
 			await res.status(200).json({ groupId: result.rows[0].id });
-		}
+    }
 	};
+
+  const getGroupFromDatabase = async (groupId) => {
+      const result = await connection.query(`select * from tidy_group where id=$1`, [
+        groupId,
+      ]);
+      const dbGroup = result.rows[0];
+      return dbGroup;
+  };
+
+  const updateGroup = async (req, res) => {
+    const groupId = req.params.groupId;
+    const groupBody = req.body;
+
+    const dbGroup = await getGroupFromDatabase(groupId);
+    const group = {...dbGroup, ...groupBody};
+
+    await connection.query(
+      `update tidy_group set 
+      group_name=$1, email=$2, date_of_creation=$3, frequency=$4, group_secret=$5, number_of_roomies=$6 where id=$7`,
+      [
+        group.name,
+        group.email,
+        group.date_of_creation,
+        group.frequency,
+        group.group_secret,
+        group.numbers_of_roomies,
+      ]
+    );
+    await res.status(202).send(`Group has been updated!`);
+  };
+
+	
 
 	return {
 		login,
@@ -248,6 +280,7 @@ const api = () => {
 		updateTask,
 		updateUser,
 		addNewGroup,
+    updateGroup,
 	};
 };
 
