@@ -19,9 +19,12 @@ const api = () => {
 	};
 
 	const getUsers = async (req, res) => {
+		const groupId = req.params.groupId;
+
 		try {
-			const query = "select * from users";
-			const result = await connection.query(query);
+			const query = `select * from users where group_id=$1`;
+			const result = await connection.query(query, [groupId]);
+			console.log(result.rows);
 			return res.status(200).send(result.rows);
 		} catch (err) {
 			console.log(err);
