@@ -75,6 +75,7 @@ const api = () => {
 	};
 
 	const getTasks = async (req, res) => {
+		const groupId = req.params.groupId;
 		const query = `
         select
             t.id,
@@ -86,9 +87,9 @@ const api = () => {
             t.task_completed
         from tasks t 
         inner join users u on u.id=t.user_id
-        inner join tidy_group g on g.id=u.group_id`;
+        inner join tidy_group g on g.id=u.group_id where g.id=$1 `;
 
-		const taskList = await connection.query(query);
+		const taskList = await connection.query(query, [groupId]);
 		return await res.status(200).json(taskList.rows);
 	};
 
