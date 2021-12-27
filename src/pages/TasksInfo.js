@@ -122,7 +122,7 @@ function TasksInfo() {
 			try {
 				const data = await response.json();
 				fetchTasks(data);
-				navigate(`/board/${idFromStorage}`);
+				navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
 			} catch (err) {
 				throw err;
 			}
