@@ -9,31 +9,37 @@ import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
 import TasksFrequency from "./pages/TasksFrequency";
 import ResetPassword from "./pages/ResetPassword";
+import EditUsers from "./pages/EditUsers";
+import EditTasks from "./pages/EditTasks";
+import EditFrequency from "./pages/EditFrequency";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { logOut } from "./auth";
 
 function App() {
-	useEffect(() => {
-		logOut();
-	}, []);
+  useEffect(() => {
+    logOut();
+  }, []);
 
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path='/' element={<Homepage />} />
-				<Route path='/login' element={<Login />} />
-				<Route path='/signup' element={<Signup />} />
-				<Route path='/tasks-info' element={<TasksInfo />} />
-				<Route path='/tasks-frequency' element={<TasksFrequency />} />
-				<Route path='/number-of-roomies' element={<NoOfRommies />} />
-				<Route path='/board/:groupId' element={<Board />} />
-				<Route path='/adminpanel' element={<AdminPanel />} />
-				<Route path='/set_roomies' element={<RoomiesInfo />} />
-				<Route path='/ResetPassword' element={<ResetPassword />} />
-			</Routes>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/tasks-info" element={<TasksInfo />} />
+        <Route path="/tasks-frequency" element={<TasksFrequency />} />
+        <Route path="/number-of-roomies" element={<NoOfRommies />} />
+        <Route path="/board/:groupId" element={<Board />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/edit_users" element={<EditUsers />} />
+        <Route path="/edit_tasks" element={<EditTasks />} />
+        <Route path="/edit_frequency" element={<EditFrequency />} />
+        <Route path="/set_roomies" element={<RoomiesInfo />} />
+        <Route path="/ResetPassword" element={<ResetPassword />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
