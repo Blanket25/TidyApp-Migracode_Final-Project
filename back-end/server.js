@@ -18,7 +18,7 @@ const api = apiFunction();
 app.use(bodyParser.json());
 
 //GET
-app.get("/tasks", api.getTasks);
+app.get("/tasks/:groupId", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
 
 //POST
