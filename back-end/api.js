@@ -198,7 +198,7 @@ const api = () => {
 			`update users set 
     username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
 			[
-				user.name,
+				user.username,
 				user.email,
 				user.type_of_user,
 				user.group_id,
@@ -253,16 +253,21 @@ const api = () => {
     const dbGroup = await getGroupFromDatabase(groupId);
     const group = {...dbGroup, ...groupBody};
 
+console.log(dbGroup);
+console.log(groupBody);
+console.log(group);
+
     await connection.query(
       `update tidy_group set 
       group_name=$1, email=$2, date_of_creation=$3, frequency=$4, group_secret=$5, number_of_roomies=$6 where id=$7`,
       [
-        group.name,
+        group.group_name,
         group.email,
         group.date_of_creation,
         group.frequency,
         group.group_secret,
-        group.numbers_of_roomies,
+        group.number_of_roomies,
+        groupId
       ]
     );
     await res.status(202).send(`Group has been updated!`);
