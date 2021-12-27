@@ -73,9 +73,9 @@ function Signup() {
 		event.preventDefault();
 		const group = newGroupData.group.length > 0;
 		const email =
-			newGroupData.email.length > 0 && newGroupData.email.includes("@");
+			newGroupData.email.includes("@") && newGroupData.email.includes(".");
 		const password = newGroupData.password.length >= 6;
-		const secret = newGroupData.secret.length > 0;
+		const secret = newGroupData.secret.length >= 6;
 		const username = newGroupData.username.length > 0;
 
 		if (group && email && password && secret && username) {
@@ -89,7 +89,7 @@ function Signup() {
 			setSignupText("Please enter your email");
 		} else if (group && email && password && !secret && username) {
 			setSignupText(
-				"Please choose a secret word for your group which will be used as a group password"
+				"Please choose a secret word (at least 6 characters long) for your group which will be used as a group password"
 			);
 		} else if (group && email && !password && secret && username) {
 			setSignupText(
