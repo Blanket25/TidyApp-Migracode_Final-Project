@@ -97,6 +97,9 @@ function TasksInfo() {
 							to_name: roomie.username,
 							link: `http://localhost:3000/board/${idFromStorage}`,
 							to_email: roomie.email,
+							admin_name: newGroupData.username,
+							group_name: newGroupData.group,
+							group_secret: newGroupData.secret,
 						},
 						"user_qM5g1zhJlzTpO2v22X8WF"
 					)
