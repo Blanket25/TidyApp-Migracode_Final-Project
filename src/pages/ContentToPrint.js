@@ -4,9 +4,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 function ContentToPrint(props) {
-	const params = useParams();
-
-	const id = props.id;
 	const [fetchedData, setFetchedData] = useState([]);
 	useEffect(() => {
 		const getData = async () => {
