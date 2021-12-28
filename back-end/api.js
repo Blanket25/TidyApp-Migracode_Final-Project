@@ -17,6 +17,34 @@ const api = () => {
 			return res.status(400).send("Your email or your password is not correct");
 		}
 	};
+  
+  const getBoardInfo = async (req, res) => {
+    const groupId = req.params.groupId;
+
+    try {
+      const query = `select u.username, t.name, t.task_completed from tasks t
+	  				inner join users u on u.id = t.user_id
+					where u.group_id=$1`;
+      const result = await connection.query(query, [groupId]);
+      console.log(result.rows);
+      return res.status(200).send(result.rows);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getGroups = async (req, res) => {
+    const groupId = req.params.groupId;
+
+    try {
+      const query = `select * from tidy_group where group_id=$1`;
+      const result = await connection.query(query, [groupId]);
+      console.log(result.rows);
+      return res.status(200).send(result.rows);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 	const getUsers = async (req, res) => {
 		const groupId = req.params.groupId;
@@ -211,32 +239,35 @@ const api = () => {
 			// if not create the group
 			let currentDate = new Date();
 			const createGroup = `insert into tidy_group (group_name, email, date_of_creation, frequency, group_secret, number_of_roomies) 
-      values ($1, $2, $3, $4, $5, $6) returning id`;
-			const result = await connection.query(createGroup, [
-				newGroup.name,
-				newGroup.email,
-				currentDate,
-				newGroup.frequency,
-				newGroup.password,
-				newGroup.numbers_of_roomies,
-			]);
-			// answering with the task id
-			await res.status(200).json({ groupId: result.rows[0].id });
-		}
-	};
 
-	return {
-		login,
-		getUsers,
-		addNewUsers,
-		deleteUser,
-		getTasks,
-		addNewTasks,
-		deleteTask,
-		updateTask,
-		updateUser,
-		addNewGroup,
-	};
+      values ($1, $2, $3, $4, $5, $6) returning id`;
+      const result = await connection.query(createGroup, [
+        newGroup.name,
+        newGroup.email,
+        currentDate,
+        newGroup.frequency,
+        newGroup.password,
+        newGroup.numbers_of_roomies,
+      ]);
+      // answering with the task id
+      await res.status(200).json({ groupId: result.rows[0].id });
+    }
+  };
+
+  return {
+    login,
+    getGroups,
+    getBoardInfo,
+    getUsers,
+    addNewUsers,
+    deleteUser,
+    getTasks,
+    addNewTasks,
+    deleteTask,
+    updateTask,
+    updateUser,
+    addNewGroup,
+  };
 };
 
 module.exports = api;

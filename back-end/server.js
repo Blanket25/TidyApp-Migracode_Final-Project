@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 
 const corsOptions = {
-	origin: "http://localhost:3000",
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -20,6 +20,8 @@ app.use(bodyParser.json());
 //GET
 app.get("/tasks/:groupId", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
+app.get("/groups/:groupId", api.getGroups);
+app.get("/board/:groupId", api.getBoardInfo);
 
 //POST
 app.post("/users", api.addNewUsers);
