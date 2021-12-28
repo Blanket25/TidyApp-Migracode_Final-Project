@@ -13,7 +13,7 @@ function ContentToPrint() {
       console.log(data);
     };
     getData();
-  }, []);
+  }, [groupId]);
 
   return (
     <div className="card-container">
