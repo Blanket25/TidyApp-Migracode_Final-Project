@@ -47,6 +47,7 @@ const api = () => {
     console.log("addNewUser");
     console.log(req.body);
     try {
+      const ids = [];
       for (let user in req.body.allgroupMembers) {
         let newUser = req.body.allgroupMembers[user];
         const newUserName = newUser.username;
@@ -58,7 +59,7 @@ const api = () => {
             .send("A user with the same name already exists!");
         } else {
           const query =
-            "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5)";
+            "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5) returning id";
           const val = [
             newUser.username,
             newUser.email,
@@ -66,11 +67,11 @@ const api = () => {
             newUser.group_id,
             newUser.password,
           ];
-          console.log(val);
-          await connection.query(query, val);
+          const result = await connection.query(query, val);
+					ids.push({ email: newUser.email, id: result.rows[0].id });
         }
       }
-      await res.status(200);
+      return await res.status(200).json(ids);
     } catch (error) {
       // return res.status(201).send('User created!').json(result.rows);
 
@@ -142,7 +143,7 @@ const api = () => {
         newTask.group_id,
         newTask.user_id,
       ]);
-      // answering wuth the task id
+      // answering with the task id
 
       return true;
     }
@@ -206,7 +207,7 @@ const api = () => {
 
     await connection.query(
       `update users set 
-    username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
+      username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
       [
         user.username,
         user.email,
