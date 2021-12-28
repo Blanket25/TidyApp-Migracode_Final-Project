@@ -87,7 +87,7 @@ const api = () => {
             t.task_completed
         from tasks t 
         inner join users u on u.id=t.user_id
-        inner join tidy_group g on g.id=u.group_id where g.id=$1 `;
+        inner join tidy_group g on g.id=u.group_id where g.id=$1 order by t.id`;
 
 		const taskList = await connection.query(query, [groupId]);
 		return await res.status(200).json(taskList.rows);
@@ -161,7 +161,7 @@ const api = () => {
 			]);
 			return res.status(200).send("Task updated").json(result.rows);
 		} catch (e) {
-			return res.status(500).send("Error");
+			return res.status(500).send("Error"+e);
 		}
 	};
 
@@ -236,7 +236,52 @@ const api = () => {
 			await res.status(200).json({ groupId: result.rows[0].id });
 		}
 	};
+	const getTaskFromDatabase = async (taskId) => {
+		const result = await connection.query(`select * from tasks where id=$1`, [
+			taskId,
+		]);
+		const dbTask = result.rows[0];
+		return dbTask;
+	};
+	const replaceTasksValues=(task,newTask)=>{
+			let updatedTask = {};
+	
+			for (const propertyName in task) {
+				updatedTask[propertyName] = task[propertyName];
+			}
+			for (const propertyName in newTask) {
+				updatedTask[propertyName] = newTask[propertyName];
+			}
+	
+			return updatedTask;
+		};	
+	
 
+	const updateTaskStatus = async(req,res)=>{
+		const taskId = req.params.taskId;
+		const taskBody = req.body;
+
+		const dbTask = await getTaskFromDatabase(taskId);
+		const task = replaceTasksValues(dbTask, taskBody);
+
+		await connection.query(
+			
+			`update tasks set 
+			name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7`,
+			[
+				task.name,
+				task.task_completed,
+				task.description,
+				task.starting_date,
+				task.group_id,
+				task.user_id,
+				taskId,
+			]
+		);
+		await res.status(202).send(`Task ${taskId} has been updated!`);
+	}
+
+	
 	return {
 		login,
 		getUsers,
@@ -248,6 +293,7 @@ const api = () => {
 		updateTask,
 		updateUser,
 		addNewGroup,
+		updateTaskStatus,
 	};
 };
 

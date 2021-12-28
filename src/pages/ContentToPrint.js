@@ -1,10 +1,9 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-
 function ContentToPrint(props) {
 	const [fetchedData, setFetchedData] = useState([]);
+	const tasks = [];
 	useEffect(() => {
 		const getData = async () => {
 			const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);
@@ -14,23 +13,25 @@ function ContentToPrint(props) {
 		getData();
 		console.log("This is params id:" + props.id);
 	}, [props.id]);
-	const tasks = [
-		// {
-		// 	name: "Elmira",
-		// 	task: "clean the kitchen",
-		// },
-		// {
-		// 	name: "Omar",
-		// 	task: "buy food",
-		// },
-		// {
-		// 	name: "Bianca",
-		// 	task: "clean the living room",
-		// },
-	];
-	const handleChange = (index) => {
-		console.log(`changed task ${index}`);
+
+	async function handleChange(index,e) {
+		console.log(`changed task ${index}`)
+		console.log(e.target.checked)
+		tasks[index].task_completed=e.target.checked
+		console.log(tasks[index])
+		const response = await fetch(`http://localhost:4000/tasks/status/${tasks[index].id}`, {
+			method: "PATCH",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({task_completed:tasks[index].task_completed})
+		})
+		if (!response.ok) 
+			throw Error(response.message);
+
+		const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);
+
+		setFetchedData(data);
 	};
+	
 	return (
 		<div className='card-container'>
 			<div className='card'>
@@ -48,7 +49,7 @@ function ContentToPrint(props) {
 								<p>{item.task_name}</p>
 								<p>{item.description}</p>
 							</div>
-							<input type='checkbox' onChange={() => handleChange(index)} />
+							<input type='checkbox' checked={item.task_completed} onChange={(e) => handleChange(index,e)} />
 						</div>
 					);
 				})}

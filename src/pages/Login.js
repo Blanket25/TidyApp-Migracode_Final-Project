@@ -33,13 +33,13 @@ function Login() {
 			// console.log(response);
 			const data = await response.json();
 
-			const groupId = data.group_id;
-			console.log(groupId);
+			const idFromStorage = data.group_id;
+			console.log(idFromStorage);
 
-			window.localStorage.setItem("group id", groupId);
-			if (groupId) {
+			window.localStorage.setItem("group id", idFromStorage);
+			if (idFromStorage) {
 				setIsLogged(true);
-				navigate(`/board/${groupId}`);
+				navigate(`/board/${idFromStorage}`,{ state: { idFromStorage }});
 			}
 		} else if (!email && password) {
 			setErrorMessage("Please enter your email");
