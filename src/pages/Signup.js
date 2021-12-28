@@ -4,7 +4,6 @@ import Nav from "./sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 function Signup() {
 	const [isSigned, setIsSigned] = useState(false);
 	const [signupText, setSignupText] = useState("");

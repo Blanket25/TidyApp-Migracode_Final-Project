@@ -197,7 +197,7 @@ const api = () => {
 			`update users set 
     username=$1, email=$2, type_of_user=$3, group_id=$4, password=$5 where id=$6`,
 			[
-				user.name,
+				user.username,
 				user.email,
 				user.type_of_user,
 				user.group_id,
@@ -225,12 +225,12 @@ const api = () => {
 			const createGroup = `insert into tidy_group (group_name, email, date_of_creation, frequency, group_secret, number_of_roomies) 
       values ($1, $2, $3, $4, $5, $6) returning id`;
 			const result = await connection.query(createGroup, [
-				newGroup.name,
+				newGroup.group_name,
 				newGroup.email,
 				currentDate,
 				newGroup.frequency,
 				newGroup.password,
-				newGroup.numbers_of_roomies,
+				newGroup.number_of_roomies,
 			]);
 			// answering with the task id
 			await res.status(200).json({ groupId: result.rows[0].id });

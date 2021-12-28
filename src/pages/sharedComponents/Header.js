@@ -2,14 +2,22 @@ import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isAuthenticated, logOut } from "../../auth";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false);
+  const navigate=useNavigate();
+  const idFromStorage=window.localStorage.getItem("group id")
 
   useEffect(() => {
     setIsLogged(isAuthenticated);
   }, []);
 
+  const goToBoard=()=>{
+    if(idFromStorage.length>0){navigate(`/board/${idFromStorage}`,{ state: { idFromStorage }}
+    )}}
+   
+  
   return (
     <header>
       <div className="header-nav-container">
@@ -28,9 +36,10 @@ function Header() {
             >
               Log out{" "}
             </Link>
-            <Link className="orange-btn" to="/board">
+           
+            <button className="orange-btn" onClick={goToBoard}>
               Go to board
-            </Link>
+            </button>
           </>
         ) : (
           <>
