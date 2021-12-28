@@ -16,7 +16,7 @@ function Board() {
 			console.log(idFromStorage);
 			return (
 				<div>
-					<ContentToPrint id={idFromStorage?idFromStorage:window.localStorage.getItem("groupId")} />
+					<ContentToPrint id={idFromStorage?idFromStorage:window.localStorage.getItem("group id")} />
 				</div>
 			);
 		}
