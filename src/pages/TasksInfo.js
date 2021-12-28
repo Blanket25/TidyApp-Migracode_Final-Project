@@ -178,7 +178,6 @@ function TasksInfo() {
 					</button>
 				</div>
 			</div>
-
 			<Footer />
 		</div>
 	);
