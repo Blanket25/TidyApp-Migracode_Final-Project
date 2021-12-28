@@ -1,16 +1,16 @@
 import "../index.css";
 import Footer from "./sharedComponents/Footer";
 import Nav from "./sharedComponents/Nav";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
-// import { isAuthenticated, logIn } from "../auth";
-// import { useNavigate } from "react-router-dom";
+import { isAuthenticated, logIn } from "../auth";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
-  // const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const [email, setEmail] = useState("");
   const [erroMessage, setErrorMessage] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -38,12 +38,12 @@ function ResetPassword() {
             type="text"
             placeholder="email"
           />
-
+          
           {/* <Link className="orange-btn" to="/board">
             Go to board
           </Link> */}
           <p>{erroMessage}</p>
-          <button type="submit" className="orange-btn">
+          <button type="submit" className="orange-btn" disabled={isLogged}>
             Reset
           </button>
         </form>
