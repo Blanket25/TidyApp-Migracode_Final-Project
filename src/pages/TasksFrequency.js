@@ -21,11 +21,11 @@ function TasksFrequency() {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				name: newGroupData.group,
+				group_name: newGroupData.group,
 				email: newGroupData.email,
 				frequency: frequency,
 				password: newGroupData.password,
-				numbers_of_roomies: number,
+				number_of_roomies: number,
 			}),
 		});
 		if (!response.ok) throw Error(response.message);
