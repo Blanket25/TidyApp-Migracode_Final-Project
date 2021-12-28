@@ -10,13 +10,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 function Board() {
 	const { state } = useLocation();
-	const { idFromStorage } = state;
+	const {idFromStorage} = state;
 	class ComponentToPrint extends React.Component {
 		render() {
 			console.log(idFromStorage);
 			return (
 				<div>
-					<ContentToPrint id={idFromStorage} />
+					<ContentToPrint id={idFromStorage?idFromStorage:window.localStorage.getItem("groupId")} />
 				</div>
 			);
 		}
