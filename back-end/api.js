@@ -17,26 +17,11 @@ const api = () => {
     }
   };
 
-  const getBoardInfo = async (req, res) => {
-    const groupId = req.params.groupId;
-
-    try {
-      const query = `select u.username, t.name, t.task_completed from tasks t
-	  				inner join users u on u.id = t.user_id
-					where u.group_id=$1`;
-      const result = await connection.query(query, [groupId]);
-      console.log(result.rows);
-      return res.status(200).send(result.rows);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const getGroups = async (req, res) => {
     const groupId = req.params.groupId;
 
     try {
-      const query = `select * from tidy_group where group_id=$1`;
+      const query = `select * from tidy_group where id=$1`;
       const result = await connection.query(query, [groupId]);
       console.log(result.rows);
       return res.status(200).send(result.rows);
@@ -192,6 +177,27 @@ const api = () => {
     }
   };
 
+  const updateGroup = async (req, res) => {
+    try {
+      const groupId = req.params.taskId;
+      const group = req.body;
+      const query =
+        "UPDATE tidy_group SET group_name=$1, date_of_creation=$2, frequency=$3, group_secret=$4, number_of_roomies=$5, email=$6 WHERE id=$7;";
+      const result = await connection.query(query, [
+        group.group_name,
+        group.date_of_creation,
+        group.frequency,
+        group.group_secret,
+        group.number_of_roomies,
+        group.email,
+        groupId,
+      ]);
+      return res.status(200).send("Group updated").json(result.rows);
+    } catch (e) {
+      return res.status(500).send("Error" + e);
+    }
+  };
+
   const replaceUserValues = (user, newUser) => {
     let updatedUser = {};
 
@@ -309,7 +315,6 @@ const api = () => {
   return {
     login,
     getGroups,
-    getBoardInfo,
     getUsers,
     addNewUsers,
     deleteUser,
@@ -320,6 +325,7 @@ const api = () => {
     updateUser,
     addNewGroup,
     updateTaskStatus,
+    updateGroup,
   };
 };
 

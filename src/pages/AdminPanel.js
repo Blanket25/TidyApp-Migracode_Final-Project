@@ -1,9 +1,28 @@
 import Nav from "../pages/sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import Footer from "../pages/sharedComponents/Footer";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AdminPanel = () => {
-  //const groupId = window.localStorage.getItem("groupId");
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { idFromStorage } = state;
+
+  console.log(idFromStorage);
+  function handleClickTasks() {
+    navigate("/edit_tasks", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
+
+  function handleClickUsers() {
+    navigate("/edit_users", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
+
+  function handleClickFrequency() {
+    navigate("/edit_frequency", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
 
   return (
     <>
@@ -14,15 +33,18 @@ const AdminPanel = () => {
       <div className="admin-panel-container">
         <h3>Settings</h3>
 
-        <Link className="orange-btn u-center-text" to="/edit_tasks">
+        <button onClick={handleClickTasks} className="orange-btn u-center-text">
           Edit a task
-        </Link>
-        <Link className="orange-btn u-center-text" to="/edit_users">
+        </button>
+        <button className="orange-btn u-center-text" onClick={handleClickUsers}>
           Edit a roomie
-        </Link>
-        <Link className="orange-btn u-center-text" to="/edit_frequency">
+        </button>
+        <button
+          className="orange-btn u-center-text"
+          onClick={handleClickFrequency}
+        >
           Edit frequency
-        </Link>
+        </button>
 
         <div className="u-center-text admin-panel-board-redirection ">
           <p>Go to the task board</p>

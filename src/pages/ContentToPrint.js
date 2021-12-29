@@ -11,6 +11,7 @@ function ContentToPrint(props) {
       setFetchedData(data);
     };
     getData();
+
     console.log("This is params id:" + props.id);
   }, [props.id]);
 

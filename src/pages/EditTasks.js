@@ -1,24 +1,29 @@
 import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
-import { Link } from "react-router-dom";
 import Footer from "./sharedComponents/Footer";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function EditUsers() {
+function EditTasks() {
   const [tasks, setTasks] = useState([]);
-  const groupId = window.localStorage.getItem("groupId");
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { idFromStorage } = state;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (isNaN(groupId)) return;
+      // if (isNaN(groupId)) return;
+      if (idFromStorage) {
+        const response = await fetch(
+          `http://localhost:4000/tasks/${idFromStorage}`
+        );
+        const data = await response.json();
+        console.log(data);
 
-      const response = await fetch(`http://localhost:4000/tasks/${groupId}`);
-      const data = await response.json();
-      console.log(data);
-
-      setTasks(data);
+        setTasks(data);
+      }
     };
     fetchData();
-  }, [groupId]);
+  }, [idFromStorage]);
 
   const handleChange = (attribute, newValue, index) => {
     const newTasks = [...tasks];
@@ -39,10 +44,6 @@ function EditUsers() {
           body: JSON.stringify({
             name: task.task_name,
             description: task.description,
-            group_id: groupId,
-            user_id: task.user_id,
-            task_completed: task.task_completed,
-            starting_date: task.starting_date,
           }),
         });
       })
@@ -52,6 +53,14 @@ function EditUsers() {
       requests.map((request) => request.text())
     );
     console.log(responses);
+  };
+
+  const handleClickBoard = () => {
+    navigate("/adminpanel", { state: { idFromStorage } });
+  };
+
+  const handleClickAdminPanel = () => {
+    navigate("/adminpanel", { state: { idFromStorage } });
   };
 
   return (
@@ -90,12 +99,12 @@ function EditUsers() {
             Save
           </button>
           <div className="link-btns">
-            <Link className="orange-btn" to="/board">
+            <button className="orange-btn" onClick={handleClickBoard}>
               Board
-            </Link>
-            <Link className="purple-btn" to="/adminpanel">
+            </button>
+            <button className="purple-btn" onClick={handleClickAdminPanel}>
               Admin Panel
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -104,4 +113,4 @@ function EditUsers() {
   );
 }
 
-export default EditUsers;
+export default EditTasks;

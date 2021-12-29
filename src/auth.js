@@ -1,7 +1,8 @@
 export const isAuthenticated = () =>
-  window.localStorage.getItem("token") !== null;
+  window.localStorage.getItem("groupId") !== null;
 
 export const logOut = () => window.localStorage.clear();
-export const logIn = (token) => window.localStorage.setItem("token", token);
+export const logIn = (groupId) =>
+  window.localStorage.setItem("groupId", groupId);
 
-export const getUserToken = () => window.localStorage.getItem("token");
+export const getGroupId = () => window.localStorage.getItem("groupId");

@@ -31,11 +31,11 @@ function App() {
         <Route path="/tasks-frequency" element={<TasksFrequency />} />
         <Route path="/number-of-roomies" element={<NoOfRommies />} />
         <Route path="/board/:groupId" element={<Board />} />
-        <Route path="/adminpanel" element={<EditTasks />} />
-        <Route path="/edit-users" element={<EditUsers />} />
-        <Route path="/edit-tasks" element={<EditFrequency />} />
-        <Route path="/edit-frequency" element={<AdminPanel />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
         <Route path="/set_roomies" element={<RoomiesInfo />} />
+        <Route path="/edit_users" element={<EditUsers />} />
+        <Route path="/edit_tasks" element={<EditTasks />} />
+        <Route path="/edit_frequency" element={<EditFrequency />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
