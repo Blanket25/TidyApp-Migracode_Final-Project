@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const [isLogged, setIsLogged] = useState(false);
   const navigate=useNavigate();
-  const idFromStorage=window.localStorage.getItem("group id")
+  const idFromStorage=window.localStorage.getItem("groupId")
 
   useEffect(() => {
     setIsLogged(isAuthenticated);
