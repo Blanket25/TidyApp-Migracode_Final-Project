@@ -70,102 +70,61 @@ function Signup() {
 
   async function handleClick(event) {
     event.preventDefault();
-    const group = newGroupData.group.length > 0;
-    const email =
-      newGroupData.email.includes("@") && newGroupData.email.includes(".");
-    const password = newGroupData.password.length >= 6;
-    const secret = newGroupData.secret.length >= 6;
-    const username = newGroupData.username.length > 0;
-
-    if (group && email && password && secret && username) {
       setIsSigned(true);
       arrayOfRegisteredUsers.push(newGroupData);
       setSignupText("");
       navigate("/number-of-roomies", { state: { newGroupData } });
-    } else if (!group && email && password && secret && username) {
-      setSignupText("Please enter the group name");
-    } else if (group && !email && password && secret && username) {
-      setSignupText("Please enter your email");
-    } else if (group && email && password && !secret && username) {
-      setSignupText(
-        "Please choose a secret word (at least 6 characters long) for your group which will be used as a group password"
-      );
-    } else if (group && email && !password && secret && username) {
-      setSignupText(
-        "Please create a strong password (at least 6 characters long)"
-      );
-    } else if (group && email && password && secret && !username) {
-      setSignupText("Please enter your name)");
-    } else if (!group && !email && password && secret && username) {
-      setSignupText("Please enter the group name and email");
-    } else if (group && !email && !password && secret && username) {
-      setSignupText("Please enter your email and password");
-    } else if (!group && email && !password && secret && username) {
-      setSignupText(
-        "Please enter a group name and create a strong password (at least 6 characters long)"
-      );
-    } else if (!group && email && password && !secret && username) {
-      setSignupText(
-        "Please enter a group name and create a secret word for your group which will be used as a group password"
-      );
-    } else if (group && !email && password && !secret && username) {
-      setSignupText(
-        "Please enter your email and create a secret word for your group which will be used as a group password"
-      );
-    } else if (group && email && !password && !secret && username) {
-      setSignupText(
-        "Please create a strong password (at least 6 characters long) and create a secret word for your group which will be used as a group password"
-      );
-    } else if (!group && !email && !password && !secret && username) {
-      setSignupText(
-        "Please fill all the fields. Note,that your password should be at least 6 characters long)"
-      );
-    } else {
-      setSignupText("You're missing some information!");
-    }
-  }
-
+   }
+  
   return (
     <div className="signup-main-container">
       <Nav />
       <div className="signup-form-container">
         <h2>Get Started!</h2>
         <p>create your first group</p>
-        <form>
+        <form onSubmit={handleClick}>
           <input
             type="text"
-            placeholder="your name"
+            placeholder="Your name"
             name="username"
             onChange={handleChange}
+            minlength="3" 
+            required
           ></input>
           <input
             type="text"
-            placeholder="group name"
+            placeholder="Group name"
             name="group"
             onChange={handleChange}
+            minlength="3" 
+            required
           ></input>
           <input
-            type="text"
-            placeholder="group secret (group password)"
+            type="password"
+            minlength="6" 
+            required
+            placeholder="Group secret (group password)"
             name="groupSecret"
             onChange={handleChange}
           ></input>
           <input
-            type="text"
-            placeholder="your email"
+            type="email"
+            placeholder="Your email"
             name="email"
             onChange={handleChange}
           ></input>
           <input
             type="password"
-            placeholder=" your password"
+            placeholder="Your password"
             name="password"
+            minlength="6" 
+            required
             onChange={handleChange}
           ></input>
 
           <button
             className="orange-btn"
-            onClick={handleClick}
+           type="submit"
             disabled={isSigned ? true : false}
           >
             Create Group
