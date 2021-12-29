@@ -25,6 +25,7 @@ function EditTasks() {
     fetchData();
   }, [idFromStorage]);
 
+
   const handleChange = (attribute, newValue, index) => {
     const newTasks = [...tasks];
     const newTask = { ...tasks[index] };
@@ -116,5 +117,4 @@ function EditTasks() {
     </div>
   );
 }
-
 export default EditTasks;

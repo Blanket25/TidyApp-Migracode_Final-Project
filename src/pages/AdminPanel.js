@@ -32,7 +32,6 @@ const AdminPanel = () => {
 
       <div className="admin-panel-container">
         <h3>Settings</h3>
-
         <button onClick={handleClickTasks} className="orange-btn u-center-text">
           Edit a task
         </button>
@@ -46,6 +45,7 @@ const AdminPanel = () => {
           Edit frequency
         </button>
 
+
         <div className="u-center-text admin-panel-board-redirection ">
           <p>Go to the task board</p>
           <Link to="/board">
@@ -58,3 +58,4 @@ const AdminPanel = () => {
   );
 };
 export default AdminPanel;
+

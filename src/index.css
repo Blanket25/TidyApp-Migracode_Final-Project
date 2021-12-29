@@ -418,7 +418,9 @@ div.signup-form-container > h2 {
 	display: flex;
 	justify-content: space-between;
 }
-
+.task-container>p{
+	min-width: 12rem;
+}
 .print-btn > p,
 .card > p {
 	margin: 0;
