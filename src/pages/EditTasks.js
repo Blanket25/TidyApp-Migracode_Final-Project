@@ -44,6 +44,10 @@ function EditTasks() {
           body: JSON.stringify({
             name: task.task_name,
             description: task.description,
+            group_id: idFromStorage,
+            user_id: task.user_id,
+            task_completed: task.task_completed,
+            starting_date: task.starting_date,
           }),
         });
       })
@@ -56,7 +60,7 @@ function EditTasks() {
   };
 
   const handleClickBoard = () => {
-    navigate("/adminpanel", { state: { idFromStorage } });
+    navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
   };
 
   const handleClickAdminPanel = () => {

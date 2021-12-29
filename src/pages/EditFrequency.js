@@ -45,7 +45,7 @@ function EditFrequency() {
   };
 
   const handleClickBoard = () => {
-    navigate("/adminpanel", { state: { idFromStorage } });
+    navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
   };
 
   const handleClickAdminPanel = () => {
