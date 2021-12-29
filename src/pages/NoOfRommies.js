@@ -6,14 +6,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Team_building_Outline from "../img/Team_building_Outline.svg";
 
 function NoOfRommies() {
-	const [number, setNumber] = useState(0);
+	const [number, setNumber] = useState(2);
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const { newGroupData } = state;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		//console.log(number);
 		navigate("/set_roomies", { state: { number, newGroupData } });
 	};
 
@@ -26,7 +25,7 @@ function NoOfRommies() {
 
 					<form onSubmit={handleSubmit}>
 						<input
-							type='number'
+							type='number' min="2"
 							value={number}
 							onChange={(e) => {
 								console.log(newGroupData);
