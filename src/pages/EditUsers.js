@@ -1,54 +1,47 @@
 import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
-import Footer from "./sharedComponents/Footer";
+import Footer from "../pages/sharedComponents/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function EditTasks() {
-  const [tasks, setTasks] = useState([]);
+function EditUsers() {
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
   const { idFromStorage } = state;
 
   useEffect(() => {
     const fetchData = async () => {
-      // if (isNaN(groupId)) return;
-      if (idFromStorage) {
-        const response = await fetch(
-          `http://localhost:4000/tasks/${idFromStorage}`
-        );
-        const data = await response.json();
-        console.log(data);
+      const response = await fetch(
+        `http://localhost:4000/users/${idFromStorage}`
+      );
+      const data = await response.json();
 
-        setTasks(data);
-      }
+      setUsers(data);
     };
     fetchData();
   }, [idFromStorage]);
 
+  console.log(users);
 
   const handleChange = (attribute, newValue, index) => {
-    const newTasks = [...tasks];
-    const newTask = { ...tasks[index] };
-    newTask[attribute] = newValue;
-    newTasks[index] = newTask;
-    setTasks(newTasks);
+    const newUsers = [...users];
+    const newUser = { ...users[index] };
+    newUser[attribute] = newValue;
+    newUsers[index] = newUser;
+    setUsers(newUsers);
   };
 
   const handleClick = async () => {
     const requests = await Promise.all(
-      tasks.map((task) => {
-        return fetch(`http://localhost:4000/tasks/${task.id}`, {
-          method: "PUT",
+      users.map((user) => {
+        return fetch(`http://localhost:4000/users/${user.id}`, {
+          method: "PATCH",
           headers: {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
-            name: task.task_name,
-            description: task.description,
-            group_id: idFromStorage,
-            user_id: task.user_id,
-            task_completed: task.task_completed,
-            starting_date: task.starting_date,
+            name: user.username,
+            email: user.email,
           }),
         });
       })
@@ -74,26 +67,26 @@ function EditTasks() {
         <Nav />
       </div>
       <div className="edit-container">
-        <h3>Edit a task</h3>
-        {tasks.map((task, index) => (
+        <h3>Edit a user</h3>
+        {users.map((user, index) => (
           <div>
             <div className="small-edit-container" key={index}>
               <input
-                name={task.id}
+                name={user.id}
                 type="text"
-                placeholder="task"
-                value={task.task_name}
+                placeholder="username"
+                value={user.username}
                 onChange={(event) =>
-                  handleChange("task_name", event.target.value, index)
+                  handleChange("username", event.target.value, index)
                 }
               />
               <input
-                name={task.id}
+                name={user.id}
                 type="text"
-                placeholder="description"
-                value={task.description}
+                placeholder="email"
+                value={user.email}
                 onChange={(event) =>
-                  handleChange("description", event.target.value, index)
+                  handleChange("email", event.target.value, index)
                 }
               />
             </div>
@@ -117,4 +110,5 @@ function EditTasks() {
     </div>
   );
 }
-export default EditTasks;
+
+export default EditUsers;

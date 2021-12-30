@@ -4,6 +4,7 @@ import Footer from "../pages/sharedComponents/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
+
 function TasksInfo() {
   const [tasks, setTasks] = useState([]);
   const [validationError, setValidationError] = useState("");
@@ -13,6 +14,7 @@ function TasksInfo() {
   const number = roomies.length + 1;
   let allgroupMembers = [];
   const idFromStorage = localStorage.getItem("groupId");
+
   useEffect(() => {
     const emptyTasks = new Array(number).fill().map(() => ({
       taskName: "",
@@ -29,6 +31,7 @@ function TasksInfo() {
     newTasks[index] = newTask;
     setTasks(newTasks);
   };
+
   async function sendUsers() {
     roomies.forEach((roomie) => (roomie.group_id = idFromStorage));
     roomies.forEach((roomie) => (roomie.password = newGroupData.secret));
@@ -42,6 +45,7 @@ function TasksInfo() {
         password: newGroupData.password,
       },
     ];
+
     const response = await fetch("http://localhost:4000/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -49,7 +53,9 @@ function TasksInfo() {
         allgroupMembers,
       }),
     });
+
     if (!response.ok) throw Error(response.message);
+
     try {
       const users = await response.json();
       allgroupMembers.forEach((member) => {
@@ -59,6 +65,7 @@ function TasksInfo() {
         member.id = userForMember.id;
         console.log(member.email + "=" + userForMember.id);
       });
+
       return users;
     } catch (err) {
       throw err;
@@ -71,6 +78,7 @@ function TasksInfo() {
 
       return user.id;
     });
+
     const response = await fetch("http://localhost:4000/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -85,6 +93,7 @@ function TasksInfo() {
         }))
       ),
     });
+
     if (!response.ok) throw Error(response.message);
     try {
       const data = await response.json();

@@ -27,7 +27,8 @@ function RoomiesInfo() {
 		newRoomies[index] = newRoomie;
 		setRoomies(newRoomies);
 	};
-	const submitRoomies = async () => {
+	const submitRoomies = async (event) => {
+		event.preventDefault()
 		let isValid = true;
 		roomies.map(
 			(roomie) =>
@@ -50,15 +51,18 @@ function RoomiesInfo() {
 							: "Enter the info of your roomie"}{" "}
 					</h3>
 				</div>
+				<form onSubmit={submitRoomies}>
 				{roomies.map((n, index) => (
 					<div key={`input-${index}`}>
 						<p className='text-bold'>Roomie {index + 1}</p>
-						<div className='input-groups-container'>
+						<div className='input-groups-container' onSubmit={submitRoomies}>
 							<div className='input-group'>
 								<p>Name:</p>
 								<input
 									name={`name-${index}`}
 									type='text'
+									required
+									minlength="3" 
 									onChange={(event) =>
 										handleTask("username", event.target.value, index)
 									}
@@ -68,7 +72,7 @@ function RoomiesInfo() {
 							<div className='input-group'>
 								<p>Email:</p>
 								<input
-									type='text'
+									type='email' required
 									name={`email-${index}`}
 									onChange={(event) =>
 										handleTask("email", event.target.value, index)
@@ -76,15 +80,17 @@ function RoomiesInfo() {
 									value={roomies[index].email}
 								/>
 							</div>
+							<p>{validationError}</p>
+							
 						</div>
 					</div>
 				))}
-				<p>{validationError}</p>
 				<div className='roomies-info-btn-container u-margin-top-small '>
-					<button className='orange-btn' onClick={submitRoomies}>
-						Next
-					</button>
-				</div>
+								<button className='orange-btn'  type="submit">
+									Next
+								</button>
+							</div>
+							</form>
 			</div>
 			<Footer />
 		</div>
