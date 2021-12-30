@@ -22,6 +22,8 @@ app.get("/tasks/:groupId", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
 app.get("/groups/:groupId", api.getGroups);
 app.get("/board/:groupId", api.getBoardInfo);
+app.get("/users/:emailId", api.getUserInfo);
+app.get("/users/:userId", api.getUserById);
 
 //POST
 app.post("/users", api.addNewUsers);

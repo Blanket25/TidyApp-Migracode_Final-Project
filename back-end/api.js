@@ -59,6 +59,32 @@ const api = () => {
 		}
 	};
 
+	const getUserInfo = async (req, res) => {
+		const emailId = req.params.emailId;
+
+		try {
+			const query = `select * from users where email=$1`;
+			const result = await connection.query(query, [emailId]);
+			console.log(result.rows);
+			return res.status(200).send(result.rows);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const getUserById = async (req, res) => {
+		const userId = req.params.userId;
+
+		try {
+			const query = `select * from users where id=$1`;
+			const result = await connection.query(query, [userId]);
+			console.log(result.rows);
+			return res.status(200).send(result.rows);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const addNewUsers = async (req, res) => {
 		console.log("addNewUser");
 		console.log(req.body);
