@@ -88,7 +88,7 @@ function Signup() {
             placeholder="Your name"
             name="username"
             onChange={handleChange}
-            minlength="3" 
+            minLength="3" 
             required
           ></input>
           <input
@@ -96,12 +96,12 @@ function Signup() {
             placeholder="Group name"
             name="group"
             onChange={handleChange}
-            minlength="3" 
+            minLength="3" 
             required
           ></input>
           <input
             type="password"
-            minlength="6" 
+            minLength="6" 
             required
             placeholder="Group secret (group password)"
             name="groupSecret"
@@ -117,7 +117,7 @@ function Signup() {
             type="password"
             placeholder="Your password"
             name="password"
-            minlength="6" 
+            minLength="6" 
             required
             onChange={handleChange}
           ></input>
