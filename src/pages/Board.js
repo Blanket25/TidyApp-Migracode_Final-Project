@@ -5,13 +5,18 @@ import printer from "../img/printer.svg";
 import ContentToPrint from "./ContentToPrint";
 import React, { useRef } from "react";
 import ReactToPrint from "react-to-print";
+import { useLocation } from "react-router-dom";
 
 function Board() {
+  const { state } = useLocation();
+  const { idFromStorage } = state;
+
   class ComponentToPrint extends React.Component {
     render() {
+      console.log(idFromStorage);
       return (
         <div>
-          <ContentToPrint />
+          <ContentToPrint id={idFromStorage} />
         </div>
       );
     }

@@ -5,7 +5,7 @@ import Footer from "./sharedComponents/Footer";
 
 function EditUsers() {
   const [tasks, setTasks] = useState([]);
-  const groupId = parseInt(window.localStorage.getItem("groupId")); //const groupId = 4;
+  const groupId = window.localStorage.getItem("groupId");
 
   useEffect(() => {
     const fetchData = async () => {

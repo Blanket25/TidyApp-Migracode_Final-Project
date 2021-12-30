@@ -1,38 +1,35 @@
 import "../index.css";
+import { useEffect, useState } from "react";
 
 function ContentToPrint() {
-  const tasks = [
-    {
-      name: "Elmira",
-      task: "clean the kitchen",
-    },
-    {
-      name: "Omar",
-      task: "buy food",
-    },
-    {
-      name: "Bianca",
-      task: "clean the living room",
-    },
-  ];
-  const handleChange = (index) => {
-    console.log(`changed task ${index}`);
-  };
+  const [fetchedData, setFetchedData] = useState([]);
+  const groupId = window.localStorage.getItem("groupId");
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(`http://localhost:4000/board/${groupId}`);
+      const data = await response.json();
+      setFetchedData(data);
+      console.log(data);
+    };
+    getData();
+  }, [groupId]);
+
   return (
     <div className="card-container">
-      <div className="card">
-        {tasks.map((item, index) => {
-          return (
-            <div className="task-container" key={index} id={index}>
-              <p>{item.name}</p>
-              <div>
-                <p>{item.task}</p>
-              </div>
-              <input type="checkbox" onChange={() => handleChange(index)} />
+      {fetchedData.map((data, index) => {
+        return (
+          <div className="card">
+            <div>
+              <p key={index}>{data.username}</p>
             </div>
-          );
-        })}
-      </div>
+            <div>
+              <p key={index}>{data.name}</p>
+            </div>
+            <input key={index} type="checkbox" />
+          </div>
+        );
+      })}
     </div>
   );
 }

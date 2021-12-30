@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import Nav from "../pages/sharedComponents/Nav";
+import { Link } from "react-router-dom";
 import Footer from "../pages/sharedComponents/Footer";
 
 const AdminPanel = () => {
-  //get group id from local storage
+  //const groupId = window.localStorage.getItem("groupId");
 
   return (
     <>

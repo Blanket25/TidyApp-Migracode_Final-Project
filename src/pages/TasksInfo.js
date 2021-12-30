@@ -4,7 +4,6 @@ import Footer from "../pages/sharedComponents/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
-
 function TasksInfo() {
   const [tasks, setTasks] = useState([]);
   const [validationError, setValidationError] = useState("");
@@ -30,7 +29,7 @@ function TasksInfo() {
     newTasks[index] = newTask;
     setTasks(newTasks);
   };
-  async function fetchUsers() {
+  async function sendUsers() {
     roomies.forEach((roomie) => (roomie.group_id = idFromStorage));
     roomies.forEach((roomie) => (roomie.password = newGroupData.secret));
     allgroupMembers = [
@@ -52,15 +51,26 @@ function TasksInfo() {
     });
     if (!response.ok) throw Error(response.message);
     try {
-      const data = await response.json();
-      return data;
+      const users = await response.json();
+      allgroupMembers.forEach((member) => {
+        const userForMember = users.find((u) => u.email === member.email);
+        if (userForMember === null)
+          throw new Error("Couldn't find user for member " + member.email);
+        member.id = userForMember.id;
+        console.log(member.email + "=" + userForMember.id);
+      });
+      return users;
     } catch (err) {
       throw err;
     }
   }
 
-  async function fetchTasks(data) {
-    const ids = data.map((data) => data.id);
+  async function sendTasks(users) {
+    const ids = users.map((user) => {
+      console.log(user.id);
+
+      return user.id;
+    });
     const response = await fetch("http://localhost:4000/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,8 +97,8 @@ function TasksInfo() {
   const handleClick = async () => {
     const isValid = tasks.every((task) => task.taskName !== "");
     if (isValid) {
-      fetchUsers();
-      fetchTasks();
+      await sendUsers();
+      await sendTasks(allgroupMembers);
       roomies.forEach((roomie) => {
         emailjs
           .send(
@@ -121,9 +131,7 @@ function TasksInfo() {
       );
       if (!response.ok) throw Error(response.message);
       try {
-        const data = await response.json();
-        fetchTasks(data);
-        navigate(`/board/${idFromStorage}`);
+        navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
       } catch (err) {
         throw err;
       }

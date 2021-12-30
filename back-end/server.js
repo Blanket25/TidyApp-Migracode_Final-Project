@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.get("/tasks/:groupId", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
 app.get("/groups/:groupId", api.getGroups);
+app.get("/board/:groupId", api.getBoardInfo);
 
 //POST
 app.post("/users", api.addNewUsers);
@@ -35,6 +36,5 @@ app.delete("/tasks/:taskId", api.deleteTask);
 //PUT AND PATCH
 app.put("/tasks/:taskId", api.updateTask);
 app.patch("/users/:userId", api.updateUser);
-app.patch("/groups/:groupId", api.updateGroup);
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));
