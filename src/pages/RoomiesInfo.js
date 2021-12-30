@@ -51,10 +51,11 @@ function RoomiesInfo() {
 							: "Enter the info of your roomie"}{" "}
 					</h3>
 				</div>
+				<form onSubmit={submitRoomies}>
 				{roomies.map((n, index) => (
 					<div key={`input-${index}`}>
 						<p className='text-bold'>Roomie {index + 1}</p>
-						<form className='input-groups-container' onSubmit={submitRoomies}>
+						<div className='input-groups-container' onSubmit={submitRoomies}>
 							<div className='input-group'>
 								<p>Name:</p>
 								<input
@@ -80,15 +81,16 @@ function RoomiesInfo() {
 								/>
 							</div>
 							<p>{validationError}</p>
-							<div className='roomies-info-btn-container u-margin-top-small '>
+							
+						</div>
+					</div>
+				))}
+				<div className='roomies-info-btn-container u-margin-top-small '>
 								<button className='orange-btn'  type="submit">
 									Next
 								</button>
 							</div>
-						</form>
-					</div>
-				))}
-				
+							</form>
 			</div>
 			<Footer />
 		</div>
