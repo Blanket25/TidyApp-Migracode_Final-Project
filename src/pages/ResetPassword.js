@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { isAuthenticated, logIn } from "../auth";
 import { useNavigate } from "react-router-dom";
+import emailjs from "emailjs-com";
 
 function ResetPassword() {
   const [isLogged, setIsLogged] = useState(false);
@@ -15,13 +16,46 @@ function ResetPassword() {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (email.length > 0) {
-      //setIsLogged(isAuthenticated);
-      //logIn("klsdjasdASFAWETGWEGF");
-      setErrorMessage("Password reset link is sent to your email");
-      //navigate("/board");
-    } else if (!email) {
+    if (!email) {
       setErrorMessage("Please enter your email to reset password");
+    }
+  };
+
+  const sendEmailResetPassword = async () => {
+    
+    const userId=1;
+    const response = await fetch(`http://localhost:4000/users/${email}`);
+    const data = await response.json();
+    const isValid = true;
+    if (isValid) {
+      
+      data.forEach((user) => {
+        emailjs
+          .send(
+            "service_kbjdvl4",
+            "template_k7fxp8r",
+            {
+              to_name: user.username,
+              link: `http://localhost:3000/setpassword/${user.id}`,
+              to_email: user.email,
+              admin_name: '',
+              group_name: '',
+              group_secret: '',
+            },
+            "user_qM5g1zhJlzTpO2v22X8WF"
+          )
+          .then(
+            (response) => {
+              console.log("SUCCESS!", response.status, response.text);
+            },
+            (err) => {
+              console.log("FAILED...", err);
+            }
+          );
+      });
+      setErrorMessage("Password reset link is sent to your email");
+    } else {
+      setErrorMessage("No such user exists");
     }
   };
 
@@ -39,12 +73,9 @@ function ResetPassword() {
             placeholder="email"
           />
           
-          {/* <Link className="orange-btn" to="/board">
-            Go to board
-          </Link> */}
           <p>{erroMessage}</p>
-          <button type="submit" className="orange-btn" disabled={isLogged}>
-            Reset
+          <button onClick={sendEmailResetPassword} className="orange-btn">
+            Submit
           </button>
         </form>
       </div>

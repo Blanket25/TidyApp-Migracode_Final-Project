@@ -12,6 +12,7 @@ import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
 import TasksFrequency from "./pages/TasksFrequency";
 import ResetPassword from "./pages/ResetPassword";
+import SetPassword from "./pages/SetPassword";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { logOut } from "./auth";
@@ -36,7 +37,8 @@ function App() {
         <Route path="/edit_users" element={<EditUsers />} />
         <Route path="/edit_tasks" element={<EditTasks />} />
         <Route path="/edit_frequency" element={<EditFrequency />} />
-        <Route path="/ResetPassword" element={<ResetPassword />} />
+				<Route path='/resetpassword' element={<ResetPassword />} />
+				<Route path='/setpassword/:userId' element={<SetPassword />} />
       </Routes>
     </BrowserRouter>
   );
