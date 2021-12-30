@@ -8,7 +8,7 @@ const cron = require('node-cron');
 const app = express();
 
 const corsOptions = {
-	origin: "http://localhost:3000",
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -26,6 +26,7 @@ cron.schedule('0 1 * * *', rotateUsers);
 //GET
 app.get("/tasks/:groupId", api.getTasks);
 app.get("/users/:groupId", api.getUsers);
+app.get("/groups/:groupId", api.getGroups);
 
 //POST
 app.post("/users", api.addNewUsers);
@@ -38,7 +39,9 @@ app.delete("/users/:userId", api.deleteUser);
 app.delete("/tasks/:taskId", api.deleteTask);
 
 //PUT AND PATCH
+app.put("/groups/:groupId", api.updateGroup);
 app.put("/tasks/:taskId", api.updateTask);
 app.patch("/users/:userId", api.updateUser);
 app.patch("/tasks/status/:taskId", api.updateTaskStatus);
+
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}`));

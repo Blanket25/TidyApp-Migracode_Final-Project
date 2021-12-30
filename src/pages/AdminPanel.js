@@ -1,34 +1,61 @@
-import logo from '../img/Logo.png';
-import { Link } from 'react-router-dom';
+import Nav from "../pages/sharedComponents/Nav";
+import { Link } from "react-router-dom";
+import Footer from "../pages/sharedComponents/Footer";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import AdminPanelButton from '../pages/sharedComponents/AdminPanelButton';
-// import AdminPanelButton from '../sharedComponents/AdminPanelButton';
-import Footer from '../pages/sharedComponents/Footer';
 const AdminPanel = () => {
-	return (
-		<>
-			<div className='admin-panel-logo-container'>
-				<img src={logo} alt='TidyApp' className='app-logo'></img>
-			</div>
-			<div className='admin-panel-container'>
-				<div className='admin-panel-left  u-center-text'>
-					<h3 className='admin-panel-header'>Settings</h3>
-					<div className='admin-panel-buttons u-margin-top-small u-margin-bottom-small '>
-						<AdminPanelButton buttonText='Edit a task' />
-						<AdminPanelButton buttonText='Edit a roomie' />
-						<AdminPanelButton buttonText='Edit frequency' />
-					</div>
-				</div>
-				<div className='admin-panel-settings-box'></div>
-			</div>
-			<div className='u-center-text admin-panel-board-redirection '>
-				<p>Go to the task board</p>
-				<Link to='/board'>
-					<button className='purple-btn'> Board</button>
-				</Link>
-			</div>
-			<Footer />
-		</>
-	);
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { idFromStorage } = state;
+
+  console.log(idFromStorage);
+  function handleClickTasks() {
+    navigate("/edit_tasks", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
+
+  function handleClickUsers() {
+    navigate("/edit_users", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
+
+  function handleClickFrequency() {
+    navigate("/edit_frequency", { state: { idFromStorage } });
+    console.log(idFromStorage);
+  }
+
+  return (
+    <>
+      <div className="admin-panel-logo-container">
+        <Nav />
+      </div>
+
+      <div className="admin-panel-container">
+        <h3>Settings</h3>
+        <button onClick={handleClickTasks} className="orange-btn u-center-text">
+          Edit a task
+        </button>
+        <button className="orange-btn u-center-text" onClick={handleClickUsers}>
+          Edit a roomie
+        </button>
+        <button
+          className="orange-btn u-center-text"
+          onClick={handleClickFrequency}
+        >
+          Edit frequency
+        </button>
+
+
+        <div className="u-center-text admin-panel-board-redirection ">
+          <p>Go to the task board</p>
+          <Link to="/board">
+            <button className="purple-btn"> Board</button>
+          </Link>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 };
 export default AdminPanel;
+
