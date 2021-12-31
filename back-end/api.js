@@ -177,13 +177,39 @@ const api = () => {
     }
   };
 
+  const replaceGroupValues = (group, newGroup) => {
+    let updatedGroup = {};
+
+    for (const propertyName in group) {
+      updatedGroup[propertyName] = group[propertyName];
+    }
+    for (const propertyName in newGroup) {
+      updatedGroup[propertyName] = newGroup[propertyName];
+    }
+
+    return updatedGroup;
+  };
+
+  const getGroupFromDatabase = async (userId) => {
+    const result = await connection.query(
+      `select * from tidy_group where id=$1`,
+      [userId]
+    );
+    const dbUser = result.rows[0];
+    return dbUser;
+  };
+
   const updateGroup = async (req, res) => {
     try {
       const groupId = req.params.taskId;
-      const group = req.body;
+      const groupBody = req.body;
+
+      const dbGroup = await getGroupFromDatabase(groupId);
+      const group = replaceUserValues(dbGroup, groupBody);
+
       const query =
         "UPDATE tidy_group SET group_name=$1, date_of_creation=$2, frequency=$3, group_secret=$4, number_of_roomies=$5, email=$6 WHERE id=$7;";
-      const result = await connection.query(query, [
+      await connection.query(query, [
         group.group_name,
         group.date_of_creation,
         group.frequency,
@@ -192,7 +218,7 @@ const api = () => {
         group.email,
         groupId,
       ]);
-      return res.status(200).send("Group updated").json(result.rows);
+      return res.status(200).send("Group updated");
     } catch (e) {
       return res.status(500).send("Error" + e);
     }

@@ -69,29 +69,27 @@ function EditUsers() {
       <div className="edit-container">
         <h3>Edit a user</h3>
         {users.map((user, index) => (
-          <div>
-            <div className="small-edit-container" key={index}>
-              <label>Username</label>
-              <input
-                name={user.id}
-                type="text"
-                placeholder="username"
-                value={user.username}
-                onChange={(event) =>
-                  handleChange("username", event.target.value, index)
-                }
-              />
-              <label>Email:</label>
-              <input
-                name={user.id}
-                type="text"
-                placeholder="email"
-                value={user.email}
-                onChange={(event) =>
-                  handleChange("email", event.target.value, index)
-                }
-              />
-            </div>
+          <div className="small-edit-container" key={index}>
+            <label>Username</label>
+            <input
+              name={`name-${index}`}
+              type="text"
+              placeholder="username"
+              value={user.username}
+              onChange={(event) =>
+                handleChange("username", event.target.value, index)
+              }
+            />
+            <label>Email:</label>
+            <input
+              name={`email-${index}`}
+              type="text"
+              placeholder="email"
+              value={user.email}
+              onChange={(event) =>
+                handleChange("email", event.target.value, index)
+              }
+            />
           </div>
         ))}
         <div className="btns-container">
