@@ -190,18 +190,18 @@ const api = () => {
     return updatedGroup;
   };
 
-  const getGroupFromDatabase = async (userId) => {
+  const getGroupFromDatabase = async (groupId) => {
     const result = await connection.query(
       `select * from tidy_group where id=$1`,
-      [userId]
+      [groupId]
     );
-    const dbUser = result.rows[0];
-    return dbUser;
+    const dbGroup = result.rows[0];
+    return dbGroup;
   };
 
   const updateGroup = async (req, res) => {
     try {
-      const groupId = req.params.taskId;
+      const groupId = req.params.groupId;
       const groupBody = req.body;
 
       const dbGroup = await getGroupFromDatabase(groupId);
