@@ -32,12 +32,16 @@ function Login() {
       const data = await response.json();
       console.log(data);
       const idFromStorage = data.group_id;
-      console.log(idFromStorage);
+      const typeOfUser = data.type_of_user;
+      console.log(idFromStorage, typeOfUser);
 
       //window.localStorage.setItem("group id", idFromStorage);
-      if (idFromStorage) {
+      if (idFromStorage && typeOfUser === "admin") {
         setIsLogged(true);
         navigate("/adminpanel", { state: { idFromStorage } });
+      } else if (idFromStorage && typeOfUser === "roomie") {
+        setIsLogged(false);
+        setErrorMessage("Ups! It seems like you are not an admin!");
       }
     } else if (!email && password) {
       setErrorMessage("Please enter your email");
