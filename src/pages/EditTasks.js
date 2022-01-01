@@ -37,17 +37,13 @@ function EditTasks() {
     const requests = await Promise.all(
       tasks.map((task) => {
         return fetch(`http://localhost:4000/tasks/${task.id}`, {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
             name: task.task_name,
             description: task.description,
-            group_id: idFromStorage,
-            user_id: task.user_id,
-            task_completed: task.task_completed,
-            starting_date: task.starting_date,
           }),
         });
       })

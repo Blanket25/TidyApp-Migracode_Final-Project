@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const [isLogged, setIsLogged] = useState(false);
   const navigate = useNavigate();
   const idFromStorage = window.localStorage.getItem("groupId");
 
+  const [isLogged, setIsLogged] = useState(idFromStorage !== null);
   useEffect(() => {
     if (idFromStorage !== null) setIsLogged(true);
   }, [idFromStorage]);

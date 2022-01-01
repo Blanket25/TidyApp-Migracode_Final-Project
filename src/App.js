@@ -17,9 +17,9 @@ import { useEffect } from "react";
 import { logOut } from "./auth";
 
 function App() {
-  useEffect(() => {
-    logOut();
-  }, []);
+  // useEffect(() => {
+  //   logOut();
+  // }, []);
 
   return (
     <BrowserRouter>

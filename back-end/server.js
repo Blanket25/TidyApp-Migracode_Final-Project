@@ -39,7 +39,7 @@ app.delete("/tasks/:taskId", api.deleteTask);
 
 //PUT AND PATCH
 app.patch("/groups/:groupId", api.updateGroup);
-app.put("/tasks/:taskId", api.updateTask);
+app.patch("/tasks/:taskId", api.updateTask);
 app.patch("/users/:userId", api.updateUser);
 app.patch("/tasks/status/:taskId", api.updateTaskStatus);
 

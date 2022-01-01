@@ -157,12 +157,16 @@ const api = () => {
   };
 
   const updateTask = async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const task = req.body;
-      const query =
-        "UPDATE tasks SET name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7;";
-      const result = await connection.query(query, [
+    const taskId = req.params.taskId;
+    const taskBody = req.body;
+
+    const dbTask = await getTaskFromDatabase(taskId);
+    const task = replaceTasksValues(dbTask, taskBody);
+
+    await connection.query(
+      `update tasks set 
+			name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7`,
+      [
         task.name,
         task.task_completed,
         task.description,
@@ -170,11 +174,9 @@ const api = () => {
         task.group_id,
         task.user_id,
         taskId,
-      ]);
-      return res.status(200).send("Task updated").json(result.rows);
-    } catch (e) {
-      return res.status(500).send("Error" + e);
-    }
+      ]
+    );
+    await res.status(202).send(`Task ${taskId} has been updated!`);
   };
 
   const replaceGroupValues = (group, newGroup) => {
@@ -266,6 +268,7 @@ const api = () => {
     );
     await res.status(202).send(`User ${userId} have been updated!`);
   };
+
 
   const addNewGroup = async (req, res) => {
     const newGroup = req.body;

@@ -51,7 +51,7 @@ const AdminPanel = () => {
 
         <div className="u-center-text">
           <p>Go to the task board</p>
-          <Link to="/board">
+          <Link to={`/board/${idFromStorage}`}>
             <button className="purple-btn"> Board</button>
           </Link>
         </div>

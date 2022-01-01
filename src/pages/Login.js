@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 // import { isAuthenticated } from "../auth";
 import { useNavigate } from "react-router-dom";
+import { logIn } from "../auth";
 
 function Login() {
   const [isLogged, setIsLogged] = useState(false);
@@ -38,6 +39,7 @@ function Login() {
       //window.localStorage.setItem("group id", idFromStorage);
       if (idFromStorage && typeOfUser === "admin") {
         setIsLogged(true);
+        logIn(idFromStorage);
         navigate("/adminpanel", { state: { idFromStorage } });
       } else if (idFromStorage && typeOfUser === "roomie") {
         setIsLogged(false);
