@@ -73,7 +73,6 @@ function Login() {
             placeholder="password"
           />
           <p>{erroMessage}</p>
-          <Link to="/ResetPassword">Forgot Password?</Link>
           <button type="submit" className="orange-btn" disabled={isLogged}>
             Log in
           </button>
