@@ -62,7 +62,7 @@ function EditUsers() {
   };
 
   return (
-    <div className="big-container">
+    <div className="main-container">
       <div>
         <Nav />
       </div>

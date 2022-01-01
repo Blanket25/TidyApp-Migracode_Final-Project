@@ -1,9 +1,11 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 function ContentToPrint(props) {
   const [fetchedData, setFetchedData] = useState([]);
   const tasks = [];
+
   useEffect(() => {
     const getData = async () => {
       const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);
@@ -46,7 +48,7 @@ function ContentToPrint(props) {
 
         {tasks.map((item, index) => {
           return (
-            <div className="task-container" key={index} id={index}>
+            <div className="task-container u-box-shadow" key={index} id={index}>
               <p>{item.username}</p>
               <div>
                 <p>{item.task_name}</p>

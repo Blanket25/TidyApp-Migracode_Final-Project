@@ -110,14 +110,23 @@ p {
 /*General*/
 header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 0 1rem;
 }
 
 .home-header {
   padding: 0 1rem;
 }
+
+@media (min-width: 768px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 /*Buttons*/
 .orange-btn,
 .purple-btn {
@@ -163,6 +172,10 @@ button:disabled:hover {
 
 .app-logo {
   width: 10rem;
+}
+
+.last-btn {
+  margin-left: 1rem;
 }
 
 /** BODY **/
@@ -372,9 +385,11 @@ div.signup-form-container > h2 {
 .board-header,
 .print-btn,
 .card-container,
-.card {
+.card,
+.task-container {
   display: flex;
 }
+
 .card {
   flex-direction: column;
 }
@@ -394,6 +409,7 @@ div.signup-form-container > h2 {
 .print-btn > p {
   color: var(--purple);
 }
+
 .print-btn:hover > p {
   color: var(--light);
 }
@@ -402,25 +418,17 @@ div.signup-form-container > h2 {
   justify-content: center;
 }
 
-.card {
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-evenly;
+.task-container {
+  align-items: center;
+  justify-content: space-between;
   gap: 2rem;
-  padding: 3rem;
+  padding: 2rem 1rem;
   margin-top: 3rem;
   border-radius: 1rem;
   background-color: #fff;
-  width: 75vw;
+  width: 80vw;
 }
 
-.task-container {
-  display: flex;
-  justify-content: space-between;
-}
-.task-container > p {
-  min-width: 12rem;
-}
 .print-btn > p,
 .card > p {
   margin: 0;

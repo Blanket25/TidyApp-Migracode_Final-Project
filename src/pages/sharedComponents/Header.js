@@ -32,7 +32,7 @@ function Header() {
       </div>
       <div>
         {isLogged ? (
-          <>
+          <div className="header-btns">
             <Link
               className="purple-btn"
               to="/"
@@ -46,10 +46,10 @@ function Header() {
             <button className="orange-btn" onClick={goToBoard}>
               Go to board
             </button>
-            <button className="orange-btn" onClick={goToAdminPanel}>
+            <button className="orange-btn last-btn" onClick={goToAdminPanel}>
               Admin Panel
             </button>
-          </>
+          </div>
         ) : (
           <>
             <Link className="purple-btn" to="/login">
