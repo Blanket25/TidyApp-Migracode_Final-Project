@@ -12,6 +12,7 @@ import NoOfRommies from "./pages/NoOfRommies";
 import RoomiesInfo from "./pages/RoomiesInfo";
 import TasksFrequency from "./pages/TasksFrequency";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 function App() {
   return (
     <BrowserRouter>

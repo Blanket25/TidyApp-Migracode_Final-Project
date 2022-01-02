@@ -4,6 +4,7 @@ import Nav from "./sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 function Signup() {
   const [isSigned, setIsSigned] = useState(false);
   const [signupText, setSignupText] = useState("");
@@ -29,6 +30,7 @@ function Signup() {
           username: prevValue.username,
         };
       }
+
       if (name === "email") {
         return {
           group: prevValue.group,
@@ -38,6 +40,7 @@ function Signup() {
           username: prevValue.username,
         };
       }
+
       if (name === "password") {
         return {
           group: prevValue.group,
@@ -47,6 +50,7 @@ function Signup() {
           username: prevValue.username,
         };
       }
+
       if (name === "groupSecret") {
         return {
           group: prevValue.group,
@@ -56,6 +60,7 @@ function Signup() {
           username: prevValue.username,
         };
       }
+
       if (name === "username") {
         return {
           group: prevValue.group,
@@ -70,12 +75,12 @@ function Signup() {
 
   async function handleClick(event) {
     event.preventDefault();
-      setIsSigned(true);
-      arrayOfRegisteredUsers.push(newGroupData);
-      setSignupText("");
-      navigate("/number-of-roomies", { state: { newGroupData } });
-   }
-  
+    setIsSigned(true);
+    arrayOfRegisteredUsers.push(newGroupData);
+    setSignupText("");
+    navigate("/number-of-roomies", { state: { newGroupData } });
+  }
+
   return (
     <div className="signup-main-container">
       <Nav />
@@ -88,7 +93,7 @@ function Signup() {
             placeholder="Your name"
             name="username"
             onChange={handleChange}
-            minLength="3" 
+            minLength="3"
             required
           ></input>
           <input
@@ -96,12 +101,12 @@ function Signup() {
             placeholder="Group name"
             name="group"
             onChange={handleChange}
-            minLength="3" 
+            minLength="3"
             required
           ></input>
           <input
             type="password"
-            minLength="6" 
+            minLength="6"
             required
             placeholder="Group secret (group password)"
             name="groupSecret"
@@ -117,14 +122,14 @@ function Signup() {
             type="password"
             placeholder="Your password"
             name="password"
-            minLength="6" 
+            minLength="6"
             required
             onChange={handleChange}
           ></input>
 
           <button
             className="orange-btn"
-           type="submit"
+            type="submit"
             disabled={isSigned ? true : false}
           >
             Create Group

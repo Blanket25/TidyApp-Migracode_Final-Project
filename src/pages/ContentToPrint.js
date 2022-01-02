@@ -1,6 +1,7 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { URL } from "../globals";
 
 function ContentToPrint(props) {
   const [fetchedData, setFetchedData] = useState([]);
@@ -8,7 +9,7 @@ function ContentToPrint(props) {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);
+      const data = await axios.get(`${URL}/tasks/${props.id}`);
 
       setFetchedData(data);
     };
@@ -22,17 +23,14 @@ function ContentToPrint(props) {
     console.log(e.target.checked);
     tasks[index].task_completed = e.target.checked;
     console.log(tasks[index]);
-    const response = await fetch(
-      `http://localhost:4000/tasks/status/${tasks[index].id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ task_completed: tasks[index].task_completed }),
-      }
-    );
+    const response = await fetch(`${URL}/tasks/status/${tasks[index].id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ task_completed: tasks[index].task_completed }),
+    });
     if (!response.ok) throw Error(response.message);
 
-    const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);
+    const data = await axios.get(`${URL}/tasks/${props.id}`);
 
     setFetchedData(data);
   }

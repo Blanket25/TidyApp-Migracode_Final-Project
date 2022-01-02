@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./sharedComponents/Footer";
+import { URL } from "../globals";
 
 function EditFrequency() {
   const [frequency, setFrequency] = useState([]);
@@ -11,9 +12,7 @@ function EditFrequency() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:4000/groups/${idFromStorage}`
-      );
+      const response = await fetch(`${URL}/groups/${idFromStorage}`);
       const data = await response.json();
       console.log(data);
 
@@ -34,7 +33,7 @@ function EditFrequency() {
     try {
       const requests = await Promise.all(
         frequency.map((f) => {
-          return fetch(`http://localhost:4000/groups/${idFromStorage}`, {
+          return fetch(`${URL}/groups/${idFromStorage}`, {
             method: "PATCH",
             headers: {
               "Content-type": "application/json",
