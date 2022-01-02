@@ -6,6 +6,7 @@ import { useState } from "react";
 // import { isAuthenticated } from "../auth";
 import { useNavigate } from "react-router-dom";
 import { logIn } from "../auth";
+import { URL } from "../globals";
 
 function Login() {
   const [isLogged, setIsLogged] = useState(false);
@@ -29,7 +30,7 @@ function Login() {
         }),
       };
 
-      const response = await fetch("http://localhost:4000/login", settings);
+      const response = await fetch(`${URL}/login`, settings);
       const data = await response.json();
       console.log(data);
       const idFromStorage = data.group_id;

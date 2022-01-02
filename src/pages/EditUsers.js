@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
 import Footer from "../pages/sharedComponents/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
+import { URL } from "../globals";
 
 function EditUsers() {
   const [users, setUsers] = useState([]);
@@ -11,9 +12,7 @@ function EditUsers() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:4000/users/${idFromStorage}`
-      );
+      const response = await fetch(`${URL}/users/${idFromStorage}`);
       const data = await response.json();
 
       setUsers(data);
@@ -34,7 +33,7 @@ function EditUsers() {
   const handleClick = async () => {
     const requests = await Promise.all(
       users.map((user) => {
-        return fetch(`http://localhost:4000/users/${user.id}`, {
+        return fetch(`${URL}/users/${user.id}`, {
           method: "PATCH",
           headers: {
             "Content-type": "application/json",
