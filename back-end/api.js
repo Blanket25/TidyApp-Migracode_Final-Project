@@ -123,17 +123,9 @@ const api = () => {
   };
 
   const addNewTask = async (newTask) => {
-    // checking if the task already exists
-    const itExists = await connection.query(
-      "select * from tasks where name=$1",
-      [newTask.name]
-    );
-    if (itExists.rows.length > 0) {
-      return false;
-    } else {
-      // if not create the task
       const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
       values ($1, $2, $3, $4, $5, $6) returning id`;
+      
       await connection.query(createTask, [
         newTask.name,
         newTask.task_completed,
@@ -142,9 +134,8 @@ const api = () => {
         newTask.group_id,
         newTask.user_id,
       ]);
-      // answering wuth the task id
+      // answering with the task id
       return true;
-    }
   };
 
   const deleteTask = async (req, res) => {
