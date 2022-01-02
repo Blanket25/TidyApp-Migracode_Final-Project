@@ -50,13 +50,13 @@ const api = () => {
       const ids = [];
       for (let user in req.body.allgroupMembers) {
         let newUser = req.body.allgroupMembers[user];
-        const newUserName = newUser.username;
-        const userQuery = "SELECT * FROM users WHERE username=$1";
-        const result = await connection.query(userQuery, [newUserName]);
+        const newUserEmail = newUser.email;
+        const userQuery = "SELECT * FROM users WHERE email=$1";
+        const result = await connection.query(userQuery, [newUserEmail]);
         if (result.rows.length > 0) {
           return res
             .status(400)
-            .send("A user with the same name already exists!");
+            .send("A user with the same email already exists!");
         } else {
           const query =
             "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5) returning id";
