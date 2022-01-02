@@ -43,6 +43,7 @@ function TasksInfo() {
         type_of_user: `admin`,
         group_id: idFromStorage,
         password: newGroupData.password,
+        user_id:newGroupData.id
       },
     ];
 

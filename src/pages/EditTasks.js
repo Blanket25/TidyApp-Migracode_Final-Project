@@ -25,7 +25,6 @@ function EditTasks() {
     fetchData();
   }, [idFromStorage]);
 
-
   const handleChange = (attribute, newValue, index) => {
     const newTasks = [...tasks];
     const newTask = { ...tasks[index] };
@@ -38,17 +37,13 @@ function EditTasks() {
     const requests = await Promise.all(
       tasks.map((task) => {
         return fetch(`http://localhost:4000/tasks/${task.id}`, {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
             name: task.task_name,
             description: task.description,
-            group_id: idFromStorage,
-            user_id: task.user_id,
-            task_completed: task.task_completed,
-            starting_date: task.starting_date,
           }),
         });
       })
@@ -69,41 +64,41 @@ function EditTasks() {
   };
 
   return (
-    <div className="big-container">
+    <div className="main-container">
       <div>
         <Nav />
       </div>
       <div className="edit-container">
         <h3>Edit a task</h3>
         {tasks.map((task, index) => (
-          <div>
-            <div className="small-edit-container" key={index}>
-              <input
-                name={task.id}
-                type="text"
-                placeholder="task"
-                value={task.task_name}
-                onChange={(event) =>
-                  handleChange("task_name", event.target.value, index)
-                }
-              />
-              <input
-                name={task.id}
-                type="text"
-                placeholder="description"
-                value={task.description}
-                onChange={(event) =>
-                  handleChange("description", event.target.value, index)
-                }
-              />
-            </div>
+          <div className="small-edit-container" key={index}>
+            <label>Task:</label>
+            <input
+              name={task.id}
+              type="text"
+              placeholder="task"
+              value={task.task_name}
+              onChange={(event) =>
+                handleChange("task_name", event.target.value, index)
+              }
+            />
+            <label>Descrption:</label>
+            <input
+              name={task.id}
+              type="text"
+              placeholder="description"
+              value={task.description}
+              onChange={(event) =>
+                handleChange("description", event.target.value, index)
+              }
+            />
           </div>
         ))}
-        <div className="btns-container">
+        <div className="btns-container u-margin-top-small">
           <button className="purple-btn" onClick={handleClick}>
             Save
           </button>
-          <div className="link-btns">
+          <div className="link-btns u-margin-bottom-big">
             <button className="orange-btn" onClick={handleClickBoard}>
               Board
             </button>

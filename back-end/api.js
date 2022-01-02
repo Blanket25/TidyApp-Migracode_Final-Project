@@ -8,7 +8,7 @@ const api = () => {
     const password = req.body.password;
 
     const userQuery =
-      "SELECT group_id FROM users WHERE email=$1 AND password=$2";
+      "SELECT group_id, type_of_user FROM users WHERE email=$1 AND password=$2";
     const result = await connection.query(userQuery, [email, password]);
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows[0]);
@@ -157,12 +157,16 @@ const api = () => {
   };
 
   const updateTask = async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const task = req.body;
-      const query =
-        "UPDATE tasks SET name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7;";
-      const result = await connection.query(query, [
+    const taskId = req.params.taskId;
+    const taskBody = req.body;
+
+    const dbTask = await getTaskFromDatabase(taskId);
+    const task = replaceTasksValues(dbTask, taskBody);
+
+    await connection.query(
+      `update tasks set 
+			name=$1, task_completed=$2, description=$3, starting_date=$4, group_id=$5, user_id=$6 WHERE id=$7`,
+      [
         task.name,
         task.task_completed,
         task.description,
@@ -170,20 +174,44 @@ const api = () => {
         task.group_id,
         task.user_id,
         taskId,
-      ]);
-      return res.status(200).send("Task updated").json(result.rows);
-    } catch (e) {
-      return res.status(500).send("Error" + e);
+      ]
+    );
+    await res.status(202).send(`Task ${taskId} has been updated!`);
+  };
+
+  const replaceGroupValues = (group, newGroup) => {
+    let updatedGroup = {};
+
+    for (const propertyName in group) {
+      updatedGroup[propertyName] = group[propertyName];
     }
+    for (const propertyName in newGroup) {
+      updatedGroup[propertyName] = newGroup[propertyName];
+    }
+
+    return updatedGroup;
+  };
+
+  const getGroupFromDatabase = async (groupId) => {
+    const result = await connection.query(
+      `select * from tidy_group where id=$1`,
+      [groupId]
+    );
+    const dbGroup = result.rows[0];
+    return dbGroup;
   };
 
   const updateGroup = async (req, res) => {
     try {
-      const groupId = req.params.taskId;
-      const group = req.body;
+      const groupId = req.params.groupId;
+      const groupBody = req.body;
+
+      const dbGroup = await getGroupFromDatabase(groupId);
+      const group = replaceUserValues(dbGroup, groupBody);
+
       const query =
         "UPDATE tidy_group SET group_name=$1, date_of_creation=$2, frequency=$3, group_secret=$4, number_of_roomies=$5, email=$6 WHERE id=$7;";
-      const result = await connection.query(query, [
+      await connection.query(query, [
         group.group_name,
         group.date_of_creation,
         group.frequency,
@@ -192,7 +220,7 @@ const api = () => {
         group.email,
         groupId,
       ]);
-      return res.status(200).send("Group updated").json(result.rows);
+      return res.status(200).send("Group updated");
     } catch (e) {
       return res.status(500).send("Error" + e);
     }
@@ -240,6 +268,7 @@ const api = () => {
     );
     await res.status(202).send(`User ${userId} have been updated!`);
   };
+
 
   const addNewGroup = async (req, res) => {
     const newGroup = req.body;
@@ -327,7 +356,6 @@ const api = () => {
     updateTaskStatus,
     updateGroup,
   };
-
 };
 
 module.exports = api;
