@@ -51,7 +51,6 @@ function TasksInfo() {
     const response = await fetch(`${URL}/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: "no-cors",
       body: JSON.stringify({
         allgroupMembers,
       }),
@@ -85,7 +84,6 @@ function TasksInfo() {
     const response = await fetch(`${URL}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: "no-cors",
       body: JSON.stringify(
         tasks.map((task, index) => ({
           name: task.taskName,
@@ -119,9 +117,7 @@ function TasksInfo() {
             "template_k7fxp8r",
             {
               to_name: roomie.username,
-
-              link: `${URL}/board/${idFromStorage}`,
-
+              link: `https://tidyappp.herokuapp.com/board/${idFromStorage}`,
               to_email: roomie.email,
               admin_name: newGroupData.username,
               group_name: newGroupData.group,
@@ -140,7 +136,6 @@ function TasksInfo() {
       });
       const response = await fetch(`${URL}/users/${idFromStorage}`, {
         method: "GET",
-        mode: "no-cors",
       });
       if (!response.ok) throw Error(response.message);
       try {
