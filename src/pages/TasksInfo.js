@@ -117,7 +117,9 @@ function TasksInfo() {
             "template_k7fxp8r",
             {
               to_name: roomie.username,
+
               link: `${URL}/board/${idFromStorage}`,
+
               to_email: roomie.email,
               admin_name: newGroupData.username,
               group_name: newGroupData.group,
