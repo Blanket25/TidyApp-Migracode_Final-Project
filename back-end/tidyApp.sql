@@ -35,4 +35,3 @@ create table tasks (
 	user_id int references users(id)
 );
 
-

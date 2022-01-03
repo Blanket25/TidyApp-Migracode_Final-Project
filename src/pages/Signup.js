@@ -95,7 +95,9 @@ function Signup() {
             placeholder="Your name"
             name="username"
             onChange={handleChange}
+
             minlength="3"
+
             required
           ></input>
           <input
@@ -103,12 +105,14 @@ function Signup() {
             placeholder="Group name"
             name="group"
             onChange={handleChange}
+
             minlength="3"
             required
           ></input>
           <input
             type="text"
             minlength="6"
+
             required
             placeholder="Group secret (group password)"
             name="groupSecret"
@@ -125,6 +129,7 @@ function Signup() {
             placeholder="Your password"
             name="password"
             minlength="6"
+
             required
             onChange={handleChange}
           ></input>

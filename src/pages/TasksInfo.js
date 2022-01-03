@@ -4,6 +4,7 @@ import Footer from "../pages/sharedComponents/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { URL } from "../globals";
 
 function TasksInfo() {
   const [tasks, setTasks] = useState([]);
@@ -43,10 +44,11 @@ function TasksInfo() {
         type_of_user: `admin`,
         group_id: idFromStorage,
         password: newGroupData.password,
+        user_id: newGroupData.id,
       },
     ];
 
-    const response = await fetch("http://localhost:4000/users", {
+    const response = await fetch(`${URL}/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -79,7 +81,7 @@ function TasksInfo() {
       return user.id;
     });
 
-    const response = await fetch("http://localhost:4000/tasks", {
+    const response = await fetch(`${URL}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
@@ -115,7 +117,7 @@ function TasksInfo() {
             "template_k7fxp8r",
             {
               to_name: roomie.username,
-              link: `http://localhost:3000/board/${idFromStorage}`,
+              link: `http://localhost:3000/board/${idFromStorage}`, //!should it be a different port??? //TODO ask elmira
               to_email: roomie.email,
               admin_name: newGroupData.username,
               group_name: newGroupData.group,
@@ -132,12 +134,9 @@ function TasksInfo() {
             }
           );
       });
-      const response = await fetch(
-        `http://localhost:4000/users/${idFromStorage}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`${URL}/users/${idFromStorage}`, {
+        method: "GET",
+      });
       if (!response.ok) throw Error(response.message);
       try {
         navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });

@@ -3,6 +3,7 @@ const PORT = 4000;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const express = require("express");
+const cron = require("node-cron");
 
 const app = express();
 
@@ -15,7 +16,11 @@ app.use(cors(corsOptions));
 const apiFunction = require("./api.js");
 const api = apiFunction();
 
+const rotateUsers = require("./cronJob");
+
 app.use(bodyParser.json());
+
+cron.schedule("0 1 * * *", rotateUsers);
 
 //GET
 app.get("/tasks/:groupId", api.getTasks);
@@ -33,8 +38,8 @@ app.delete("/users/:userId", api.deleteUser);
 app.delete("/tasks/:taskId", api.deleteTask);
 
 //PUT AND PATCH
-app.put("/groups/:groupId", api.updateGroup);
-app.put("/tasks/:taskId", api.updateTask);
+app.patch("/groups/:groupId", api.updateGroup);
+app.patch("/tasks/:taskId", api.updateTask);
 app.patch("/users/:userId", api.updateUser);
 app.patch("/tasks/status/:taskId", api.updateTaskStatus);
 

@@ -4,6 +4,8 @@ import Nav from "./sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { logIn } from "../auth";
+import { URL } from "../globals";
 
 function Login() {
   const [isLogged, setIsLogged] = useState(false);
@@ -25,7 +27,7 @@ function Login() {
         }),
       };
 
-      const response = await fetch("http://localhost:4000/login", settings);
+      const response = await fetch(`${URL}/login`, settings);
       const data = await response.json();
       // console.log(data);
       const idFromStorage = data.group_id;
@@ -34,10 +36,13 @@ function Login() {
 
       if (idFromStorage && typeOfUser === "admin") {
         setIsLogged(true);
+        logIn(idFromStorage);
         navigate("/adminpanel", { state: { idFromStorage } });
       } else if (idFromStorage && typeOfUser === "roomie") {
+
         setIsLogged(true);
         navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
+
       }
     } else if (!email && password) {
       setErrorMessage("Please enter your email");
@@ -67,7 +72,6 @@ function Login() {
             placeholder="password"
           />
           <p>{erroMessage}</p>
-          <Link to="/ResetPassword">Forgot Password?</Link>
           <button type="submit" className="orange-btn" disabled={isLogged}>
             Log in
           </button>

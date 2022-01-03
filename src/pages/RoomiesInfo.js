@@ -55,45 +55,47 @@ function RoomiesInfo() {
               : "Enter the info of your roomie"}{" "}
           </h3>
         </div>
-
-        {roomies.map((n, index) => (
-          <div key={`input-${index}`}>
-            <p className="text-bold">Roomie {index + 1}</p>
-            <form className="input-groups-container" onSubmit={submitRoomies}>
-              <div className="input-group">
-                <p>Name:</p>
-                <input
-                  name={`name-${index}`}
-                  type="text"
-                  required
-                  minlength="3"
-                  onChange={(event) =>
-                    handleTask("username", event.target.value, index)
-                  }
-                  value={roomies[index].username}
-                />
+        <form onSubmit={submitRoomies}>
+          {roomies.map((n, index) => (
+            <div key={`input-${index}`}>
+              <p className="text-bold">Roomie {index + 1}</p>
+              <div className="input-groups-container" onSubmit={submitRoomies}>
+                <div className="input-group">
+                  <p>Name:</p>
+                  <input
+                    name={`name-${index}`}
+                    type="text"
+                    required
+                    minlength="3"
+                    onChange={(event) =>
+                      handleTask("username", event.target.value, index)
+                    }
+                    value={roomies[index].username}
+                  />
+                </div>
+                <div className="input-group">
+                  <p>Email:</p>
+                  <input
+                    type="email"
+                    required
+                    name={`email-${index}`}
+                    onChange={(event) =>
+                      handleTask("email", event.target.value, index)
+                    }
+                    value={roomies[index].email}
+                  />
+                </div>
+                <p>{validationError}</p>
               </div>
-              <div className="input-group">
-                <p>Email:</p>
-                <input
-                  type="email"
-                  required
-                  name={`email-${index}`}
-                  onChange={(event) =>
-                    handleTask("email", event.target.value, index)
-                  }
-                  value={roomies[index].email}
-                />
-              </div>
-              <p>{validationError}</p>
-              <div className="roomies-info-btn-container u-margin-top-small ">
-                <button className="orange-btn" type="submit">
-                  Next
-                </button>
-              </div>
-            </form>
+            </div>
+          ))}
+          <div className="roomies-info-btn-container u-margin-top-small ">
+            <button className="orange-btn" type="submit">
+              Next
+            </button>
           </div>
-        ))}
+        </form>
+
       </div>
       <Footer />
     </div>

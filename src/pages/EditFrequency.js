@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./sharedComponents/Footer";
+import { URL } from "../globals";
 
 function EditFrequency() {
-  const [frequency, setFrequency] = useState();
+  const [frequency, setFrequency] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
   const { idFromStorage } = state;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:4000/groups/${idFromStorage}`
-      );
+      const response = await fetch(`${URL}/groups/${idFromStorage}`);
       const data = await response.json();
       console.log(data);
 
@@ -22,26 +21,37 @@ function EditFrequency() {
     fetchData();
   }, [idFromStorage]);
 
-  const handleChange = (event) => {
-    setFrequency(event.target.value);
+  const handleChange = (attribute, newValue, index) => {
+    const newFrequencies = [...frequency];
+    const newFrequency = { ...frequency[index] };
+    newFrequency[attribute] = newValue;
+    newFrequencies[index] = newFrequency;
+    setFrequency(newFrequencies);
   };
 
   const handleClick = async () => {
-    const result = await fetch(
-      `http://localhost:4000/groups/${idFromStorage}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          frequency: frequency.frequency,
-        }),
-      }
-    );
+    try {
+      const requests = await Promise.all(
+        frequency.map((f) => {
+          return fetch(`${URL}/groups/${idFromStorage}`, {
+            method: "PATCH",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              frequency: f.frequency,
+            }),
+          });
+        })
+      );
 
-    const data = await result.json();
-    console.log(data);
+      const responses = await Promise.all(
+        requests.map((request) => request.text())
+      );
+      console.log(responses);
+    } catch (error) {
+      console.log("Ups! Something went wrong: " + error);
+    }
   };
 
   const handleClickBoard = () => {
@@ -57,11 +67,22 @@ function EditFrequency() {
       <Nav />
       <div>
         <div className="edit-container edit-frequency u-box-shadow">
-          <select name="frequency" value={frequency} onChange={handleChange}>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Biweekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
+          {frequency.map((f, index) => {
+            return (
+              <select
+                key={index}
+                name="frequency"
+                value={f.frequency}
+                onChange={(event) =>
+                  handleChange("frequency", event.target.value, index)
+                }
+              >
+                <option value="weekly">Weekly</option>
+                <option value="biweekly">Biweekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            );
+          })}
           <div className="btns-container">
             <button
               className="purple-btn u-margin-top-medium"

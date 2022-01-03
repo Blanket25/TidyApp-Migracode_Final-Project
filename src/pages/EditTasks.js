@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Nav from "../pages/sharedComponents/Nav";
 import Footer from "./sharedComponents/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
+import { URL } from "../globals";
 
 function EditTasks() {
   const [tasks, setTasks] = useState([]);
@@ -13,9 +14,7 @@ function EditTasks() {
     const fetchData = async () => {
       // if (isNaN(groupId)) return;
       if (idFromStorage) {
-        const response = await fetch(
-          `http://localhost:4000/tasks/${idFromStorage}`
-        );
+        const response = await fetch(`${URL}/tasks/${idFromStorage}`);
         const data = await response.json();
         console.log(data);
 
@@ -36,18 +35,14 @@ function EditTasks() {
   const handleClick = async () => {
     const requests = await Promise.all(
       tasks.map((task) => {
-        return fetch(`http://localhost:4000/tasks/${task.id}`, {
-          method: "PUT",
+        return fetch(`${URL}/tasks/${task.id}`, {
+          method: "PATCH",
           headers: {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
             name: task.task_name,
             description: task.description,
-            group_id: idFromStorage,
-            user_id: task.user_id,
-            task_completed: task.task_completed,
-            starting_date: task.starting_date,
           }),
         });
       })
@@ -98,6 +93,7 @@ function EditTasks() {
                 }
               />
             </div>
+
           </div>
         ))}
         <div className="btns-container u-margin-top-small">
