@@ -51,6 +51,7 @@ function TasksInfo() {
     const response = await fetch(`${URL}/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
       body: JSON.stringify({
         allgroupMembers,
       }),
@@ -84,6 +85,7 @@ function TasksInfo() {
     const response = await fetch(`${URL}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
       body: JSON.stringify(
         tasks.map((task, index) => ({
           name: task.taskName,
@@ -136,6 +138,7 @@ function TasksInfo() {
       });
       const response = await fetch(`${URL}/users/${idFromStorage}`, {
         method: "GET",
+        mode: "no-cors",
       });
       if (!response.ok) throw Error(response.message);
       try {
