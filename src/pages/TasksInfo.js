@@ -117,7 +117,7 @@ function TasksInfo() {
             "template_k7fxp8r",
             {
               to_name: roomie.username,
-              link: `http://localhost:3000/board/${idFromStorage}`, //!should it be a different port??? //TODO ask elmira
+              link: `https://thetidyapp.herokuapp.com/board/${idFromStorage}`,
               to_email: roomie.email,
               admin_name: newGroupData.username,
               group_name: newGroupData.group,
