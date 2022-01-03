@@ -71,6 +71,7 @@ function EditUsers() {
         {users.map((user, index) => (
           <div>
             <div className="small-edit-container" key={index}>
+              <label>Username</label>
               <input
                 name={user.id}
                 type="text"
@@ -80,6 +81,7 @@ function EditUsers() {
                   handleChange("username", event.target.value, index)
                 }
               />
+              <label>Email:</label>
               <input
                 name={user.id}
                 type="text"
@@ -96,7 +98,7 @@ function EditUsers() {
           <button className="purple-btn" onClick={handleClick}>
             Save
           </button>
-          <div className="link-btns">
+          <div className="link-btns u-margin-bottom-big">
             <button className="orange-btn" onClick={handleClickBoard}>
               Board
             </button>

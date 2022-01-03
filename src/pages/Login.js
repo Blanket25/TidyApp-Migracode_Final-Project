@@ -3,7 +3,6 @@ import Footer from "./sharedComponents/Footer";
 import Nav from "./sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-// import { isAuthenticated } from "../auth";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -17,8 +16,6 @@ function Login() {
     event.preventDefault();
 
     if (email.length > 0 && password.length >= 6) {
-      // setIsLogged(isAuthenticated);
-
       const settings = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,14 +27,17 @@ function Login() {
 
       const response = await fetch("http://localhost:4000/login", settings);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const idFromStorage = data.group_id;
-      console.log(idFromStorage);
+      const typeOfUser = data.type_of_user;
+      // console.log(idFromStorage);
 
-      //window.localStorage.setItem("group id", idFromStorage);
-      if (idFromStorage) {
+      if (idFromStorage && typeOfUser === "admin") {
         setIsLogged(true);
         navigate("/adminpanel", { state: { idFromStorage } });
+      } else if (idFromStorage && typeOfUser === "roomie") {
+        setIsLogged(true);
+        navigate(`/board/${idFromStorage}`, { state: { idFromStorage } });
       }
     } else if (!email && password) {
       setErrorMessage("Please enter your email");

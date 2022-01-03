@@ -25,7 +25,6 @@ function EditTasks() {
     fetchData();
   }, [idFromStorage]);
 
-
   const handleChange = (attribute, newValue, index) => {
     const newTasks = [...tasks];
     const newTask = { ...tasks[index] };
@@ -69,7 +68,7 @@ function EditTasks() {
   };
 
   return (
-    <div className="big-container">
+    <div className="main-container">
       <div>
         <Nav />
       </div>
@@ -78,6 +77,7 @@ function EditTasks() {
         {tasks.map((task, index) => (
           <div>
             <div className="small-edit-container" key={index}>
+              <label>Task:</label>
               <input
                 name={task.id}
                 type="text"
@@ -87,6 +87,7 @@ function EditTasks() {
                   handleChange("task_name", event.target.value, index)
                 }
               />
+              <label>Descrption:</label>
               <input
                 name={task.id}
                 type="text"
@@ -99,11 +100,11 @@ function EditTasks() {
             </div>
           </div>
         ))}
-        <div className="btns-container">
+        <div className="btns-container u-margin-top-small">
           <button className="purple-btn" onClick={handleClick}>
             Save
           </button>
-          <div className="link-btns">
+          <div className="link-btns u-margin-bottom-big">
             <button className="orange-btn" onClick={handleClickBoard}>
               Board
             </button>

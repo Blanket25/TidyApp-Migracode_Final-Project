@@ -1,9 +1,11 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 function ContentToPrint(props) {
   const [fetchedData, setFetchedData] = useState([]);
   const tasks = [];
+
   useEffect(() => {
     const getData = async () => {
       const data = await axios.get(`http://localhost:4000/tasks/${props.id}`);

@@ -25,28 +25,31 @@ const AdminPanel = () => {
   }
 
   return (
-    <>
-      <div className="admin-panel-logo-container">
-        <Nav />
-      </div>
+    <div className="main-container">
+      <Nav />
 
-      <div className="admin-panel-container">
+      <div className="edit-container admin-container u-margin-top-medium">
         <h3>Settings</h3>
-        <button onClick={handleClickTasks} className="orange-btn u-center-text">
+        <button
+          onClick={handleClickTasks}
+          className="orange-btn u-center-text admin-btn"
+        >
           Edit a task
         </button>
-        <button className="orange-btn u-center-text" onClick={handleClickUsers}>
+        <button
+          className="orange-btn u-center-text admin-btn"
+          onClick={handleClickUsers}
+        >
           Edit a roomie
         </button>
         <button
-          className="orange-btn u-center-text"
+          className="orange-btn u-center-text admin-btn"
           onClick={handleClickFrequency}
         >
           Edit frequency
         </button>
 
-
-        <div className="u-center-text admin-panel-board-redirection ">
+        <div className="u-center-text">
           <p>Go to the task board</p>
           <Link to="/board">
             <button className="purple-btn"> Board</button>
@@ -54,8 +57,7 @@ const AdminPanel = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 export default AdminPanel;
-

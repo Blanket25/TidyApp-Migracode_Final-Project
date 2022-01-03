@@ -8,7 +8,7 @@ const api = () => {
     const password = req.body.password;
 
     const userQuery =
-      "SELECT group_id FROM users WHERE email=$1 AND password=$2";
+      "SELECT group_id, type_of_user FROM users WHERE email=$1 AND password=$2";
     const result = await connection.query(userQuery, [email, password]);
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows[0]);
