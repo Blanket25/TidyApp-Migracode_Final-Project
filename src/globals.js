@@ -1,1 +1,1 @@
-export const URL = "https://tidyappp.herokuapp.com/";
+export const URL = "https://tidyappp.herokuapp.com";
