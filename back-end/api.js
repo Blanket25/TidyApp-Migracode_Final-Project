@@ -104,6 +104,22 @@ const api = () => {
     const taskList = await connection.query(query, [groupId]);
     return await res.status(200).json(taskList.rows);
   };
+  
+  const addNewTask = async (newTask) => {
+      const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
+      values ($1, $2, $3, $4, $5, $6) returning id`;
+      
+      await connection.query(createTask, [
+        newTask.name,
+        newTask.task_completed,
+        newTask.description,
+        newTask.starting_date,
+        newTask.group_id,
+        newTask.user_id,
+      ]);
+      // answering with the task id
+      return true;
+  };
 
   const addNewTasks = async (req, res) => {
     const tasks = req.body;
@@ -122,21 +138,6 @@ const api = () => {
         );
   };
 
-  const addNewTask = async (newTask) => {
-      const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
-      values ($1, $2, $3, $4, $5, $6) returning id`;
-      
-      await connection.query(createTask, [
-        newTask.name,
-        newTask.task_completed,
-        newTask.description,
-        newTask.starting_date,
-        newTask.group_id,
-        newTask.user_id,
-      ]);
-      // answering with the task id
-      return true;
-  };
 
   const deleteTask = async (req, res) => {
     const taskId = req.params.taskId;
@@ -198,7 +199,7 @@ const api = () => {
       const groupBody = req.body;
 
       const dbGroup = await getGroupFromDatabase(groupId);
-      const group = replaceUserValues(dbGroup, groupBody);
+      const group = replaceGroupValues(dbGroup, groupBody);
 
       const query =
         "UPDATE tidy_group SET group_name=$1, date_of_creation=$2, frequency=$3, group_secret=$4, number_of_roomies=$5, email=$6 WHERE id=$7;";
@@ -289,6 +290,7 @@ const api = () => {
       await res.status(200).json({ groupId: result.rows[0].id });
     }
   };
+
   const getTaskFromDatabase = async (taskId) => {
     const result = await connection.query(`select * from tasks where id=$1`, [
       taskId,
@@ -296,6 +298,7 @@ const api = () => {
     const dbTask = result.rows[0];
     return dbTask;
   };
+  
   const replaceTasksValues = (task, newTask) => {
     let updatedTask = {};
 
