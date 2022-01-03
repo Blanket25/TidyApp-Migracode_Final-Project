@@ -39,7 +39,7 @@ function EditUsers() {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
-            name: user.username,
+            username: user.username,
             email: user.email,
           }),
         });
