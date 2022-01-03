@@ -7,11 +7,11 @@ const cron = require("node-cron");
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-};
+// const corsOptions = {
+//   origin: "http://localhost:3000",
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 const apiFunction = require("./api.js");
 const api = apiFunction();
