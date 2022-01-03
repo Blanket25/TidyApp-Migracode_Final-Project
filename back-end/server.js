@@ -1,17 +1,17 @@
 const PORT = 4000;
 
-//const cors = require("cors");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const express = require("express");
 const cron = require("node-cron");
 
 const app = express();
 
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-// };
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 const apiFunction = require("./api.js");
 const api = apiFunction();
