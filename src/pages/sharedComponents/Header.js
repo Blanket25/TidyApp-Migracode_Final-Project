@@ -1,7 +1,7 @@
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-//import { isAuthenticated, logOut } from "../../auth";
+import { isAuthenticated, logOut } from "../../auth";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -38,6 +38,7 @@ function Header() {
               to="/"
               onClick={() => {
                 setIsLogged(false);
+                logOut();
               }}
             >
               Log out{" "}
