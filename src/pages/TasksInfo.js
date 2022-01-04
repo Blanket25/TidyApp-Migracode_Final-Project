@@ -117,7 +117,7 @@ function TasksInfo() {
             "template_k7fxp8r",
             {
               to_name: roomie.username,
-              link: `https://thetidyapp.herokuapp.com/board/${idFromStorage}`,
+              link: `https://thetidyapp.herokuapp.com/board/${localStorage.getItem("groupId")}`,
               to_email: roomie.email,
               admin_name: newGroupData.username,
               group_name: newGroupData.group,
