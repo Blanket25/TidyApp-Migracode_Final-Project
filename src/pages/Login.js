@@ -17,10 +17,16 @@ function Login() {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
+    if (!email && password.length >= 6) {
+      setErrorMessage("Please enter your email");
+    } if (!email && !password) {
+      setErrorMessage("Please enter your email and password");
+    }
+    if (email && password.length < 6) {
+      setErrorMessage("Please enter the correct password");
+    }
     if (email.length > 0 && password.length >= 6) {
       // setIsLogged(isAuthenticated);
-
       const settings = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,11 +40,6 @@ function Login() {
       const data = await response.json();
       const idFromStorage = data.group_id;
       const typeOfUser = data.type_of_user;
-      console.log("response " + response);
-      console.log("data" + data);
-      if (!response) {
-        setErrorMessage("Server error, please try again later");
-      }
       if (response && response.status_code === 200) {
         if (idFromStorage && typeOfUser === "admin") {
           setIsLogged(true);
@@ -48,15 +49,8 @@ function Login() {
           setIsLogged(false);
           setErrorMessage("Ups! It seems like you are not an admin!");
         }
-        else if (!email && password) {
-          setErrorMessage("Please enter your email");
-        } else if (email && !password) {
-          setErrorMessage("Please enter the correct password");
-        } else if (!email && !password) {
-          setErrorMessage("Please enter your email and password");
-        }
       }
-      else if (response && response.status_code === 400 && response.text.length > 0) {
+      else if (response && response.status_code === 400) {
         console.log("responsejson" + response.json());
         console.log("response" + response);
         console.log("response" + response.text);
@@ -70,7 +64,8 @@ function Login() {
 
       }
     }
-  };
+  }
+
 
   return (
     <div className="login-main-container">
