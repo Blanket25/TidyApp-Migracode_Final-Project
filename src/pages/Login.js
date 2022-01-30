@@ -16,8 +16,9 @@ function Login() {
   const navigate = useNavigate();
   async function test() {
     try {
+      let settings;
       if (email && password) {
-        const settings = {
+        settings = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -27,28 +28,20 @@ function Login() {
         };
         const response = await fetch(`${URL}/login`, settings);
         const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
         return data;
       }
-
     } catch (error) {
-      console.log(error.error);
-      // console.log(error);
-      // setErrorMessage(error);
-
+      setErrorMessage(error.message);
     }
   }
   const submitHandler = async (event) => {
     event.preventDefault();
-
-    const response = test();
-    // const response = await fetch(`${URL}/login`, settings).catch(e => { console.log(e) });
-    // const data = await response.json();
+    const response = await test();
     const idFromStorage = response.group_id;
     const typeOfUser = response.type_of_user;
-    // if () {
-    //   setErrorMessage("Server error, please try again later");
-    // }
-    // if (response.status_code === 200) {
     if (idFromStorage && typeOfUser === "admin") {
       setIsLogged(true);
       logIn(idFromStorage);
@@ -57,17 +50,6 @@ function Login() {
       setIsLogged(false);
       setErrorMessage("Ups! It seems like you are not an admin!");
     }
-    // }
-    // if (response.status_code === 400) {
-    //   console.log("responsejson" + response.json());
-    //   console.log("response" + response);
-    //   console.log("response" + response.text);
-    //   console.log("responsejson" + response.json().text);
-
-
-    //   setErrorMessage("Text" + response.text);
-    // }
-
   }
 
 
