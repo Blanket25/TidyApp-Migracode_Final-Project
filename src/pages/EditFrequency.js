@@ -14,7 +14,6 @@ function EditFrequency() {
     const fetchData = async () => {
       const response = await fetch(`${URL}/groups/${idFromStorage}`);
       const data = await response.json();
-      console.log(data);
 
       setFrequency(data);
     };
@@ -48,7 +47,6 @@ function EditFrequency() {
       const responses = await Promise.all(
         requests.map((request) => request.text())
       );
-      console.log(responses);
     } catch (error) {
       console.log("Ups! Something went wrong: " + error);
     }

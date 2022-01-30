@@ -28,7 +28,6 @@ function NoOfRommies() {
 							type='number' min="2"
 							value={number}
 							onChange={(e) => {
-								console.log(newGroupData);
 								setNumber(e.target.value);
 							}}
 						/>

@@ -14,15 +14,10 @@ function ContentToPrint(props) {
       setFetchedData(data);
     };
     getData();
-
-    console.log("This is params id:" + props.id);
   }, [props.id]);
 
   async function handleChange(index, e) {
-    console.log(`changed task ${index}`);
-    console.log(e.target.checked);
     tasks[index].task_completed = e.target.checked;
-    console.log(tasks[index]);
     const response = await fetch(`${URL}/tasks/status/${tasks[index].id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -40,8 +35,8 @@ function ContentToPrint(props) {
       <div className="card">
         {fetchedData.data
           ? fetchedData.data.forEach((item) => {
-              tasks.push(item);
-            })
+            tasks.push(item);
+          })
           : null}
 
         {tasks.map((item, index) => {

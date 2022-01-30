@@ -7,21 +7,16 @@ const AdminPanel = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { idFromStorage } = state;
-
-  console.log(idFromStorage);
   function handleClickTasks() {
     navigate("/edit_tasks", { state: { idFromStorage } });
-    console.log(idFromStorage);
   }
 
   function handleClickUsers() {
     navigate("/edit_users", { state: { idFromStorage } });
-    console.log(idFromStorage);
   }
 
   function handleClickFrequency() {
     navigate("/edit_frequency", { state: { idFromStorage } });
-    console.log(idFromStorage);
   }
 
   return (

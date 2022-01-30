@@ -65,7 +65,6 @@ function TasksInfo() {
         if (userForMember === null)
           throw new Error("Couldn't find user for member " + member.email);
         member.id = userForMember.id;
-        console.log(member.email + "=" + userForMember.id);
       });
 
       return users;
@@ -76,8 +75,6 @@ function TasksInfo() {
 
   async function sendTasks(users) {
     const ids = users.map((user) => {
-      console.log(user.id);
-
       return user.id;
     });
 

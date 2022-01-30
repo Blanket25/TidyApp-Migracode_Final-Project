@@ -32,10 +32,8 @@ function Login() {
 
       const response = await fetch(`${URL}/login`, settings);
       const data = await response.json();
-      console.log(data);
       const idFromStorage = data.group_id;
       const typeOfUser = data.type_of_user;
-      console.log(idFromStorage, typeOfUser);
 
       //window.localStorage.setItem("group id", idFromStorage);
       if (idFromStorage && typeOfUser === "admin") {

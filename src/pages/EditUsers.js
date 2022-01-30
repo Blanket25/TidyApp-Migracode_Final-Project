@@ -20,8 +20,6 @@ function EditUsers() {
     fetchData();
   }, [idFromStorage]);
 
-  console.log(users);
-
   const handleChange = (attribute, newValue, index) => {
     const newUsers = [...users];
     const newUser = { ...users[index] };
@@ -49,7 +47,6 @@ function EditUsers() {
     const responses = await Promise.all(
       requests.map((request) => request.text())
     );
-    console.log(responses);
   };
 
   const handleClickBoard = () => {

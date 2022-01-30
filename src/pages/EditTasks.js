@@ -16,8 +16,6 @@ function EditTasks() {
       if (idFromStorage) {
         const response = await fetch(`${URL}/tasks/${idFromStorage}`);
         const data = await response.json();
-        console.log(data);
-
         setTasks(data);
       }
     };
@@ -51,7 +49,6 @@ function EditTasks() {
     const responses = await Promise.all(
       requests.map((request) => request.text())
     );
-    console.log(responses);
   };
 
   const handleClickBoard = () => {
