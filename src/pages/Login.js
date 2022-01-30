@@ -14,57 +14,61 @@ function Login() {
   const [password, setPassword] = useState("");
   const [erroMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-
-  const submitHandler = async (event) => {
-    event.preventDefault();
-    if (!email && password.length >= 6) {
-      setErrorMessage("Please enter your email");
-    } if (!email && !password) {
-      setErrorMessage("Please enter your email and password");
-    }
-    if (email && password.length < 6) {
-      setErrorMessage("Please enter the correct password");
-    }
-    if (email.length > 0 && password.length >= 6) {
-      // setIsLogged(isAuthenticated);
-      const settings = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      };
-
-      const response = await fetch(`${URL}/login`, settings);
-      const data = await response.json();
-      const idFromStorage = data.group_id;
-      const typeOfUser = data.type_of_user;
-      if (response && response.status_code === 200) {
-        if (idFromStorage && typeOfUser === "admin") {
-          setIsLogged(true);
-          logIn(idFromStorage);
-          navigate("/adminpanel", { state: { idFromStorage } });
-        } else if (idFromStorage && typeOfUser === "roomie") {
-          setIsLogged(false);
-          setErrorMessage("Ups! It seems like you are not an admin!");
-        }
+  async function test() {
+    try {
+      if (email && password) {
+        const settings = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        };
+        const response = await fetch(`${URL}/login`, settings);
+        const data = await response.json();
+        return data;
       }
-      else if (response && response.status_code === 400) {
-        console.log("responsejson" + response.json());
-        console.log("response" + response);
-        console.log("response" + response.text);
-        console.log("responsejson" + response.json().text);
 
+    } catch (error) {
+      console.log(error.message);
+      setErrorMessage(error.message);
 
-        setErrorMessage("Text" + response.text);
-      }
-      else {
-        setErrorMessage("Server error, please try again later");
-
-      }
     }
   }
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    const response = test();
+    // const response = await fetch(`${URL}/login`, settings).catch(e => { console.log(e) });
+    // const data = await response.json();
+    const idFromStorage = response.group_id;
+    const typeOfUser = response.type_of_user;
+    // if () {
+    //   setErrorMessage("Server error, please try again later");
+    // }
+    // if (response.status_code === 200) {
+    if (idFromStorage && typeOfUser === "admin") {
+      setIsLogged(true);
+      logIn(idFromStorage);
+      navigate("/adminpanel", { state: { idFromStorage } });
+    } else if (idFromStorage && typeOfUser === "roomie") {
+      setIsLogged(false);
+      setErrorMessage("Ups! It seems like you are not an admin!");
+    }
+    // }
+    // if (response.status_code === 400) {
+    //   console.log("responsejson" + response.json());
+    //   console.log("response" + response);
+    //   console.log("response" + response.text);
+    //   console.log("responsejson" + response.json().text);
+
+
+    //   setErrorMessage("Text" + response.text);
+    // }
+
+  }
+
 
 
   return (
@@ -77,7 +81,7 @@ function Login() {
             autoFocus
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            type="text"
+            type="email"
             placeholder="email"
           />
           <input
@@ -85,6 +89,8 @@ function Login() {
             onChange={(event) => setPassword(event.target.value)}
             type="password"
             placeholder="password"
+            minLength="6"
+
           />
           <p>{erroMessage}</p>
           <button type="submit" className="orange-btn" disabled={isLogged}>
