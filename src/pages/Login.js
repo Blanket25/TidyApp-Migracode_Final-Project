@@ -19,13 +19,13 @@ function Login() {
   async function test() {
     try {
       let settings;
-      if (email && password) {
+      if (email && encryptedPassword) {
         settings = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
-            password,
+            encryptedPassword,
           }),
         };
         const response = await fetch(`${URL}/login`, settings);
