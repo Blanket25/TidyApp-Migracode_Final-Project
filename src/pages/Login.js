@@ -42,15 +42,21 @@ function Login() {
   const submitHandler = async (event) => {
     event.preventDefault();
     const response = await test();
-    const idFromStorage = response.group_id;
-    const typeOfUser = response.type_of_user;
-    if (idFromStorage && typeOfUser === "admin") {
-      setIsLogged(true);
-      logIn(idFromStorage);
-      navigate("/adminpanel", { state: { idFromStorage } });
-    } else if (idFromStorage && typeOfUser === "roomie") {
+    if (response) {
+      const idFromStorage = response.group_id;
+      const typeOfUser = response.type_of_user;
+      if (idFromStorage && typeOfUser === "admin") {
+        setIsLogged(true);
+        logIn(idFromStorage);
+        navigate("/adminpanel", { state: { idFromStorage } });
+      } else if (idFromStorage && typeOfUser === "roomie") {
+        setIsLogged(false);
+        setErrorMessage("Ups! It seems like you are not an admin!");
+      }
+    }
+    else {
       setIsLogged(false);
-      setErrorMessage("Ups! It seems like you are not an admin!");
+      setErrorMessage("Ups! something went wrong. Please check your password or email and try again")
     }
   }
 
