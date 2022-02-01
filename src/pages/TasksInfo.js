@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { URL } from "../globals";
+import md5 from 'md5';
 
 function TasksInfo() {
   const [tasks, setTasks] = useState([]);
@@ -33,6 +34,7 @@ function TasksInfo() {
     setTasks(newTasks);
   };
 
+  console.log(newGroupData.password);
   async function sendUsers() {
     roomies.forEach((roomie) => (roomie.group_id = idFromStorage));
     roomies.forEach((roomie) => (roomie.password = newGroupData.secret));
@@ -43,7 +45,7 @@ function TasksInfo() {
         email: newGroupData.email,
         type_of_user: `admin`,
         group_id: idFromStorage,
-        password: newGroupData.password,
+        password: md5(newGroupData.password),
         user_id: newGroupData.id,
       },
     ];
