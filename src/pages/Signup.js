@@ -4,6 +4,7 @@ import Nav from "./sharedComponents/Nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import md5 from 'md5';
 
 function Signup() {
   const [isSigned, setIsSigned] = useState(false);
@@ -45,7 +46,7 @@ function Signup() {
         return {
           group: prevValue.group,
           email: prevValue.email,
-          password: value,
+          password: md5(value),
           secret: prevValue.secret,
           username: prevValue.username,
         };
