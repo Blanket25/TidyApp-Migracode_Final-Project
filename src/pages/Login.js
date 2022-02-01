@@ -7,23 +7,25 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logIn } from "../auth";
 import { URL } from "../globals";
+import md5 from 'md5';
 
 function Login() {
   const [isLogged, setIsLogged] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [encodedPassword, setEncodedPassword] = useState("")
   const [erroMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   async function test() {
     try {
       let settings;
-      if (email && password) {
+      if (email && encodedPassword) {
         settings = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
-            password,
+            encodedPassword,
           }),
         };
         const response = await fetch(`${URL}/login`, settings);
@@ -51,7 +53,11 @@ function Login() {
       setErrorMessage("Ups! It seems like you are not an admin!");
     }
   }
-
+  const getPasswordFrominput = (event) => {
+    setPassword(event.target.value)
+    setEncodedPassword(md5(event.target.value))
+    console.log(encodedPassword);
+  }
 
 
   return (
@@ -69,7 +75,7 @@ function Login() {
           />
           <input
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={getPasswordFrominput}
             type="password"
             placeholder="password"
             minLength="6"
